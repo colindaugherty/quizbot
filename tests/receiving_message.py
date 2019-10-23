@@ -8,7 +8,7 @@ class ExampleJSONHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header(b'Content-type', b'text/plain')
         self.end_headers()
-        self.wfile.write("In the JSON you sent me, data['foo'][2] is {}\n".format(data['text'][2]).encode('utf-8'))
+        self.wfile.write("In the JSON you sent me, data['text'][2] is {}\n".format(data['text'][2]).encode('utf-8'))
 
-server = HTTPServer(('localhost', 2000), ExampleJSONHandler)
+server = HTTPServer(("192.168.0.69", 2000), ExampleJSONHandler)
 server.serve_forever()
