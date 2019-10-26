@@ -1,7 +1,7 @@
 # fair warning to y'all. this is gonna be wack
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json, requests, re, time, os
-from message_routing import MessageRouter
+from .message_routing import MessageRouter
 
 config_file = os.path.join('.', 'data', 'config.json')
 
