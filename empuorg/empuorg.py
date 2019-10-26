@@ -17,6 +17,8 @@ class Empuorg():
         self.listening_port = config['listening_port']
         print(self.listening_port)
         self.groupme_url = "https://api.groupme.com/v3/bots/post"
+
+        self._init_regexes()
     
     def _init_regexes(self):
         self.likes = re.compile("(!likes)")
