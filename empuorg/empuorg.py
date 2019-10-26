@@ -63,7 +63,9 @@ class Empuorg():
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sid))
 
     def send_meme(self, mes, att, sid, text):
+        print(len(self.meme_source))
         rand = random.randint(0, len(self.meme_source))
+        print(rand)
         subreddit = self.meme_source[rand]
         submission_list = []
         for submission in reddit.subreddit(subreddit).hot(limit=3):
