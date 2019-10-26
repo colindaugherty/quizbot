@@ -70,10 +70,7 @@ class Empuorg():
         submission_list = []
         rand = random.randint(0,2)
         for submission in reddit.subreddit(subreddit).hot(limit=3):
-            if submission.stickied != True:
-                submission_list.append(submission)
-            else:
-                print("Submission was a stickied post gross")
+            submission_list.append(submission)
         print("Printing url link-\n")
         if submission_list[rand].selftext == "":
             print(submission_list[rand].url)
