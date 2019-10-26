@@ -12,7 +12,7 @@ class ExampleJSONHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header(b'Content-type', b'text/plain')
         self.end_headers()
-        if data['name'] = "test beep boop":
+        if data['name'] == "test beep boop":
             break
         self.wfile.write("In the JSON you sent me, data['foo'][2] is {}\n".format(data['text'][2]).encode('utf-8'))
         message = "This is the message I received {}\n".format(data['text'])
