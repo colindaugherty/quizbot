@@ -14,7 +14,7 @@ class ExampleJSONHandler(BaseHTTPRequestHandler):
         self.end_headers()
         if data['name'] != "test beep boop":
             self.wfile.write("In the JSON you sent me, data['foo'][2] is {}\n".format(data['text'][2]).encode('utf-8'))
-            message = "This is the message I received {}\n".format(data['text'])
+            message = "This is the message I received: {}\n".format(data['text'])
 
             data = {"bot_id": "31283ec6a67b96f542641a4aa9", "text": str(message)}
             r = requests.post(url, json=data)
