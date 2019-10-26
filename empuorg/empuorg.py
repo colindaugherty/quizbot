@@ -72,7 +72,9 @@ class Empuorg():
         for submission in reddit.subreddit(subreddit).hot(limit=3):
             submission_list.append(submission)
             print(submission)
-        print(submission_list[rand] + "this is the random submission and this is it's link " + submission_list[rand].url)
+        print(submission_list[rand])
+        print("\nThere's the random submission and here's its url\n")
+        print(submission_list[rand].url)
 
 
     def send_help(self, mes, att, sid, text):
