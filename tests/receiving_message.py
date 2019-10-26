@@ -6,7 +6,7 @@ import re
 
 url = "https://api.groupme.com/v3/bots/post"
 
-meme_regex = re.compile("/(?!meme)(!meme)/g")
+meme_regex = re.compile("(!meme)")
 
 class ExampleJSONHandler(BaseHTTPRequestHandler):
     def do_POST(self):
