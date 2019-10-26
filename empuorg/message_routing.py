@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler
 import json
-import empuorg as empuorg
+import empuorg.empuorg as empuorg
 
 class MessageRouter(BaseHTTPRequestHandler):
 
