@@ -3,7 +3,7 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import json, requests, re, time, os, random, praw
 from .message_routing import MessageRouter
 
-reddit = praw.Reddit(client_id="nothing, don't hack me", client_secret="nothing", user_agent="nothing")
+reddit = praw.Reddit(client_id="ZqOYcWdF4EzuTQ", client_secret="1I2b8Gk5tYNm4MWRUAQT8OR9Tew", user_agent="groupmebot")
 config_file = os.path.join('.', 'data', 'config.json')
 
 class Empuorg():
