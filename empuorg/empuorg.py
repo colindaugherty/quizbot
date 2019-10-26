@@ -17,6 +17,7 @@ class Empuorg():
         print(self.meme_source)
         self.listening_port = config['listening_port']
         print(self.listening_port)
+        print(reddit.read_only)
         self.groupme_url = "https://api.groupme.com/v3/bots/post"
 
         self._init_regexes()
