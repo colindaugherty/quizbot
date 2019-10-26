@@ -15,6 +15,7 @@ class Empuorg():
         print(self.bot_id)
         self.meme_source = config['meme_source']
         print(self.meme_source)
+        self.real_len = len(self.meme_source) - 1
         self.listening_port = config['listening_port']
         print(self.listening_port)
         print(reddit.read_only)
@@ -64,17 +65,21 @@ class Empuorg():
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sid))
 
     def send_meme(self, mes, att, sid, text):
-        print(len(self.meme_source))
-        rand = random.randint(0, len(self.meme_source))
-        print(rand)
+        rand = random.randint(0, self.real_len)
         subreddit = self.meme_source[rand]
         submission_list = []
+        rand = random.randint(0,3)
         for submission in reddit.subreddit(subreddit).hot(limit=3):
             submission_list.append(submission)
-            print(submission)
-        print(submission_list[rand])
-        print("\nThere's the random submission and here's its url\n")
-        print(submission_list[rand].url)
+        print("Printing url link-\n")
+        if submission_list[rand].selftext == "":
+            print(submission_list[rand].url)
+            result = submission_list[rand].url
+        else:
+            print(submission_list[rand].shortlink)
+            result = submission_list[rand].shortlink
+
+        self.send_message("Received request for something funny/bizarre. Try this link: %s" % (result))
 
 
     def send_help(self, mes, att, sid, text):
