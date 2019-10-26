@@ -1,8 +1,9 @@
 # fair warning to y'all. this is gonna be wack
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import json, requests, re, time, os
+import json, requests, re, time, os, random, praw
 from .message_routing import MessageRouter
 
+reddit = praw.Reddit(client_id="nothing, don't hack me", client_secret="nothing", user_agent="nothing")
 config_file = os.path.join('.', 'data', 'config.json')
 
 class Empuorg():
@@ -62,7 +63,14 @@ class Empuorg():
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sid))
 
     def send_meme(self, mes, att, sid, text):
-        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sid))
+        rand = random.randint(0, self.meme_source.len())
+        subreddit = self.meme_source[rand]
+        submission_list = []
+        for submission in reddit.subreddit(subreddit).hot(3):
+            submission_list.append(submission)
+            print(submission)
+        print(submission_list)
+
 
     def send_help(self, mes, att, sid, text):
         help_message = "Empuorg Bot Commands-\n"
