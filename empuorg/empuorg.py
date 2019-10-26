@@ -66,7 +66,7 @@ class Empuorg():
         rand = random.randint(0, len(self.meme_source))
         subreddit = self.meme_source[rand]
         submission_list = []
-        for submission in reddit.subreddit(subreddit).hot(3):
+        for submission in reddit.subreddit(subreddit).hot(limit=3):
             submission_list.append(submission)
             print(submission)
         print(submission_list)
