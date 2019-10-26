@@ -68,7 +68,7 @@ class Empuorg():
         rand = random.randint(0, self.real_len)
         subreddit = self.meme_source[rand]
         submission_list = []
-        rand = random.randint(0,3)
+        rand = random.randint(0,2)
         for submission in reddit.subreddit(subreddit).hot(limit=3):
             submission_list.append(submission)
         print("Printing url link-\n")
