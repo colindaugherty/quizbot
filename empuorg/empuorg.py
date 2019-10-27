@@ -76,7 +76,7 @@ class Empuorg():
         subreddit = self.meme_source[rand]
         submission_list = []
         for submission in reddit.subreddit(subreddit).hot(limit=10):
-            if submission.sticked != True:
+            if submission.stickied != True:
                 submission_list.append(submission)
             else:
                 print("We don't approve of stickied messages")
