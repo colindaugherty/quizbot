@@ -100,9 +100,7 @@ class Empuorg():
         meme_message += "\nI hope you enjoy!\n"
         meme_message += "response_time: "
         response_time = time.time() - start
-        meme_message += str(response_time)
-        meme_message += "\n"
-        meme_message += time.strftime("%H:%M:%S", time.gmtime(response_time))
+        meme_message += time.strftime("%Ss", time.gmtime(response_time))
 
         self.send_message(meme_message)
 
