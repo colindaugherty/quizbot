@@ -1,7 +1,11 @@
 # fair warning to y'all. this is gonna be wack
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import json, requests, re, time, os, random, praw
+import json, requests, re, time, os, random, praw, logging
 from .message_routing import MessageRouter
+
+logging.basicConfig(filename='access.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
+logging.info("Started program. Hello world!")
 
 reddit = praw.Reddit(client_id="pPp18DiGR-UnFA", client_secret="vmY57gKz-6l01ePkoC2FMmv1nv4", user_agent="groupmebot /u/b1ackzi0n")
 config_file = os.path.join('.', 'data', 'config.json')
@@ -21,6 +25,8 @@ class Empuorg():
         print(reddit.read_only)
         self.groupme_url = "https://api.groupme.com/v3/bots/post"
 
+        logging.info("Initialized variables.")
+        logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
         self._init_regexes()
     
     def _init_regexes(self):
@@ -40,6 +46,7 @@ class Empuorg():
             ("Info", self.groupinfo, self.send_info),
             ("Help", self.help_regex, self.send_help)
         ]
+        logging.info("Initialized regex.")
 
     def receive_message(self, message, attachments, senderid):
         for type, regex, action in self.regex_actions:
@@ -47,7 +54,7 @@ class Empuorg():
             att = attachments
             sid = senderid
             if mes:
-                print("Received a message- %s\nType of request is- %s" % (mes, type))
+                logging.info(f'Received message with type:{type} and message:{mes}')
                 if att:
                     action(mes, att, sid, message)
                 else:
@@ -95,9 +102,8 @@ class Empuorg():
     def send_message(self, message):
         data = {"bot_id": self.bot_id, "text": str(message)}
         time.sleep(1)
-        r = requests.post(self.groupme_url, json=data)
-        print("Just sent message with this text - ")
-        print(r.text)
+        requests.post(self.groupme_url, json=data)
+        logging.info(f"Just sent a message-\n{message}\n")
 
 def init(bot_id=0):
     global bot
