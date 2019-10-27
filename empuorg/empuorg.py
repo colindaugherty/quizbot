@@ -1,9 +1,11 @@
 # fair warning to y'all. this is gonna be wack
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import json, requests, re, time, os, random, praw, logging
+import json, requests, re, time, os, random, praw, logging, sqlite3
 from .message_routing import MessageRouter
 
 logging.basicConfig(level=logging.DEBUG,filename='access.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
+conn = sqlite3.connect('config.db')
 
 logging.info("Started program. Hello world!")
 
@@ -15,18 +17,39 @@ class Empuorg():
         with open(config_file) as data_file:
             config = json.load(data_file)
 
-        self.bot_id = config['bot_id']
-        print(self.bot_id)
-        self.meme_source = config['meme_source']
-        print(self.meme_source)
-        self.real_len = len(self.meme_source) - 1
+        self.bots = config['bots']
+        print(self.bots)
+        for name, id, group in self.bots.values():
+            iteration_values = [(name, id, group)]
+            c = conn.cursor()
+            c.execute("""CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, botid TEXT, group TEXT, allownsfw TEXT, allowrepost TEXT)""")
+            c.execute("""CREATE TABLE IF NOT EXISTS memesource (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, botid TEXT, group TEXT, subreddit TEXT)""")
+            databasecheckconfig = c.execute("SELECT * FROM config WHERE name=? AND botid=? AND group=?", iteration_values)
+            databasecheckmemesource = c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND group=?", iteration_values)
+            if None in databasecheckconfig and None in databasecheckmemesource:
+                insertvalues = [(name, id, group, 'false','false')]
+                c.executemany("INSERT INTO config (name, botid, group, allownsfw, allowrepost) VALUES (?,?,?,?,?)", insertvalues)
+                insertvalues = [(name, id, group, 'wholesomememes')]
+                c.executemany("INSERT INTO memesource (name, botid, group, subreddit) VALUES (?,?,?,?)", insertvalues)
+                conn.commit()
+            else:
+                for row in c.execute("SELECT * FROM config ORDER BY id"):
+                    print(row)
+                for row in c.execute("SELECT * FROM memesource ORDER BY botid"):
+                    print(row)
+        conn.commit()
+        conn.close()
+
+        # self.bot_id = config['bot_id']
+        # print(self.bot_id)
+        # self.meme_source = config['meme_source']
+        # print(self.meme_source)
+        # self.real_len = len(self.meme_source) - 1
         self.listening_port = config['listening_port']
         print(self.listening_port)
         print(reddit.read_only)
         self.groupme_url = "https://api.groupme.com/v3/bots/post"
 
-        logging.info("Initialized variables.")
-        logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
         self._init_regexes()
     
     def _init_regexes(self):
@@ -38,6 +61,15 @@ class Empuorg():
 
         self._construct_regexes()
     
+    def _init_config(self, groupid, bot_id, meme_source, allow_nsfw, allow_reposts):
+        self.bot_id = bot_id
+        self.meme_source = meme_source
+        self.real_len = len(self.meme_source) - 1
+        self.allow_nsfw = allow_nsfw
+        self.allow_reposts = allow_reposts
+        logging.info("Initialized config for group %s" % (groupid))
+        logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
+
     def _construct_regexes(self):
         self.regex_actions = [
             ("Likes", self.likes, self.send_likes),
@@ -48,30 +80,72 @@ class Empuorg():
         ]
         logging.info("Initialized regex.")
 
-    def receive_message(self, message, attachments, senderid):
+    def _getmemesource(self, id, group):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        values = [(id, group)]
+        memesource = []
+        for row in c.execute("SELECT subreddit FROM memesource WHERE id=? AND WHERE group=?", values):
+            memesource.append(row)
+        conn.commit()
+        conn.close()
+        return memesource
+
+    def _getallownsfw(self, id, group):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        values = [(id, group)]
+        for text in c.execute("SELECT allownsfw FROM config WHERE id=? AND WHERE group=?", values):
+            allownsfw = text
+        conn.commit()
+        conn.close()
+        return allownsfw
+
+    def _getallowreposts(self, id, group):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        values = [(id, group)]
+        for text in c.execute("SELECT allowrepost FROM config WHERE id=? AND WHERE group=?", values):
+            allowrepost = text
+        conn.commit()
+        conn.close()
+        return allowrepost
+
+    def receive_message(self, message, attachments, groupid):
         for type, regex, action in self.regex_actions:
             mes = regex.match(message)
             att = attachments
-            sid = senderid
+            gid = groupid
+            for name, id, group in self.bots.values():
+                if group == gid:
+                    # database functions return all the variables
+                    bot_id = id
+                    meme_source = self._getmemesource(id, group)
+                    allow_nsfw = self._getallownsfw(id, group)
+                    allow_reposts = self._getallowreposts(id, group)
+                    botname = name
+                    self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
+                else:
+                    print("%s and id#%s did not match group id#%s" %(name, id, gid))
             if mes:
-                logging.info(f'Received message with type:{type} and message:{mes}')
+                logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
                 if att:
-                    action(mes, att, sid, message)
+                    action(mes, att, gid, message)
                 else:
                     att = []
-                    action(mes, att, sid, message)
+                    action(mes, att, gid, message)
                 break
     
-    def send_likes(self, mes, att, sid, text):
-        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sid))
+    def send_likes(self, mes, att, gid, text):
+        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (gid))
 
-    def send_info(self, mes, att, sid, text):
-        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sid))
+    def send_info(self, mes, att, gid, text):
+        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (gid))
 
-    def send_rank(self, mes, att, sid, text):
-        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sid))
+    def send_rank(self, mes, att, gid, text):
+        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (gid))
 
-    def send_meme(self, mes, att, sid, text):
+    def send_meme(self, mes, att, gid, text):
         start = time.time()
         meme_message = "Meme response-\n'"
         rand = random.randint(0, self.real_len)
@@ -108,7 +182,7 @@ class Empuorg():
         self.send_message(meme_message)
 
 
-    def send_help(self, mes, att, sid, text):
+    def send_help(self, mes, att, gid, text):
         help_message = "Empuorg Bot Commands-\n"
         help_message += "Version 0.1b\n"
         help_message += "!memes - searches for a random meme from your meme suppliers in the config\n"

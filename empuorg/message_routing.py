@@ -11,4 +11,4 @@ class MessageRouter(BaseHTTPRequestHandler):
         data = json.loads(post_body)
         print(data)
     
-        empuorg.bot.receive_message(data['text'],data['attachments'],data['sender_id'])
+        empuorg.bot.receive_message(data['text'],data['attachments'],data['group_id'])
