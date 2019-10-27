@@ -9,6 +9,6 @@ class MessageRouter(BaseHTTPRequestHandler):
         content_len = int(self.headers['content-length'])
         post_body = self.rfile.read(content_len)
         data = json.loads(post_body)
-        self.wfile.write(data)
+        print(data)
     
         empuorg.bot.receive_message(data['text'],data['attachments'],data['sender_id'])
