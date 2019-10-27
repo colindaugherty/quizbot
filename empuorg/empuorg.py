@@ -72,7 +72,8 @@ class Empuorg():
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sid))
 
     def send_meme(self, mes, att, sid, text):
-        meme_message = "Meme response-\n"
+        start = time.time()
+        meme_message = "Meme response-\n'"
         rand = random.randint(0, self.real_len)
         subreddit = self.meme_source[rand]
         submission_list = []
@@ -92,11 +93,14 @@ class Empuorg():
             print(submission_list[rand].shortlink)
             result = submission_list[rand].shortlink
         meme_message += submission_list[rand].title
-        meme_message += "from the subreddit"
-        meme_message += submission_list[rand].subreddit.name
-        meme_message += "\n"
+        meme_message += "' from the subreddit '"
+        meme_message += submission_list[rand].subreddit.display_name
+        meme_message += "'\n"
         meme_message += result
-        meme_message += "\nI hope you enjoy!"
+        meme_message += "\nI hope you enjoy!\n"
+        meme_message += "response_time: "
+        response_time = time.time() - start
+        meme_message += response_time
 
         self.send_message(meme_message)
 
