@@ -13,8 +13,6 @@ else:
 with open(config_file) as data_file:
     config = json.load(data_file)
 
-empuorg.init(
-    bot_id=config['bot_id']
-    )
+empuorg.init()
 
 empuorg.listen(port=config['listening_port'])
