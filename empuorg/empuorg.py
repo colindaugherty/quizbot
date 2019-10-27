@@ -75,10 +75,15 @@ class Empuorg():
         rand = random.randint(0, self.real_len)
         subreddit = self.meme_source[rand]
         submission_list = []
-        rand = random.randint(0,2)
-        for submission in reddit.subreddit(subreddit).hot(limit=3):
-            submission_list.append(submission)
-        print("Printing url link-\n")
+        for submission in reddit.subreddit(subreddit).hot(limit=10):
+            if submission.sticked != True:
+                submission_list.append(submission)
+            else:
+                print("We don't approve of stickied messages")
+        submission_list_length = len(submission_list) - 1
+        rand = random.randint(0,submission_list_length)
+        print("Got a random submission index of %d out of %d\nIt has an upvote ratio of %d" % (rand, submission_list_length, submission_list[rand].upvote_ratio))
+        print("Printing url link for post '%s'-\n" % (submission_list[rand].title))
         if submission_list[rand].selftext == "":
             print(submission_list[rand].url)
             result = submission_list[rand].url
@@ -95,7 +100,7 @@ class Empuorg():
         help_message += "!memes - searches for a random meme from your meme suppliers in the config\n"
         help_message += "!info - prints information for the group\n"
         help_message += "!config - edits group config\n"
-        help_message += "!help or ! - displays help commands\n"
+        help_message += "!help - displays help commands\n"
 
         self.send_message(help_message)
     

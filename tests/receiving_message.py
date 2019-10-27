@@ -1,5 +1,5 @@
+#this is just me figuring out how the server and all that worked
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import urllib
 import json
 import requests
 import re
