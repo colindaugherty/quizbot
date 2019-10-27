@@ -103,7 +103,7 @@ class Empuorg():
         if time.strftime("%S", time.gmtime(response_time)) == "00":
             meme_message += "< 0s"
         else:
-            meme_message += time.strftime("%S", time.gmtime(response_time))
+            meme_message += time.strftime("%Ss", time.gmtime(response_time))
 
         self.send_message(meme_message)
 
