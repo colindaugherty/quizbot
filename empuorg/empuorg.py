@@ -28,6 +28,8 @@ class Empuorg():
         print(len(self.bots) - 1)
         for bot in self.bots:
             print(bot)
+            for name, id, group in bot:
+                print("Bot with name %s id #%s and group id #%s" % (name, id, group))
         for bot in self.bots:
             for name, id, group in bot:
                 iteration_values = [(name, id, group)]
