@@ -95,8 +95,9 @@ class Empuorg():
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         t = (name,)
-        c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t))
-        memesource = c.fetchall()
+        memesource = []
+        for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
+            memesource.append(row[0])
         print("Inside _getmemesource: memesource should be populated here it is- %s" % (memesource))
         conn.commit()
         conn.close()
@@ -173,7 +174,7 @@ class Empuorg():
         start = time.time()
         meme_message = "Meme response-\n'"
         rand = random.randint(0, self.real_len)
-        subreddit = self.meme_source[rand]
+        subreddit = self.meme_source[rand][rand]
         submission_list = []
         for submission in reddit.subreddit(subreddit).hot(limit=10):
             if submission.stickied != True:
