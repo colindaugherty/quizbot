@@ -148,7 +148,7 @@ class Empuorg():
                     allow_nsfw = self._getallownsfw(id, group)
                     allow_reposts = self._getallowreposts(id, group)
                     self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
-                    break
+                break
             if mes:
                 logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
                 if att:
