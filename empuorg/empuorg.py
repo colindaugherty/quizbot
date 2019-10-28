@@ -102,8 +102,8 @@ class Empuorg():
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         values = (id, group)
-        for text in c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", values):
-            allownsfw = text
+        for row in c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", values):
+            allownsfw = row
         conn.commit()
         conn.close()
         return allownsfw
@@ -112,8 +112,8 @@ class Empuorg():
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         values = (id, group)
-        for text in c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", values):
-            allowrepost = text
+        for row in c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", values):
+            allowrepost = row
         conn.commit()
         conn.close()
         return allowrepost
