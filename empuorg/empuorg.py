@@ -28,8 +28,8 @@ class Empuorg():
         for name, id, group in self.bots:
             iteration_values = [(name, id, group)]
             c = conn.cursor()
-            c.execute("CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, group text, allownsfw text, allowrepost text)")
-            c.execute("CREATE TABLE IF NOT EXISTS memesource (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, group text, subreddit text)")
+            c.execute("CREATE TABLE IF NOT EXISTS config(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, group text, allownsfw text, allowrepost text);")
+            c.execute("CREATE TABLE IF NOT EXISTS memesource(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, group text, subreddit text);")
             databasecheckconfig = c.execute("SELECT * FROM config WHERE name=? AND botid=? AND group=?", iteration_values)
             databasecheckmemesource = c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND group=?", iteration_values)
             if None in databasecheckconfig and None in databasecheckmemesource:
