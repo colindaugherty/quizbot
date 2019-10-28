@@ -12,6 +12,8 @@ logging.info("Started program. Hello world!")
 test = [["one","two","three"], ["four","five","six"]]
 for result in test:
     print(result)
+    for resulttwo in result:
+        print(resulttwo)
 
 reddit = praw.Reddit(client_id="pPp18DiGR-UnFA", client_secret="vmY57gKz-6l01ePkoC2FMmv1nv4", user_agent="groupmebot /u/b1ackzi0n")
 config_file = os.path.join('.', 'data', 'config.json')
