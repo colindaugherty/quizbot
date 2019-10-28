@@ -76,15 +76,6 @@ class Empuorg():
         self.help_regex = re.compile("(!help)")
 
         self._construct_regexes()
-    
-    def _init_config(self, groupid, bot_id, meme_source, allow_nsfw, allow_reposts):
-        self.bot_id = bot_id
-        self.meme_source = meme_source
-        self.real_len = len(self.meme_source) - 1
-        self.allow_nsfw = allow_nsfw
-        self.allow_reposts = allow_reposts
-        logging.info("Initialized config for group %s" % (groupid))
-        logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
 
     def _construct_regexes(self):
         self.regex_actions = [
@@ -126,6 +117,15 @@ class Empuorg():
         conn.commit()
         conn.close()
         return allowrepost
+
+    def _init_config(self, groupid, bot_id, meme_source, allow_nsfw, allow_reposts):
+        self.bot_id = bot_id
+        self.meme_source = meme_source
+        self.real_len = len(self.meme_source) - 1
+        self.allow_nsfw = allow_nsfw
+        self.allow_reposts = allow_reposts
+        logging.info("Initialized config for group %s" % (groupid))
+        logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
 
     def receive_message(self, message, attachments, groupid):
         for type, regex, action in self.regex_actions:
