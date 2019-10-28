@@ -96,10 +96,8 @@ class Empuorg():
         c = conn.cursor()
         values = (id, group)
         memesource = []
-        for row in c.execute("SELECT subreddit FROM memesource WHERE (id=? AND groupid=?)", values):
-            memesource.append(row)
-            print(row)
-            print("There should be an sqlite result above me")
+        c.execute("SELECT subreddit FROM memesource WHERE (id=? AND groupid=?)", values)
+        memesource = c.fetchall()
         print("Inside _getmemesource: memesource should be populated here it is- %s" % (memesource))
         conn.commit()
         conn.close()
@@ -110,10 +108,8 @@ class Empuorg():
         c = conn.cursor()
         values = (id, group)
         allownsfw = ""
-        for row in c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", values):
-            allownsfw = row
-            print(row)
-            print("There should be an sqlite result above me")
+        c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", values)
+        allownsfw = c.fetchone()
         print("Inside _getallownsfw: allownsfw should be populated here it is- %s" % (allownsfw))
         conn.commit()
         conn.close()
@@ -124,10 +120,8 @@ class Empuorg():
         c = conn.cursor()
         values = (id, group)
         allowrepost = ""
-        for row in c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", values):
-            allowrepost = row
-            print(row)
-            print("There should be an sqlite result above me")
+        c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", values)
+        allowrepost = c.fetchone()
         print("Inside _getallowrepost: allowrepost should be populated here it is- %s" % (allowrepost))
         conn.commit()
         conn.close()
