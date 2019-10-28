@@ -175,6 +175,7 @@ class Empuorg():
         meme_message = "Meme response-\n'"
         rand = random.randint(0, self.real_len)
         subreddit = self.meme_source[rand][rand]
+        print(subreddit)
         submission_list = []
         for submission in reddit.subreddit(subreddit).hot(limit=10):
             if submission.stickied != True:
