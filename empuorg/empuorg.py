@@ -26,7 +26,7 @@ class Empuorg():
         self.bots = reallist
         print(self.bots)
         for name, id, group in self.bots:
-            iteration_values = [(name, id, group)]
+            iteration_values = (name, id, group)
             c = conn.cursor()
             c.execute("""CREATE TABLE IF NOT EXISTS config
             (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid text, allownsfw text, allowrepost text)
@@ -37,10 +37,16 @@ class Empuorg():
             databasecheckconfig = c.execute("SELECT * FROM config WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckmemesource = c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND groupid=?", iteration_values)
             if None in databasecheckconfig and None in databasecheckmemesource:
+                print("Doing default config for bot %s (id#%s and groupid#%s)" % (name, id, group))
                 insertvalues = [(name, id, group, 'false','false')]
                 c.executemany("INSERT INTO config (name, botid, groupid, allownsfw, allowrepost) VALUES (?,?,?,?,?)", insertvalues)
                 insertvalues = [(name, id, group, 'all')]
                 c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", insertvalues)
+                print("Finished - results:\n")
+                for row in c.execute("SELECT * FROM config ORDER BY id"):
+                    print(row)
+                for row in c.execute("SELECT * FROM memesource ORDER BY botid"):
+                    print(row)
                 conn.commit()
             else:
                 for row in c.execute("SELECT * FROM config ORDER BY id"):
