@@ -36,6 +36,8 @@ class Empuorg():
             """)
             databasecheckconfig = c.execute("SELECT * FROM config WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckmemesource = c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND groupid=?", iteration_values)
+            print(databasecheckconfig)
+            print(databasecheckmemesource)
             if None in databasecheckconfig and None in databasecheckmemesource:
                 print("Doing default config for bot %s (id#%s and groupid#%s)" % (name, id, group))
                 insertvalues = [(name, id, group, 'false','false')]
