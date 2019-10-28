@@ -18,35 +18,31 @@ class Empuorg():
             config = json.load(data_file)
 
         self.bots = config['bots']
-        print(self.bots)
-        print(len(self.bots) - 1)
         reallist = []
         for bot in self.bots:
-            print(bot)
             bot = tuple(bot)
             print(bot)
             reallist.append(bot)
-        for name, id, group in reallist:
-            print("%s %s %s" % (name, id, group))
-        for bot in self.bots:
-            for name, id, group in bot:
-                iteration_values = [(name, id, group)]
-                c = conn.cursor()
-                c.execute("""CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, botid TEXT, group TEXT, allownsfw TEXT, allowrepost TEXT)""")
-                c.execute("""CREATE TABLE IF NOT EXISTS memesource (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, botid TEXT, group TEXT, subreddit TEXT)""")
-                databasecheckconfig = c.execute("SELECT * FROM config WHERE name=? AND botid=? AND group=?", iteration_values)
-                databasecheckmemesource = c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND group=?", iteration_values)
-                if None in databasecheckconfig and None in databasecheckmemesource:
-                    insertvalues = [(name, id, group, 'false','false')]
-                    c.executemany("INSERT INTO config (name, botid, group, allownsfw, allowrepost) VALUES (?,?,?,?,?)", insertvalues)
-                    insertvalues = [(name, id, group, 'all')]
-                    c.executemany("INSERT INTO memesource (name, botid, group, subreddit) VALUES (?,?,?,?)", insertvalues)
-                    conn.commit()
-                else:
-                    for row in c.execute("SELECT * FROM config ORDER BY id"):
-                        print(row)
-                    for row in c.execute("SELECT * FROM memesource ORDER BY botid"):
-                        print(row)
+        self.bots = reallist
+        print(self.bots)
+        for name, id, group in self.bots:
+            iteration_values = [(name, id, group)]
+            c = conn.cursor()
+            c.execute("""CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, botid TEXT, group TEXT, allownsfw TEXT, allowrepost TEXT)""")
+            c.execute("""CREATE TABLE IF NOT EXISTS memesource (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, botid TEXT, group TEXT, subreddit TEXT)""")
+            databasecheckconfig = c.execute("SELECT * FROM config WHERE name=? AND botid=? AND group=?", iteration_values)
+            databasecheckmemesource = c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND group=?", iteration_values)
+            if None in databasecheckconfig and None in databasecheckmemesource:
+                insertvalues = [(name, id, group, 'false','false')]
+                c.executemany("INSERT INTO config (name, botid, group, allownsfw, allowrepost) VALUES (?,?,?,?,?)", insertvalues)
+                insertvalues = [(name, id, group, 'all')]
+                c.executemany("INSERT INTO memesource (name, botid, group, subreddit) VALUES (?,?,?,?)", insertvalues)
+                conn.commit()
+            else:
+                for row in c.execute("SELECT * FROM config ORDER BY id"):
+                    print(row)
+                for row in c.execute("SELECT * FROM memesource ORDER BY botid"):
+                    print(row)
         conn.commit()
         conn.close()
 
@@ -126,26 +122,25 @@ class Empuorg():
             mes = regex.match(message)
             att = attachments
             gid = groupid
-            for bot in self.bots:
-                for name, id, group in bot:
-                    if group == gid:
-                        # database functions return all the variables
-                        bot_id = id
-                        meme_source = self._getmemesource(id, group)
-                        allow_nsfw = self._getallownsfw(id, group)
-                        allow_reposts = self._getallowreposts(id, group)
-                        botname = name
-                        self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
-                    else:
-                        print("%s and id#%s did not match group id#%s" %(name, id, gid))
-                if mes:
-                    logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
-                    if att:
-                        action(mes, att, gid, message)
-                    else:
-                        att = []
-                        action(mes, att, gid, message)
-                    break
+            for name, id, group in self.bots:
+                if group == gid:
+                    # database functions return all the variables
+                    bot_id = id
+                    meme_source = self._getmemesource(id, group)
+                    allow_nsfw = self._getallownsfw(id, group)
+                    allow_reposts = self._getallowreposts(id, group)
+                    botname = name
+                    self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
+                else:
+                    print("%s and id#%s did not match group id#%s" %(name, id, gid))
+            if mes:
+                logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
+                if att:
+                    action(mes, att, gid, message)
+                else:
+                    att = []
+                    action(mes, att, gid, message)
+                break
     
     def send_likes(self, mes, att, gid, text):
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (gid))
