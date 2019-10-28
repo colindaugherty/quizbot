@@ -34,8 +34,10 @@ class Empuorg():
             c.execute("""CREATE TABLE IF NOT EXISTS memesource
             (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid text, subreddit text)
             """)
-            databasecheckconfig = c.execute("SELECT * FROM config WHERE name=? AND botid=? AND groupid=?", iteration_values)
-            databasecheckmemesource = c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND groupid=?", iteration_values)
+            c.execute("SELECT * FROM config WHERE name=? AND botid=? AND groupid=?", iteration_values)
+            databasecheckconfig = c.fetchone()
+            c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND groupid=?", iteration_values)
+            databasecheckmemesource = c.fetchone()
             print(databasecheckconfig)
             print(databasecheckmemesource)
             if None in databasecheckconfig and None in databasecheckmemesource:
