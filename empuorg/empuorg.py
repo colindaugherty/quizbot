@@ -138,7 +138,9 @@ class Empuorg():
             att = attachments
             gid = groupid
             for name, id, group in self.bots:
-                if group == gid:
+                if group != gid:
+                    print("%s and id#%s did not match group id#%s" %(name, id, gid))
+                else:
                     # database functions return all the variables
                     bot_id = id
                     botname = name
@@ -146,8 +148,7 @@ class Empuorg():
                     allow_nsfw = self._getallownsfw(id, group)
                     allow_reposts = self._getallowreposts(id, group)
                     self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
-                else:
-                    print("%s and id#%s did not match group id#%s" %(name, id, gid))
+                    break
             if mes:
                 logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
                 if att:
