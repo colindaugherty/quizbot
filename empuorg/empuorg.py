@@ -109,7 +109,6 @@ class Empuorg():
         t = (name,)
         c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
         allownsfw = c.fetchone()
-        print("Inside _getallownsfw: allownsfw should be populated here it is- %s" % (allownsfw))
         conn.commit()
         conn.close()
         return allownsfw
@@ -120,7 +119,6 @@ class Empuorg():
         t = (name,)
         c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
         allowrepost = c.fetchone()
-        print("Inside _getallowrepost: allowrepost should be populated here it is- %s" % (allowrepost))
         conn.commit()
         conn.close()
         return allowrepost
@@ -134,32 +132,33 @@ class Empuorg():
         logging.info("Initialized config for group %s" % (groupid))
         logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
 
-    def receive_message(self, message, attachments, groupid):
-        for type, regex, action in self.regex_actions:
-            mes = regex.match(message)
-            att = attachments
-            gid = groupid
-            for name, id, group in self.bots:
-                if group != gid:
-                    print("%s and id#%s did not match group id#%s" %(name, id, gid))
-                else:
-                    # database functions return all the variables
-                    bot_id = id
-                    botname = name
-                    meme_source = self._getmemesource(name)
-                    allow_nsfw = self._getallownsfw(name)
-                    allow_reposts = self._getallowreposts(name)
-                    self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
+    def receive_message(self, message, attachments, groupid, sendertype):
+        if sendertype != "bot":
+            for type, regex, action in self.regex_actions:
+                mes = regex.match(message)
+                att = attachments
+                gid = groupid
+                for name, id, group in self.bots:
+                    if group != gid:
+                        print("%s and id#%s did not match group id#%s" %(name, id, gid))
+                    else:
+                        # database functions return all the variables
+                        bot_id = id
+                        botname = name
+                        meme_source = self._getmemesource(name)
+                        allow_nsfw = self._getallownsfw(name)
+                        allow_reposts = self._getallowreposts(name)
+                        self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
+                        break
                     break
-                break
-            if mes:
-                logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
-                if att:
-                    action(mes, att, gid, message)
-                else:
-                    att = []
-                    action(mes, att, gid, message)
-                break
+                if mes:
+                    logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
+                    if att:
+                        action(mes, att, gid, message)
+                    else:
+                        att = []
+                        action(mes, att, gid, message)
+                    break
     
     def send_likes(self, mes, att, gid, text):
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (gid))
