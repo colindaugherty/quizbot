@@ -94,7 +94,8 @@ class Empuorg():
     def _getmemesource(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (name))
+        t = (name,)
+        c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t))
         memesource = c.fetchall()
         print("Inside _getmemesource: memesource should be populated here it is- %s" % (memesource))
         conn.commit()
@@ -104,7 +105,8 @@ class Empuorg():
     def _getallownsfw(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        c.execute("SELECT allownsfw FROM config WHERE (name=?)", (name))
+        t = (name,)
+        c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
         allownsfw = c.fetchone()
         print("Inside _getallownsfw: allownsfw should be populated here it is- %s" % (allownsfw))
         conn.commit()
@@ -114,7 +116,8 @@ class Empuorg():
     def _getallowreposts(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        c.execute("SELECT allowrepost FROM config WHERE (name=?)", (name))
+        t = (name,)
+        c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
         allowrepost = c.fetchone()
         print("Inside _getallowrepost: allowrepost should be populated here it is- %s" % (allowrepost))
         conn.commit()
