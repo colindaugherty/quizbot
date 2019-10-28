@@ -91,33 +91,30 @@ class Empuorg():
         ]
         logging.info("Initialized regex.")
 
-    def _getmemesource(self, id, group):
+    def _getmemesource(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        memesource = []
-        c.execute("SELECT subreddit FROM memesource WHERE (id=? AND groupid=?)", (id, group))
+        c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (name))
         memesource = c.fetchall()
         print("Inside _getmemesource: memesource should be populated here it is- %s" % (memesource))
         conn.commit()
         conn.close()
         return memesource
 
-    def _getallownsfw(self, id, group):
+    def _getallownsfw(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        allownsfw = ""
-        c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", (id, group))
+        c.execute("SELECT allownsfw FROM config WHERE (name=?)", (name))
         allownsfw = c.fetchone()
         print("Inside _getallownsfw: allownsfw should be populated here it is- %s" % (allownsfw))
         conn.commit()
         conn.close()
         return allownsfw
 
-    def _getallowreposts(self, id, group):
+    def _getallowreposts(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        allowrepost = ""
-        c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", (id, group))
+        c.execute("SELECT allowrepost FROM config WHERE (name=?)", (name))
         allowrepost = c.fetchone()
         print("Inside _getallowrepost: allowrepost should be populated here it is- %s" % (allowrepost))
         conn.commit()
@@ -145,9 +142,9 @@ class Empuorg():
                     # database functions return all the variables
                     bot_id = id
                     botname = name
-                    meme_source = self._getmemesource(id, group)
-                    allow_nsfw = self._getallownsfw(id, group)
-                    allow_reposts = self._getallowreposts(id, group)
+                    meme_source = self._getmemesource(name)
+                    allow_nsfw = self._getallownsfw(name)
+                    allow_reposts = self._getallowreposts(name)
                     self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
                     break
                 break
