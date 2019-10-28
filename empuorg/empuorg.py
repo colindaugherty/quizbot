@@ -94,6 +94,7 @@ class Empuorg():
         memesource = []
         for row in c.execute("SELECT subreddit FROM memesource WHERE (id=? AND groupid=?)", values):
             memesource.append(row)
+        print("Inside _getmemesource: memesource should be populated here it is- %s" % (memesource))
         conn.commit()
         conn.close()
         return memesource
@@ -105,6 +106,7 @@ class Empuorg():
         allownsfw = ""
         for row in c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", values):
             allownsfw = row
+        print("Inside _getallownsfw: allownsfw should be populated here it is- %s" % (allownsfw))
         conn.commit()
         conn.close()
         return allownsfw
@@ -116,6 +118,7 @@ class Empuorg():
         allowrepost = ""
         for row in c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", values):
             allowrepost = row
+        print("Inside _getallowrepost: allowrepost should be populated here it is- %s" % (allowrepost))
         conn.commit()
         conn.close()
         return allowrepost
