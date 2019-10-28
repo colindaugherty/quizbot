@@ -99,7 +99,7 @@ class Empuorg():
     def _getmemesource(self, id, group):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        values = [(id, group)]
+        values = (id, group)
         memesource = []
         for row in c.execute("SELECT subreddit FROM memesource WHERE (id=? AND groupid=?)", values):
             memesource.append(row)
@@ -110,7 +110,7 @@ class Empuorg():
     def _getallownsfw(self, id, group):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        values = [(id, group)]
+        values = (id, group)
         for text in c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", values):
             allownsfw = text
         conn.commit()
@@ -120,7 +120,7 @@ class Empuorg():
     def _getallowreposts(self, id, group):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        values = [(id, group)]
+        values = (id, group)
         for text in c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", values):
             allowrepost = text
         conn.commit()
