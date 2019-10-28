@@ -94,6 +94,8 @@ class Empuorg():
         memesource = []
         for row in c.execute("SELECT subreddit FROM memesource WHERE (id=? AND groupid=?)", values):
             memesource.append(row)
+            print(row)
+            print("There should be an sqlite result above me")
         print("Inside _getmemesource: memesource should be populated here it is- %s" % (memesource))
         conn.commit()
         conn.close()
@@ -106,6 +108,8 @@ class Empuorg():
         allownsfw = ""
         for row in c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", values):
             allownsfw = row
+            print(row)
+            print("There should be an sqlite result above me")
         print("Inside _getallownsfw: allownsfw should be populated here it is- %s" % (allownsfw))
         conn.commit()
         conn.close()
@@ -118,6 +122,8 @@ class Empuorg():
         allowrepost = ""
         for row in c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", values):
             allowrepost = row
+            print(row)
+            print("There should be an sqlite result above me")
         print("Inside _getallowrepost: allowrepost should be populated here it is- %s" % (allowrepost))
         conn.commit()
         conn.close()
@@ -148,6 +154,7 @@ class Empuorg():
                     allow_nsfw = self._getallownsfw(id, group)
                     allow_reposts = self._getallowreposts(id, group)
                     self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
+                    break
                 break
             if mes:
                 logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
