@@ -9,12 +9,6 @@ conn = sqlite3.connect('config.db')
 
 logging.info("Started program. Hello world!")
 
-test = [["one","two","three"], ["four","five","six"]]
-for result in test:
-    print(result)
-    for resulttwo in result:
-        print(resulttwo)
-
 reddit = praw.Reddit(client_id="pPp18DiGR-UnFA", client_secret="vmY57gKz-6l01ePkoC2FMmv1nv4", user_agent="groupmebot /u/b1ackzi0n")
 config_file = os.path.join('.', 'data', 'config.json')
 
@@ -26,10 +20,6 @@ class Empuorg():
         self.bots = config['bots']
         print(self.bots)
         print(len(self.bots) - 1)
-        for bot in self.bots:
-            print(bot)
-            for name, id, group in bot:
-                print("Bot with name %s id #%s and group id #%s" % (name, id, group))
         for bot in self.bots:
             for name, id, group in bot:
                 iteration_values = [(name, id, group)]
