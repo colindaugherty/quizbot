@@ -21,6 +21,8 @@ class Empuorg():
         print(self.bots)
         print(len(self.bots) - 1)
         for bot in self.bots:
+            print(bot)
+        for bot in self.bots:
             for name, id, group in bot:
                 iteration_values = [(name, id, group)]
                 c = conn.cursor()
