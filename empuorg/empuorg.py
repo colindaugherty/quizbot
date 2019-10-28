@@ -9,7 +9,7 @@ conn = sqlite3.connect('config.db')
 
 logging.info("Started program. Hello world!")
 
-test = ["one","two","three"]
+test = [["one","two","three"], ["four","five","six"]]
 for result in test:
     print(result)
 
