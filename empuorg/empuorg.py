@@ -40,7 +40,7 @@ class Empuorg():
             databasecheckmemesource = c.fetchone()
             print(databasecheckconfig)
             print(databasecheckmemesource)
-            if None in databasecheckconfig and None in databasecheckmemesource:
+            if databasecheckconfig == None and databasecheckmemesource == None or None in databasecheckconfig and None in databasecheckmemesource:
                 print("Doing default config for bot %s (id#%s and groupid#%s)" % (name, id, group))
                 insertvalues = [(name, id, group, 'false','false')]
                 c.executemany("INSERT INTO config (name, botid, groupid, allownsfw, allowrepost) VALUES (?,?,?,?,?)", insertvalues)
