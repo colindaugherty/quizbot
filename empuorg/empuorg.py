@@ -24,6 +24,8 @@ class Empuorg():
             print(bot)
             bot = tuple(bot)
             print(bot)
+            for name, id, group in bot:
+                print("%s %s %s" % (name, id, group))
         for bot in self.bots:
             for name, id, group in bot:
                 iteration_values = [(name, id, group)]
