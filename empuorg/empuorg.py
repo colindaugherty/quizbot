@@ -20,12 +20,14 @@ class Empuorg():
         self.bots = config['bots']
         print(self.bots)
         print(len(self.bots) - 1)
+        reallist = []
         for bot in self.bots:
             print(bot)
             bot = tuple(bot)
             print(bot)
-            for name,id,group in bot:
-                print("%s %s %s" % (name, id, group))
+            reallist.append(bot)
+        for name, id, group in reallist:
+            print("%s %s %s" % (name, id, group))
         for bot in self.bots:
             for name, id, group in bot:
                 iteration_values = [(name, id, group)]
