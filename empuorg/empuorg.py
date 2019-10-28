@@ -101,7 +101,7 @@ class Empuorg():
         c = conn.cursor()
         values = [(id, group)]
         memesource = []
-        for row in c.execute("SELECT subreddit FROM memesource WHERE id=? AND WHERE group=?", values):
+        for row in c.execute("SELECT subreddit FROM memesource WHERE id=? AND WHERE groupid=?", values):
             memesource.append(row)
         conn.commit()
         conn.close()
@@ -111,7 +111,7 @@ class Empuorg():
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         values = [(id, group)]
-        for text in c.execute("SELECT allownsfw FROM config WHERE id=? AND WHERE group=?", values):
+        for text in c.execute("SELECT allownsfw FROM config WHERE id=? AND WHERE groupid=?", values):
             allownsfw = text
         conn.commit()
         conn.close()
@@ -121,7 +121,7 @@ class Empuorg():
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         values = [(id, group)]
-        for text in c.execute("SELECT allowrepost FROM config WHERE id=? AND WHERE group=?", values):
+        for text in c.execute("SELECT allowrepost FROM config WHERE id=? AND WHERE groupid=?", values):
             allowrepost = text
         conn.commit()
         conn.close()
@@ -136,10 +136,10 @@ class Empuorg():
                 if group == gid:
                     # database functions return all the variables
                     bot_id = id
+                    botname = name
                     meme_source = self._getmemesource(id, group)
                     allow_nsfw = self._getallownsfw(id, group)
                     allow_reposts = self._getallowreposts(id, group)
-                    botname = name
                     self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
                 else:
                     print("%s and id#%s did not match group id#%s" %(name, id, gid))
