@@ -117,6 +117,7 @@ class Empuorg():
                 c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
                 for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
                     localusers.append(row[0])
+                    print(row)
                 print(localusers)
                 print("Just authenticated a user, an updated list should be above me")
                 message = sender_name
