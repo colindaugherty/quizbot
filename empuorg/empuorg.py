@@ -189,6 +189,7 @@ class Empuorg():
         if configword in what_config:
             if what_config[0] == configword:
                 if text[2] == 'add':
+                    print(text[3])
                     if text[3] == str:
                         t = [(self.bot_name, self.bot_id, self.group_id, text[3])]
                         c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", t)
@@ -204,6 +205,7 @@ class Empuorg():
                     else:
                         self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
                 elif text[2] == 'delete':
+                    print(text[3])
                     if text[3] == str:
                         t = (text[3],)
                         c.execute("DELETE FROM memesource WHERE (subreddit=?)", (t))
@@ -226,6 +228,7 @@ class Empuorg():
                         message += "\n{}".format(subreddit)
                     self.send_message(message)
             elif what_config[1] == configword:
+                print(text[2])
                 if text[2] == str:
                     if text[2] == 'true':
                         t = (text[2],)
@@ -256,6 +259,7 @@ class Empuorg():
                 else:
                     self.send_message("Incorrect usage, expected true|false\nUsage !config allownsfw <true|false>")
             elif what_config[2] == configword:
+                print(text[2])
                 if text[2] == str:
                     if text[2] == 'true':
                         t = (text[2],)
