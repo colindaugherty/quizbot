@@ -109,7 +109,7 @@ class Empuorg():
         print(authenticatedCheck)
         localusers = []
         if 0 <= 2 < len(text) and authenticatedCheck == None or 0 <= 2 < len(text) and None in authenticatedCheck:
-            if text[1] == self.bot_id and text[2] == self.group_id:
+            if text[1] == self.bot_name and text[2] == self.group_id:
                 insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
                 c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
                 for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
