@@ -99,6 +99,9 @@ class Empuorg():
         logging.info("Initialized regex.")
 
     def _authenticateUser(self, mes, att, type, text, sender_name):
+        sender_name = sender_name.lower()
+        sender_name = sender_name.replace(" ", "_")
+        print(sender_name)
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         text = text.lower()
