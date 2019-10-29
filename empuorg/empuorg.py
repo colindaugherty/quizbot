@@ -111,6 +111,7 @@ class Empuorg():
         t = (name,)
         c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
         allownsfw = c.fetchone()
+        allownsfw = allownsfw[0]
         conn.commit()
         conn.close()
         return allownsfw
@@ -121,6 +122,7 @@ class Empuorg():
         t = (name,)
         c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
         allowrepost = c.fetchone()
+        allowrepost = allowrepost[0]
         conn.commit()
         conn.close()
         return allowrepost
