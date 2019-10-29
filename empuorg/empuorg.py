@@ -78,9 +78,7 @@ class Empuorg():
         self.randommeme = re.compile("(!meme)")
         self.groupinfo = re.compile("(!info)")
         self.help_regex = re.compile("(!help)")
-        self.config_subreddit = re.compile("(^!config subreddit add)")
-        self.config_allownsfw = re.compile("(^!config allownsfw)")
-        self.config_allowrepost = re.compile("(^!config allowrepost)")
+        self.config = re.compile("(^!config)")
 
         self._construct_regexes()
 
@@ -91,9 +89,7 @@ class Empuorg():
             ("Meme", self.randommeme, self.send_meme),
             ("Info", self.groupinfo, self.send_info),
             ("Help", self.help_regex, self.send_help),
-            ("Config", self.config_subreddit, self.update_config),
-            ("Config", self.config_allownsfw, self.update_config),
-            ("Config", self.config_allowrepost, self.update_config)
+            ("Config", self.config, self.update_config)
         ]
         logging.info("Initialized regex.")
 
@@ -190,7 +186,8 @@ class Empuorg():
             if what_config[0] == configword:
                 if text[2] == 'add':
                     print(text[3])
-                    if text[3] == str:
+                    isString = isinstance(text[3], str)
+                    if isString:
                         t = [(self.bot_name, self.bot_id, self.group_id, text[3])]
                         c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", t)
                         memesource = []
@@ -206,7 +203,8 @@ class Empuorg():
                         self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
                 elif text[2] == 'delete':
                     print(text[3])
-                    if text[3] == str:
+                    isString = isinstance(text[3], str)
+                    if isString:
                         t = (text[3],)
                         c.execute("DELETE FROM memesource WHERE (subreddit=?)", (t))
                         memesource = []
@@ -228,8 +226,8 @@ class Empuorg():
                         message += "\n{}".format(subreddit)
                     self.send_message(message)
             elif what_config[1] == configword:
-                print(text[2])
-                if text[2] == str:
+                isString = isinstance(text[2], str)
+                if isString:
                     if text[2] == 'true':
                         t = (text[2],)
                         c.execute("UPDATE config SET allownsfw = ?")
@@ -260,7 +258,8 @@ class Empuorg():
                     self.send_message("Incorrect usage, expected true|false\nUsage !config allownsfw <true|false>")
             elif what_config[2] == configword:
                 print(text[2])
-                if text[2] == str:
+                isString = isinstance(text[2], str)
+                if isString:
                     if text[2] == 'true':
                         t = (text[2],)
                         c.execute("UPDATE config SET allowrepost = ?")
