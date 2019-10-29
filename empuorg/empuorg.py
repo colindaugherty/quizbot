@@ -229,8 +229,6 @@ class Empuorg():
                         allow_reposts = self._getallowreposts(name)
                         authenticatedUsers = self._getauthenticatedusers(name)
                         self._init_config(gid, bot_id, botname, meme_source, allow_nsfw, allow_reposts, authenticatedUsers)
-                        break
-                    break
                 if mes:
                     logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
                     if att:
@@ -238,7 +236,6 @@ class Empuorg():
                     else:
                         att = []
                         action(mes, att, gid, message, sender_name)
-                    break
     
     def send_likes(self, mes, att, gid, text, sender_name):
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
@@ -417,12 +414,7 @@ class Empuorg():
 
 
     def send_help(self, mes, att, gid, text, sender_name):
-        help_message = "Empuorg Bot Commands-\n"
-        help_message += "Version 0.1b\n"
-        help_message += "!memes - searches for a random meme from your meme suppliers in the config\n"
-        help_message += "!info - prints information for the group\n"
-        help_message += "!config - edits group config\n"
-        help_message += "!help - displays help commands\n"
+        help_message = "Empuorg Bot Commands-\n" + "Version 0.1b\n" + "!memes - searches for a random meme from your meme suppliers in the config\n" + "!info - prints information for the group\n" + "!config - edits group config\n" + "!help - displays help commands\n"
 
         self.send_message(help_message)
     
