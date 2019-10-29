@@ -106,8 +106,8 @@ class Empuorg():
         c = conn.cursor()
         text = text.lower()
         text = text.split()
-        t = (self.bot_id, self.group_id,)
-        c.execute("SELECT users FROM authenticate WHERE (id=? AND groupid=?)", (t))
+        t = (self.bot_name,)
+        c.execute("SELECT users FROM authenticate WHERE name=?", (t))
         authenticatedCheck = c.fetchone()
         print(authenticatedCheck)
         localusers = []
@@ -116,7 +116,7 @@ class Empuorg():
                 if text[1] not in self.authenticatedUsers:
                     insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
                     c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
-                    for row in c.execute("SELECT users FROM authenticate WHERE (id=? AND groupid=?)", (t)):
+                    for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
                         localusers.append(row[0])
                         print(row)
                     print(localusers)
@@ -135,7 +135,7 @@ class Empuorg():
                 if text[1] not in self.authenticatedUsers:
                     insertvalues = [(self.bot_name, self.bot_id, self.group_id, text[1])]
                     c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
-                    for row in c.execute("SELECT users FROM authenticate WHERE (id=? AND groupid=?)", (t)):
+                    for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
                         localusers.append(row[0])
                     print(localusers)
                     conn.commit()
@@ -150,46 +150,46 @@ class Empuorg():
         else:
             self.send_message("I'm sorry, but you can not authenticate anyone :/")
 
-    def _getmemesource(self, id, groupid):
+    def _getmemesource(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        t = (id, groupid,)
+        t = (name,)
         memesource = []
-        for row in c.execute("SELECT subreddit FROM memesource WHERE (id=? AND groupid=?)", (t)):
+        for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
             memesource.append(row[0])
         print("Inside _getmemesource: memesource should be populated here it is- %s" % (memesource))
         conn.commit()
         conn.close()
         return memesource
 
-    def _getallownsfw(self, id, groupid):
+    def _getallownsfw(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        t = (id, groupid,)
-        c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", (t))
+        t = (name,)
+        c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
         allownsfw = c.fetchone()
         allownsfw = allownsfw[0]
         conn.commit()
         conn.close()
         return allownsfw
 
-    def _getallowreposts(self, id, groupid):
+    def _getallowreposts(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        t = (id, groupid,)
-        c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", (t))
+        t = (name,)
+        c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
         allowrepost = c.fetchone()
         allowrepost = allowrepost[0]
         conn.commit()
         conn.close()
         return allowrepost
 
-    def _getauthenticatedusers(self, id, groupid):
+    def _getauthenticatedusers(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        t = (id, groupid,)
+        t = (name,)
         users = []
-        for row in c.execute("SELECT users FROM authenticate WHERE (id=? AND groupid=?)", (t)):
+        for row in c.execute("SELECT users FROM authenticate WHERE (name=?)", (t)):
             users.append(row[0])
         print("Current authenticated users %s" % (users))
         conn.commit()
@@ -222,10 +222,10 @@ class Empuorg():
                         # database functions return all the variables
                         bot_id = id
                         botname = name
-                        meme_source = self._getmemesource(id, gid)
-                        allow_nsfw = self._getallownsfw(id, gid)
-                        allow_reposts = self._getallowreposts(id, gid)
-                        authenticatedUsers = self._getauthenticatedusers(id, gid)
+                        meme_source = self._getmemesource(name)
+                        allow_nsfw = self._getallownsfw(name)
+                        allow_reposts = self._getallowreposts(name)
+                        authenticatedUsers = self._getauthenticatedusers(name)
                         self._init_config(gid, bot_id, botname, meme_source, allow_nsfw, allow_reposts, authenticatedUsers)
                         break
                     break
@@ -268,8 +268,8 @@ class Empuorg():
                                 t = [(self.bot_name, self.bot_id, self.group_id, text[3])]
                                 c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", t)
                                 memesource = []
-                                t = [(self.bot_id, self.group_id),]
-                                for row in c.execute("SELECT subreddit FROM memesource WHERE (id=? AND groupid=?)", (t)):
+                                t = [(self.bot_name),]
+                                for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
                                     memesource.append(row)
                                 print("Just updated memesource here it is- %s" % (memesource))    
                                 conn.commit()
@@ -285,8 +285,8 @@ class Empuorg():
                                 t = (text[3],)
                                 c.execute("DELETE FROM memesource WHERE (subreddit=?)", (t))
                                 memesource = []
-                                t = [(self.bot_id, self.group_id),]
-                                for row in c.execute("SELECT subreddit FROM memesource WHERE (id=? AND groupid=?)", (t)):
+                                t = [(self.bot_name),]
+                                for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
                                     memesource.append(row[0])
                                 print("Just updated memesource here it is- %s" % (memesource))    
                                 conn.commit()
@@ -310,8 +310,8 @@ class Empuorg():
                             if text[2] == 'true':
                                 t = (text[2],)
                                 c.execute("UPDATE config SET allownsfw = ?", (t))
-                                t = [(self.bot_id, self.group_id),]
-                                c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", (t))
+                                t = [(self.bot_name),]
+                                c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
                                 allownsfw = c.fetchone()
                                 print("Just updated allownsfw, expected output is 'true', here it is- %s" % (allownsfw))
                                 conn.commit()
@@ -322,8 +322,8 @@ class Empuorg():
                             elif text[2] == 'false':
                                 t = (text[2],)
                                 c.execute("UPDATE config SET allownsfw = ?", (t))
-                                t = [(self.bot_id, self.group_id),]
-                                c.execute("SELECT allownsfw FROM config WHERE (id=? AND groupid=?)", (t))
+                                t = [(self.bot_name),]
+                                c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
                                 allownsfw = c.fetchone()
                                 print("Just updated allownsfw, expected output is 'false', here it is- %s" % (allownsfw))
                                 conn.commit()
@@ -344,8 +344,8 @@ class Empuorg():
                             if text[2] == 'true':
                                 t = (text[2],)
                                 c.execute("UPDATE config SET allowrepost = ?", (t))
-                                t = [(self.bot_id, self.group_id),]
-                                c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", (t))
+                                t = [(self.bot_name),]
+                                c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
                                 allowrepost = c.fetchone()
                                 print("Just updated allowrepost, expected output is 'true', here it is- %s" % (allowrepost))
                                 conn.commit()
@@ -356,8 +356,8 @@ class Empuorg():
                             elif text[2] == 'false':
                                 t = (text[2],)
                                 c.execute("UPDATE config SET allowrepost = ?", (t))
-                                t = [(self.bot_id, self.group_id),]
-                                c.execute("SELECT allowrepost FROM config WHERE (id=? AND groupid=?)", (t))
+                                t = [(self.bot_name),]
+                                c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
                                 allowrepost = c.fetchone()
                                 print("Just updated allowrepost, expected output is 'false', here it is- %s" % (allowrepost))
                                 conn.commit()
