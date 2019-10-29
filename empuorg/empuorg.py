@@ -189,7 +189,7 @@ class Empuorg():
         c = conn.cursor()
         t = (self.bot_id, self.group_id)
         users = []
-        for row in c.executemany("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
+        for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
             users.append(row[0])
         print("Current authenticated users %s" % (users))
         conn.commit()
