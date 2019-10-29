@@ -106,8 +106,8 @@ class Empuorg():
         c = conn.cursor()
         text = text.lower()
         text = text.split()
-        t = (self.bot_name,)
-        c.execute("SELECT users FROM authenticate WHERE name=?", (t))
+        t = (self.bot_id, self.group_id)
+        c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t))
         authenticatedCheck = c.fetchone()
         print(authenticatedCheck)
         localusers = []
@@ -116,7 +116,7 @@ class Empuorg():
                 if text[1] not in self.authenticatedUsers:
                     insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
                     c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
-                    for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
+                    for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
                         localusers.append(row[0])
                         print(row)
                     print(localusers)
@@ -135,7 +135,7 @@ class Empuorg():
                 if text[1] not in self.authenticatedUsers:
                     insertvalues = [(self.bot_name, self.bot_id, self.group_id, text[1])]
                     c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
-                    for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
+                    for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
                         localusers.append(row[0])
                     print(localusers)
                     conn.commit()
