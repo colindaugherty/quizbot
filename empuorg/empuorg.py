@@ -150,7 +150,7 @@ class Empuorg():
         else:
             self.send_message("I'm sorry, but you can not authenticate anyone :/")
 
-    def _getmemesource(self, name):
+    def _getmemesource(self):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         t = (self.bot_id, self.group_id)
@@ -162,7 +162,7 @@ class Empuorg():
         conn.close()
         return memesource
 
-    def _getallownsfw(self, name):
+    def _getallownsfw(self):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         t = (self.bot_id, self.group_id)
@@ -173,7 +173,7 @@ class Empuorg():
         conn.close()
         return allownsfw
 
-    def _getallowreposts(self, name):
+    def _getallowreposts(self):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         t = (self.bot_id, self.group_id)
@@ -184,7 +184,7 @@ class Empuorg():
         conn.close()
         return allowrepost
 
-    def _getauthenticatedusers(self, name):
+    def _getauthenticatedusers(self):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         t = (self.bot_id, self.group_id)
@@ -196,15 +196,15 @@ class Empuorg():
         conn.close()
         return users
 
-    def _init_config(self, groupid, bot_id, botname, meme_source, allow_nsfw, allow_reposts, authenticatedUsers):
+    def _init_config(self, groupid, bot_id, botname):
         self.bot_id = bot_id
-        self.meme_source = meme_source
-        self.real_len = len(self.meme_source) - 1
-        self.allow_nsfw = allow_nsfw
-        self.allow_reposts = allow_reposts
-        self.bot_name = botname
         self.group_id = groupid
-        self.authenticatedUsers = authenticatedUsers
+        self.meme_source = self._getmemesource()
+        self.real_len = len(self.meme_source) - 1
+        self.allow_nsfw = self._getallownsfw()
+        self.allow_reposts = self._getallowreposts()
+        self.bot_name = botname
+        self.authenticatedUsers = self._getauthenticatedusers()
         print("\n\n\nLOTS OF SPACE FOR CONFIG INITS\n\nTHESE ARE CONFIG VALUES-\n\nbot_id: %s\nmeme_source: %s\nallow_nsfw: %s\nallow_reposts: %s\nbot_name: %s\ngroup_id: %d\nauthenticatedUsers: %s\n\n\nEND CONFIG VALUES\n\n\n" % (self.bot_id, self.meme_source, self.allow_nsfw, self.allow_reposts, self.bot_name, self.group_id, self.authenticatedUsers))
         logging.info("Initialized config for group %s" % (groupid))
         logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
@@ -225,11 +225,7 @@ class Empuorg():
                         bot_id = id
                         gid = int(gid)
                         botname = name
-                        meme_source = self._getmemesource(name)
-                        allow_nsfw = self._getallownsfw(name)
-                        allow_reposts = self._getallowreposts(name)
-                        authenticatedUsers = self._getauthenticatedusers(name)
-                        self._init_config(gid, bot_id, botname, meme_source, allow_nsfw, allow_reposts, authenticatedUsers)
+                        self._init_config(gid, bot_id, botname)
                 if mes:
                     logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
                     if att:
