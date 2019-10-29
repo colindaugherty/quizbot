@@ -107,7 +107,7 @@ class Empuorg():
         text = text.lower()
         text = text.split()
         t = (self.bot_id, self.group_id)
-        c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t))
+        c.executemany("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t))
         authenticatedCheck = c.fetchone()
         print(authenticatedCheck)
         localusers = []
@@ -153,9 +153,9 @@ class Empuorg():
     def _getmemesource(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        t = (name,)
+        t = (self.bot_id, self.group_id)
         memesource = []
-        for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
+        for row in c.executemany("SELECT subreddit FROM memesource WHERE (botid=? AND groupid=?)", (t)):
             memesource.append(row[0])
         print("Inside _getmemesource: memesource should be populated here it is- %s" % (memesource))
         conn.commit()
@@ -165,8 +165,8 @@ class Empuorg():
     def _getallownsfw(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        t = (name,)
-        c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
+        t = (self.bot_id, self.group_id)
+        c.executemany("SELECT allownsfw FROM config WHERE (botid=? AND groupid=?)", (t))
         allownsfw = c.fetchone()
         allownsfw = allownsfw[0]
         conn.commit()
@@ -176,8 +176,8 @@ class Empuorg():
     def _getallowreposts(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        t = (name,)
-        c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
+        t = (self.bot_id, self.group_id)
+        c.executemany("SELECT allowrepost FROM config WHERE (botid=? AND groupid=?)", (t))
         allowrepost = c.fetchone()
         allowrepost = allowrepost[0]
         conn.commit()
@@ -187,9 +187,9 @@ class Empuorg():
     def _getauthenticatedusers(self, name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        t = (name,)
+        t = (self.bot_id, self.group_id)
         users = []
-        for row in c.execute("SELECT users FROM authenticate WHERE (name=?)", (t)):
+        for row in c.executemany("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
             users.append(row[0])
         print("Current authenticated users %s" % (users))
         conn.commit()
@@ -308,8 +308,8 @@ class Empuorg():
                         isString = isinstance(text[2], str)
                         if isString:
                             if text[2] == 'true':
-                                t = (text[2],)
-                                c.execute("UPDATE config SET allownsfw = ?", (t))
+                                t = (text[2],self.bot_id,self.group_id)
+                                c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
                                 t = [(self.bot_name),]
                                 c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
                                 allownsfw = c.fetchone()
@@ -320,8 +320,8 @@ class Empuorg():
                                 message += text[2]
                                 self.send_message(message)
                             elif text[2] == 'false':
-                                t = (text[2],)
-                                c.execute("UPDATE config SET allownsfw = ?", (t))
+                                t = (text[2],self.bot_id,self.group_id)
+                                c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
                                 t = [(self.bot_name),]
                                 c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
                                 allownsfw = c.fetchone()
@@ -342,8 +342,8 @@ class Empuorg():
                         isString = isinstance(text[2], str)
                         if isString:
                             if text[2] == 'true':
-                                t = (text[2],)
-                                c.execute("UPDATE config SET allowrepost = ?", (t))
+                                t = (text[2],self.bot_id,self.group_id)
+                                c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
                                 t = [(self.bot_name),]
                                 c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
                                 allowrepost = c.fetchone()
@@ -354,8 +354,8 @@ class Empuorg():
                                 message += text[2]
                                 self.send_message(message)
                             elif text[2] == 'false':
-                                t = (text[2],)
-                                c.execute("UPDATE config SET allowrepost = ?", (t))
+                                t = (text[2],self.bot_id,self.group_id)
+                                c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
                                 t = [(self.bot_name),]
                                 c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
                                 allowrepost = c.fetchone()
