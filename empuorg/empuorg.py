@@ -107,8 +107,10 @@ class Empuorg():
         c.execute("SELECT users FROM authenticate WHERE name=?", (t))
         authenticatedCheck = c.fetchone()
         authenticatedUsers = []
+        print(authenticatedCheck)
         for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
             authenticatedUsers.append(row[0])
+        print(authenticatedUsers)
         if 0 <= 2 < len(text) and authenticatedCheck == None or 0 <= 2 < len(text) and None in authenticatedCheck:
             insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
             c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
