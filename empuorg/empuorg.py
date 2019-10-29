@@ -189,8 +189,8 @@ class Empuorg():
             if what_config[0] == configword:
                 if 0 <= 2 < len(text):
                     if text[2] == 'add':
-                        isString = isinstance(text[3], str)
                         if 0 <= 3 < len(text) and isString:
+                            isString = isinstance(text[3], str)
                             t = [(self.bot_name, self.bot_id, self.group_id, text[3])]
                             c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", t)
                             memesource = []
@@ -206,8 +206,8 @@ class Empuorg():
                         else:
                             self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
                     elif text[2] == 'delete':
-                        isString = isinstance(text[3], str)
                         if 0 <= 3 < len(text) and isString:
+                            isString = isinstance(text[3], str)
                             t = (text[3],)
                             c.execute("DELETE FROM memesource WHERE (subreddit=?)", (t))
                             memesource = []
@@ -295,7 +295,7 @@ class Empuorg():
                             self.send_message("Incorrect usage, expected true|false\nUsage !config allowrepost <true|false>")
                 else:
                     message = "Current status of allowrepost - "
-                    message += self.allow_nsfw
+                    message += self.allow_reposts
                     self.send_message(message)
             else:
                 self.send_message("Sorry, I can't find that config! This is the config message I received-\n%s" % (text))
