@@ -32,10 +32,10 @@ class Empuorg():
             (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, allownsfw text, allowrepost text)
             """)
             c.execute("""CREATE TABLE IF NOT EXISTS memesource
-            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid int, groupid int, subreddit text)
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, subreddit text)
             """)
             c.execute("""CREATE TABLE IF NOT EXISTS authenticate
-            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid int, groupid int, users text)
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, users text)
             """)
             c.execute("SELECT * FROM config WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckconfig = c.fetchone()
