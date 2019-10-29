@@ -78,6 +78,9 @@ class Empuorg():
         self.randommeme = re.compile("(!meme)")
         self.groupinfo = re.compile("(!info)")
         self.help_regex = re.compile("(!help)")
+        self.config_subreddit = re.compile("(^!config subreddit add)")
+        self.config_allownsfw = re.compile("(^!config allownsfw)")
+        self.config_allowrepost = re.compile("(^!config allowrepost)")
 
         self._construct_regexes()
 
@@ -87,7 +90,10 @@ class Empuorg():
             ("Rank", self.likesrank, self.send_rank),
             ("Meme", self.randommeme, self.send_meme),
             ("Info", self.groupinfo, self.send_info),
-            ("Help", self.help_regex, self.send_help)
+            ("Help", self.help_regex, self.send_help),
+            ("Config", self.config_subreddit, self.update_config),
+            ("Config", self.config_allownsfw, self.update_config),
+            ("Config", self.config_allowrepost, self.update_config)
         ]
         logging.info("Initialized regex.")
 
