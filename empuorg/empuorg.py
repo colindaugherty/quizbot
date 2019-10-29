@@ -183,7 +183,7 @@ class Empuorg():
         text = text.lower()
         print(mes)
         what_config = ['subreddit','allownsfw','allowrepost']
-        text.split(' ')
+        text = text.split(' ')
         print(text)
         configword = text[1]
         if configword in what_config:
