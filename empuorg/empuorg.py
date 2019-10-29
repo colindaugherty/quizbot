@@ -29,10 +29,10 @@ class Empuorg():
             iteration_values = (name, id, group)
             c = conn.cursor()
             c.execute("""CREATE TABLE IF NOT EXISTS config
-            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid text, allownsfw text, allowrepost text)
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid int, groupid int, allownsfw text, allowrepost text)
             """)
             c.execute("""CREATE TABLE IF NOT EXISTS memesource
-            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid text, subreddit text)
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid int, groupid int, subreddit text)
             """)
             c.execute("SELECT * FROM config WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckconfig = c.fetchone()
@@ -123,12 +123,14 @@ class Empuorg():
         conn.close()
         return allowrepost
 
-    def _init_config(self, groupid, bot_id, meme_source, allow_nsfw, allow_reposts):
+    def _init_config(self, groupid, bot_id, botname, meme_source, allow_nsfw, allow_reposts):
         self.bot_id = bot_id
         self.meme_source = meme_source
         self.real_len = len(self.meme_source) - 1
         self.allow_nsfw = allow_nsfw
         self.allow_reposts = allow_reposts
+        self.bot_name = botname
+        self.group_id = groupid
         logging.info("Initialized config for group %s" % (groupid))
         logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
 
@@ -148,7 +150,7 @@ class Empuorg():
                         meme_source = self._getmemesource(name)
                         allow_nsfw = self._getallownsfw(name)
                         allow_reposts = self._getallowreposts(name)
-                        self._init_config(gid, bot_id, meme_source, allow_nsfw, allow_reposts)
+                        self._init_config(gid, bot_id, botname, meme_source, allow_nsfw, allow_reposts)
                         break
                     break
                 if mes:
@@ -168,6 +170,117 @@ class Empuorg():
 
     def send_rank(self, mes, att, gid, text):
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (gid))
+
+    def update_config(self, mes, att, gid, text):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        text = text.lower()
+        print(mes)
+        what_config = ['subreddit','allownsfw','allowrepost']
+        text.split(' ')
+        print(text)
+        configword = text[1]
+        if configword in what_config:
+            if what_config[0] == configword:
+                if text[2] == 'add':
+                    if text[3] == str:
+                        t = [(self.bot_name, self.bot_id, self.group_id, text[3])]
+                        c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", t)
+                        memesource = []
+                        for row in c.execute("SELECT * FROM memesource ORDER BY botid"):
+                            memesource.append(row)
+                        print("Just updated memesource here it is- %s" % (memesource))    
+                        conn.commit()
+                        conn.close()
+                        message = "Updated subreddit list, added - "
+                        message += text[3]
+                        self.send_message(message)
+                    else:
+                        self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
+                elif text[2] == 'delete':
+                    if text[3] == str:
+                        t = (text[3],)
+                        c.execute("DELETE FROM memesource WHERE (subreddit=?)", (t))
+                        memesource = []
+                        for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
+                            memesource.append(row[0])
+                        print("Just updated memesource here it is- %s" % (memesource))    
+                        conn.commit()
+                        conn.close()
+                        message = "Updated subreddit list, removed - "
+                        message += text[3]
+                        self.send_message(message)
+                    else:
+                        self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
+                elif text[2] == str:
+                    self.send_message("Incorrect usage, expected add|delete\nUsage - !config subreddit <add|delete>")
+                else:
+                    message = "Current enabled subreddits to pull from -"
+                    for subreddit in self.meme_source:
+                        message += "\n{}".format(subreddit)
+                    self.send_message(message)
+            elif what_config[1] == configword:
+                if text[2] == str:
+                    if text[2] == 'true':
+                        t = (text[2],)
+                        c.execute("UPDATE config SET allownsfw = ?")
+                        c.execute("SELECT allownsfw FROM config WHERE (name=?)", (self.bot_name))
+                        allownsfw = c.fetchone()
+                        print("Just updated allownsfw, expected output is 'true', here it is- %s" % (allownsfw))
+                        conn.commit()
+                        conn.close()
+                        message = "Updated status of allownsfw - "
+                        message += text[2]
+                        self.send_message(message)
+                    elif text[2] == 'false':
+                        t = (text[2],)
+                        c.execute("UPDATE config SET allownsfw = ?")
+                        c.execute("SELECT allownsfw FROM config WHERE (name=?)", (self.bot_name))
+                        allownsfw = c.fetchone()
+                        print("Just updated allownsfw, expected output is 'false', here it is- %s" % (allownsfw))
+                        conn.commit()
+                        conn.close()
+                        message = "Updated status of allownsfw - "
+                        message += text[2]
+                        self.send_message(message)
+                    else:
+                        message = "Current status of allownsfw - "
+                        message += self.allow_nsfw
+                        self.send_message(message)
+                else:
+                    self.send_message("Incorrect usage, expected true|false\nUsage !config allownsfw <true|false>")
+            elif what_config[2] == configword:
+                if text[2] == str:
+                    if text[2] == 'true':
+                        t = (text[2],)
+                        c.execute("UPDATE config SET allowrepost = ?")
+                        c.execute("SELECT allowrepost FROM config WHERE (name=?)", (self.bot_name))
+                        allowrepost = c.fetchone()
+                        print("Just updated allowrepost, expected output is 'true', here it is- %s" % (allowrepost))
+                        conn.commit()
+                        conn.close()
+                        message = "Updated status of allowrepost - "
+                        message += text[2]
+                        self.send_message(message)
+                    elif text[2] == 'false':
+                        t = (text[2],)
+                        c.execute("UPDATE config SET allowrepost = ?")
+                        c.execute("SELECT allowrepost FROM config WHERE (name=?)", (self.bot_name))
+                        allowrepost = c.fetchone()
+                        print("Just updated allowrepost, expected output is 'false', here it is- %s" % (allowrepost))
+                        conn.commit()
+                        conn.close()
+                        message = "Updated status of allowrepost - "
+                        message += text[2]
+                        self.send_message(message)
+                    else:
+                        message = "Current status of allowrepost - "
+                        message += self.allow_nsfw
+                        self.send_message(message)
+                else:
+                    self.send_message("Incorrect usage, expected true|false\nUsage !config allowrepost <true|false>")
+            else:
+                self.send_message("Sorry, I can't find that config! This is the config message I received-\n%s" % (text))
 
     def send_meme(self, mes, att, gid, text):
         start = time.time()
