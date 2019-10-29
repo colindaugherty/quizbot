@@ -221,6 +221,7 @@ class Empuorg():
                         print("%s and id#%s did not match group id#%s" %(name, id, gid))
                     else:
                         # database functions return all the variables
+                        print("%s and id#%s matched group id#%s" % (name, id, gid))
                         bot_id = id
                         botname = name
                         meme_source = self._getmemesource(name)
