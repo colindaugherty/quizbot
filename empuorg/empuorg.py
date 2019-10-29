@@ -112,7 +112,7 @@ class Empuorg():
         print(authenticatedCheck)
         localusers = []
         if 0 <= 2 < len(text) and authenticatedCheck == None or 0 <= 2 < len(text) and None in authenticatedCheck:
-            if text[1] == self.bot_name and text[2] == self.group_id:
+            if text[1] == str(self.bot_name) and text[2] == str(self.group_id):
                 if text[1] not in self.authenticatedUsers:
                     insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
                     c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
@@ -205,7 +205,7 @@ class Empuorg():
         self.bot_name = botname
         self.group_id = groupid
         self.authenticatedUsers = authenticatedUsers
-        print("\n\n\nLOTS OF SPACE FOR CONFIG INITS\n\nTHESE ARE CONFIG VALUES-\n\nbot_id: %s\nmeme_source: %s\nallow_nsfw: %s\nallow_reposts: %s\nbot_name: %s\ngroup_id: %s\nauthenticatedUsers: %s\n\n\nEND CONFIG VALUES\n\n\n" % (self.bot_id, self.meme_source, self.allow_nsfw, self.allow_reposts, self.bot_name, self.group_id, self.authenticatedUsers))
+        print("\n\n\nLOTS OF SPACE FOR CONFIG INITS\n\nTHESE ARE CONFIG VALUES-\n\nbot_id: %d\nmeme_source: %s\nallow_nsfw: %s\nallow_reposts: %s\nbot_name: %s\ngroup_id: %d\nauthenticatedUsers: %s\n\n\nEND CONFIG VALUES\n\n\n" % (self.bot_id, self.meme_source, self.allow_nsfw, self.allow_reposts, self.bot_name, self.group_id, self.authenticatedUsers))
         logging.info("Initialized config for group %s" % (groupid))
         logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
 
@@ -222,7 +222,8 @@ class Empuorg():
                     else:
                         # database functions return all the variables
                         print("%s and id#%s matched group id#%s" % (name, id, gid))
-                        bot_id = id
+                        bot_id = int(id)
+                        gid = int(gid)
                         botname = name
                         meme_source = self._getmemesource(name)
                         allow_nsfw = self._getallownsfw(name)
@@ -419,7 +420,7 @@ class Empuorg():
         self.send_message(help_message)
     
     def send_message(self, message):
-        data = {"bot_id": self.bot_id, "text": str(message)}
+        data = {"bot_id": str(self.bot_id), "text": str(message)}
         time.sleep(1)
         requests.post(self.groupme_url, json=data)
         logging.info(f"Just sent a message-\n{message}\n")
