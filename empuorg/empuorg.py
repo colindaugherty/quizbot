@@ -106,30 +106,36 @@ class Empuorg():
         t = (self.bot_name,)
         c.execute("SELECT users FROM authenticate WHERE name=?", (t))
         authenticatedCheck = c.fetchone()
-        authenticatedUsers = []
         print(authenticatedCheck)
-        for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
-            authenticatedUsers.append(row[0])
-        print(authenticatedUsers)
+        localusers = []
         if 0 <= 2 < len(text) and authenticatedCheck == None or 0 <= 2 < len(text) and None in authenticatedCheck:
-            insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
-            c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
-            for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
-                authenticatedUsers.append(row[0])
-            print(authenticatedUsers)
-            print("Just authenticated a user, should be above me")
-        elif sender_name in authenticatedUsers:
-            if 0 <= 1 < len(text):
-                insertvalues = [(self.bot_name, self.bot_id, self.group_id, text[1])]
+            if text[1] == self.bot_id and text[2] == self.group_id:
+                insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
                 c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
                 for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
-                    authenticatedUsers.append(row[0])
-                print(authenticatedUsers)
-                print("Just authenticated a user, should be above me")
-                message = "Authenticating user "
-                message += text[1]
-                message += " they will now have access to all commands."
+                    localusers.append(row[0])
+                print(localusers)
+                print("Just authenticated a user, an updated list should be above me")
+                message = sender_name
+                message += " is now authenticated."
                 self.send_message(message)
+            else:
+                self.send_message("Include bot_id and group_id.")
+        elif sender_name in self.authenticatedUsers:
+            if 0 <= 1 < len(text):
+                if text[1] not in self.authenticatedUsers:
+                    insertvalues = [(self.bot_name, self.bot_id, self.group_id, text[1])]
+                    c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
+                    for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
+                        localusers.append(row[0])
+                    print(localusers)
+                    print("Just authenticated a user, an updated list should be above me")
+                    message = "Authenticating user "
+                    message += text[1]
+                    message += " they will now have access to all commands."
+                    self.send_message(message)
+                else:
+                    self.send_message("Error - user is already authenticated.")
         else:
             self.send_message("I'm sorry, but you can not authenticate anyone :/")
 
@@ -167,7 +173,19 @@ class Empuorg():
         conn.close()
         return allowrepost
 
-    def _init_config(self, groupid, bot_id, botname, meme_source, allow_nsfw, allow_reposts):
+    def _getauthenticatedusers(self, name):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        t = (name,)
+        users = []
+        for row in c.execute("SELECT users FROM authenticate WHERE (name=?)", (t)):
+            users.append(row[0])
+        print("Current authenticated users %s" % (users))
+        conn.commit()
+        conn.close()
+        return users
+
+    def _init_config(self, groupid, bot_id, botname, meme_source, allow_nsfw, allow_reposts, authenticatedUsers):
         self.bot_id = bot_id
         self.meme_source = meme_source
         self.real_len = len(self.meme_source) - 1
@@ -175,6 +193,7 @@ class Empuorg():
         self.allow_reposts = allow_reposts
         self.bot_name = botname
         self.group_id = groupid
+        self.authenticatedUsers = authenticatedUsers
         print("\n\n\nLOTS OF SPACE FOR CONFIG INITS\n\nTHESE ARE CONFIG VALUES-\n\nbot_id: %s\nmeme_source: %s\nallow_nsfw: %s\nallow_reposts: %s\nbot_name: %s\ngroup_id: %s\n\n\nEND CONFIG VALUES\n\n\n" % (self.bot_id, self.meme_source, self.allow_nsfw, self.allow_reposts, self.bot_name, self.group_id))
         logging.info("Initialized config for group %s" % (groupid))
         logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
@@ -195,7 +214,8 @@ class Empuorg():
                         meme_source = self._getmemesource(name)
                         allow_nsfw = self._getallownsfw(name)
                         allow_reposts = self._getallowreposts(name)
-                        self._init_config(gid, bot_id, botname, meme_source, allow_nsfw, allow_reposts)
+                        authenticatedUsers = self._getauthenticatedusers(name)
+                        self._init_config(gid, bot_id, botname, meme_source, allow_nsfw, allow_reposts, authenticatedUsers)
                         break
                     break
                 if mes:
