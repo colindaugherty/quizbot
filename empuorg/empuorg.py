@@ -113,16 +113,21 @@ class Empuorg():
         localusers = []
         if 0 <= 2 < len(text) and authenticatedCheck == None or 0 <= 2 < len(text) and None in authenticatedCheck:
             if text[1] == self.bot_name and text[2] == self.group_id:
-                insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
-                c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
-                for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
-                    localusers.append(row[0])
-                    print(row)
-                print(localusers)
-                print("Just authenticated a user, an updated list should be above me")
-                message = sender_name
-                message += " is now authenticated."
-                self.send_message(message)
+                if text[1] not in self.authenticatedUsers:
+                    insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
+                    c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
+                    for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
+                        localusers.append(row[0])
+                        print(row)
+                    print(localusers)
+                    conn.commit()
+                    conn.close()
+                    print("Just authenticated a user, an updated list should be above me")
+                    message = sender_name
+                    message += " is now authenticated."
+                    self.send_message(message)
+                else:
+                    self.send_message("Error - user already authenticated")
             else:
                 self.send_message("Include bot_id and group_id.")
         elif sender_name in self.authenticatedUsers:
@@ -133,6 +138,8 @@ class Empuorg():
                     for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
                         localusers.append(row[0])
                     print(localusers)
+                    conn.commit()
+                    conn.close()
                     print("Just authenticated a user, an updated list should be above me")
                     message = "Authenticating user "
                     message += text[1]
