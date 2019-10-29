@@ -29,7 +29,7 @@ class Empuorg():
             iteration_values = (name, id, group)
             c = conn.cursor()
             c.execute("""CREATE TABLE IF NOT EXISTS config
-            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid int, groupid int, allownsfw text, allowrepost text)
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, allownsfw text, allowrepost text)
             """)
             c.execute("""CREATE TABLE IF NOT EXISTS memesource
             (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid int, groupid int, subreddit text)
@@ -222,7 +222,7 @@ class Empuorg():
                     else:
                         # database functions return all the variables
                         print("%s and id#%s matched group id#%s" % (name, id, gid))
-                        bot_id = int(id)
+                        bot_id = id
                         gid = int(gid)
                         botname = name
                         meme_source = self._getmemesource(name)
@@ -420,7 +420,7 @@ class Empuorg():
         self.send_message(help_message)
     
     def send_message(self, message):
-        data = {"bot_id": str(self.bot_id), "text": str(message)}
+        data = {"bot_id": self.bot_id, "text": str(message)}
         time.sleep(1)
         requests.post(self.groupme_url, json=data)
         logging.info(f"Just sent a message-\n{message}\n")
