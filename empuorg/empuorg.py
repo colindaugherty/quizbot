@@ -103,8 +103,9 @@ class Empuorg():
         c = conn.cursor()
         text = text.lower()
         text = text.split()
-        authenticatedCheck = ''
         t = (self.bot_name,)
+        c.execute("SELECT users FROM authenticate WHERE name=?", (t))
+        authenticatedCheck = c.fetchone()
         authenticatedUsers = []
         for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
             authenticatedUsers.append(row[0])
