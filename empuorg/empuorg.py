@@ -133,6 +133,7 @@ class Empuorg():
         self.allow_reposts = allow_reposts
         self.bot_name = botname
         self.group_id = groupid
+        print("\n\n\nLOTS OF SPACE FOR CONFIG INITS\n\nTHESE ARE CONFIG VALUES-\n\nbot_id: %s\nmeme_source: %s\nallow_nsfw: %s\nallow_reposts: %s\nbot_name: %s\ngroup_id: %s\n\n\nEND CONFIG VALUES\n\n\n" % (self.bot_id, self.meme_source, self.allow_nsfw, self.allow_reposts, self.bot_name, self.group_id))
         logging.info("Initialized config for group %s" % (groupid))
         logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
 
@@ -191,7 +192,7 @@ class Empuorg():
                         t = [(self.bot_name, self.bot_id, self.group_id, text[3])]
                         c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", t)
                         memesource = []
-                        for row in c.execute("SELECT * FROM memesource ORDER BY botid"):
+                        for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (self.bot_name)):
                             memesource.append(row)
                         print("Just updated memesource here it is- %s" % (memesource))    
                         conn.commit()
@@ -208,7 +209,7 @@ class Empuorg():
                         t = (text[3],)
                         c.execute("DELETE FROM memesource WHERE (subreddit=?)", (t))
                         memesource = []
-                        for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
+                        for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (self.bot_name)):
                             memesource.append(row[0])
                         print("Just updated memesource here it is- %s" % (memesource))    
                         conn.commit()
@@ -218,7 +219,7 @@ class Empuorg():
                         self.send_message(message)
                     else:
                         self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
-                elif text[2] == str:
+                elif isinstance(text[2], str):
                     self.send_message("Incorrect usage, expected add|delete\nUsage - !config subreddit <add|delete>")
                 else:
                     message = "Current enabled subreddits to pull from -"
@@ -230,7 +231,7 @@ class Empuorg():
                 if isString:
                     if text[2] == 'true':
                         t = (text[2],)
-                        c.execute("UPDATE config SET allownsfw = ?")
+                        c.execute("UPDATE config SET allownsfw = ?", (t))
                         c.execute("SELECT allownsfw FROM config WHERE (name=?)", (self.bot_name))
                         allownsfw = c.fetchone()
                         print("Just updated allownsfw, expected output is 'true', here it is- %s" % (allownsfw))
@@ -241,7 +242,7 @@ class Empuorg():
                         self.send_message(message)
                     elif text[2] == 'false':
                         t = (text[2],)
-                        c.execute("UPDATE config SET allownsfw = ?")
+                        c.execute("UPDATE config SET allownsfw = ?", (t))
                         c.execute("SELECT allownsfw FROM config WHERE (name=?)", (self.bot_name))
                         allownsfw = c.fetchone()
                         print("Just updated allownsfw, expected output is 'false', here it is- %s" % (allownsfw))
@@ -262,7 +263,7 @@ class Empuorg():
                 if isString:
                     if text[2] == 'true':
                         t = (text[2],)
-                        c.execute("UPDATE config SET allowrepost = ?")
+                        c.execute("UPDATE config SET allowrepost = ?", (t))
                         c.execute("SELECT allowrepost FROM config WHERE (name=?)", (self.bot_name))
                         allowrepost = c.fetchone()
                         print("Just updated allowrepost, expected output is 'true', here it is- %s" % (allowrepost))
@@ -273,7 +274,7 @@ class Empuorg():
                         self.send_message(message)
                     elif text[2] == 'false':
                         t = (text[2],)
-                        c.execute("UPDATE config SET allowrepost = ?")
+                        c.execute("UPDATE config SET allowrepost = ?", (t))
                         c.execute("SELECT allowrepost FROM config WHERE (name=?)", (self.bot_name))
                         allowrepost = c.fetchone()
                         print("Just updated allowrepost, expected output is 'false', here it is- %s" % (allowrepost))
