@@ -210,6 +210,7 @@ class Empuorg():
         logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
 
     def receive_message(self, message, attachments, groupid, sendertype, sender_name):
+        print("\n\n\n\n\nreceived message from group: %s\n\n\n\n" % (groupid))
         if sendertype != "bot":
             for type, regex, action in self.regex_actions:
                 mes = regex.match(message)
