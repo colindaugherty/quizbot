@@ -282,8 +282,8 @@ class Empuorg():
                         elif text[2] == 'delete':
                             if 0 <= 3 < len(text):
                                 isString = isinstance(text[3], str)
-                                t = (text[3],)
-                                c.execute("DELETE FROM memesource WHERE (subreddit=?)", (t))
+                                t = (text[3],self.bot_name,)
+                                c.execute("DELETE FROM memesource WHERE (subreddit=? AND name=?)", (t))
                                 memesource = []
                                 t = [(self.bot_name),]
                                 for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
