@@ -34,6 +34,9 @@ class Empuorg():
             c.execute("""CREATE TABLE IF NOT EXISTS memesource
             (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid int, groupid int, subreddit text)
             """)
+            c.execute("""CREATE TABLE IF NOT EXISTS authenticate
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid int, groupid int, users text)
+            """)
             c.execute("SELECT * FROM config WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckconfig = c.fetchone()
             c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND groupid=?", iteration_values)
@@ -79,6 +82,7 @@ class Empuorg():
         self.groupinfo = re.compile("(!info)")
         self.help_regex = re.compile("(!help)")
         self.config = re.compile("(^!config)")
+        self.authenticate = re.compile("(^!authenticate)")
 
         self._construct_regexes()
 
@@ -89,9 +93,42 @@ class Empuorg():
             ("Meme", self.randommeme, self.send_meme),
             ("Info", self.groupinfo, self.send_info),
             ("Help", self.help_regex, self.send_help),
-            ("Config", self.config, self.update_config)
+            ("Config", self.config, self.update_config),
+            ("Authenticate", self.authenticate, self._authenticateUser)
         ]
         logging.info("Initialized regex.")
+
+    def _authenticateUser(self, mes, att, type, text, sender_name):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        text = text.lower()
+        text = text.split()
+        authenticatedCheck = ''
+        t = (self.bot_name,)
+        authenticatedUsers = []
+        for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
+            authenticatedUsers.append(row[0])
+        if 0 <= 2 < len(text) and authenticatedCheck == None or 0 <= 2 < len(text) and None in authenticatedCheck:
+            insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
+            c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
+            for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
+                authenticatedUsers.append(row[0])
+            print(authenticatedUsers)
+            print("Just authenticated a user, should be above me")
+        elif sender_name in authenticatedUsers:
+            if 0 <= 1 < len(text):
+                insertvalues = [(self.bot_name, self.bot_id, self.group_id, text[1])]
+                c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
+                for row in c.execute("SELECT users FROM authenticate WHERE name=?", (t)):
+                    authenticatedUsers.append(row[0])
+                print(authenticatedUsers)
+                print("Just authenticated a user, should be above me")
+                message = "Authenticating user "
+                message += text[1]
+                message += " they will now have access to all commands."
+                self.send_message(message)
+        else:
+            self.send_message("I'm sorry, but you can not authenticate anyone :/")
 
     def _getmemesource(self, name):
         conn = sqlite3.connect('config.db')
@@ -139,7 +176,7 @@ class Empuorg():
         logging.info("Initialized config for group %s" % (groupid))
         logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
 
-    def receive_message(self, message, attachments, groupid, sendertype):
+    def receive_message(self, message, attachments, groupid, sendertype, sender_name):
         if sendertype != "bot":
             for type, regex, action in self.regex_actions:
                 mes = regex.match(message)
@@ -161,22 +198,22 @@ class Empuorg():
                 if mes:
                     logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
                     if att:
-                        action(mes, att, gid, message)
+                        action(mes, att, gid, message, sender_name)
                     else:
                         att = []
-                        action(mes, att, gid, message)
+                        action(mes, att, gid, message, sender_name)
                     break
     
-    def send_likes(self, mes, att, gid, text):
-        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (gid))
+    def send_likes(self, mes, att, gid, text, sender_name):
+        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
 
-    def send_info(self, mes, att, gid, text):
-        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (gid))
+    def send_info(self, mes, att, gid, text, sender_name):
+        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
 
-    def send_rank(self, mes, att, gid, text):
-        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (gid))
+    def send_rank(self, mes, att, gid, text, sender_name):
+        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
 
-    def update_config(self, mes, att, gid, text):
+    def update_config(self, mes, att, gid, text, sender_name):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         text = text.lower()
@@ -300,7 +337,7 @@ class Empuorg():
             else:
                 self.send_message("Sorry, I can't find that config! This is the config message I received-\n%s" % (text))
 
-    def send_meme(self, mes, att, gid, text):
+    def send_meme(self, mes, att, gid, text, sender_name):
         start = time.time()
         meme_message = "Meme response-\n'"
         rand = random.randint(0, self.real_len)
@@ -322,6 +359,9 @@ class Empuorg():
         else:
             print(submission_list[rand].shortlink)
             result = submission_list[rand].shortlink
+        meme_message += "@"
+        meme_message += sender_name
+        meme_message += " here's the meme you requested!\n"
         meme_message += submission_list[rand].title
         meme_message += "' from the subreddit '"
         meme_message += submission_list[rand].subreddit.display_name
@@ -338,7 +378,7 @@ class Empuorg():
         self.send_message(meme_message)
 
 
-    def send_help(self, mes, att, gid, text):
+    def send_help(self, mes, att, gid, text, sender_name):
         help_message = "Empuorg Bot Commands-\n"
         help_message += "Version 0.1b\n"
         help_message += "!memes - searches for a random meme from your meme suppliers in the config\n"
