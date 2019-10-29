@@ -187,42 +187,44 @@ class Empuorg():
         configword = text[1]
         if configword in what_config:
             if what_config[0] == configword:
-                if text[2] == 'add':
-                    print(text[3])
-                    isString = isinstance(text[3], str)
-                    if isString:
-                        t = [(self.bot_name, self.bot_id, self.group_id, text[3])]
-                        c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", t)
-                        memesource = []
-                        for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (self.bot_name)):
-                            memesource.append(row)
-                        print("Just updated memesource here it is- %s" % (memesource))    
-                        conn.commit()
-                        conn.close()
-                        message = "Updated subreddit list, added - "
-                        message += text[3]
-                        self.send_message(message)
+                if 0 <= 2 < len(text):
+                    isString = isinstance(text[2], str)
+                    if text[2] == 'add':
+                        print(text[3])
+                        isString = isinstance(text[3], str)
+                        if isString:
+                            t = [(self.bot_name, self.bot_id, self.group_id, text[3])]
+                            c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", t)
+                            memesource = []
+                            for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (self.bot_name)):
+                                memesource.append(row)
+                            print("Just updated memesource here it is- %s" % (memesource))    
+                            conn.commit()
+                            conn.close()
+                            message = "Updated subreddit list, added - "
+                            message += text[3]
+                            self.send_message(message)
+                        else:
+                            self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
+                    elif text[2] == 'delete':
+                        print(text[3])
+                        isString = isinstance(text[3], str)
+                        if isString:
+                            t = (text[3],)
+                            c.execute("DELETE FROM memesource WHERE (subreddit=?)", (t))
+                            memesource = []
+                            for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (self.bot_name)):
+                                memesource.append(row[0])
+                            print("Just updated memesource here it is- %s" % (memesource))    
+                            conn.commit()
+                            conn.close()
+                            message = "Updated subreddit list, removed - "
+                            message += text[3]
+                            self.send_message(message)
+                        else:
+                            self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
                     else:
-                        self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
-                elif text[2] == 'delete':
-                    print(text[3])
-                    isString = isinstance(text[3], str)
-                    if isString:
-                        t = (text[3],)
-                        c.execute("DELETE FROM memesource WHERE (subreddit=?)", (t))
-                        memesource = []
-                        for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (self.bot_name)):
-                            memesource.append(row[0])
-                        print("Just updated memesource here it is- %s" % (memesource))    
-                        conn.commit()
-                        conn.close()
-                        message = "Updated subreddit list, removed - "
-                        message += text[3]
-                        self.send_message(message)
-                    else:
-                        self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
-                elif isinstance(text[2], str):
-                    self.send_message("Incorrect usage, expected add|delete\nUsage - !config subreddit <add|delete>")
+                        self.send_message("Incorrect usage, expected add|delete\nUsage - !config subreddit <add|delete>")
                 else:
                     message = "Current enabled subreddits to pull from -"
                     for subreddit in self.meme_source:
@@ -234,7 +236,7 @@ class Empuorg():
                     if text[2] == 'true':
                         t = (text[2],)
                         c.execute("UPDATE config SET allownsfw = ?", (t))
-                        c.execute("SELECT allownsfw FROM config WHERE (name=?)", (self.bot_name))
+                        c.execute("SELECT allownsfw FROM config WHERE (name=?)", ((self.bot_name)))
                         allownsfw = c.fetchone()
                         print("Just updated allownsfw, expected output is 'true', here it is- %s" % (allownsfw))
                         conn.commit()
@@ -245,7 +247,7 @@ class Empuorg():
                     elif text[2] == 'false':
                         t = (text[2],)
                         c.execute("UPDATE config SET allownsfw = ?", (t))
-                        c.execute("SELECT allownsfw FROM config WHERE (name=?)", (self.bot_name))
+                        c.execute("SELECT allownsfw FROM config WHERE (name=?)", ((self.bot_name)))
                         allownsfw = c.fetchone()
                         print("Just updated allownsfw, expected output is 'false', here it is- %s" % (allownsfw))
                         conn.commit()
@@ -266,7 +268,7 @@ class Empuorg():
                     if text[2] == 'true':
                         t = (text[2],)
                         c.execute("UPDATE config SET allowrepost = ?", (t))
-                        c.execute("SELECT allowrepost FROM config WHERE (name=?)", (self.bot_name))
+                        c.execute("SELECT allowrepost FROM config WHERE (name=?)", ((self.bot_name)))
                         allowrepost = c.fetchone()
                         print("Just updated allowrepost, expected output is 'true', here it is- %s" % (allowrepost))
                         conn.commit()
@@ -277,7 +279,7 @@ class Empuorg():
                     elif text[2] == 'false':
                         t = (text[2],)
                         c.execute("UPDATE config SET allowrepost = ?", (t))
-                        c.execute("SELECT allowrepost FROM config WHERE (name=?)", (self.bot_name))
+                        c.execute("SELECT allowrepost FROM config WHERE (name=?)", ((self.bot_name)))
                         allowrepost = c.fetchone()
                         print("Just updated allowrepost, expected output is 'false', here it is- %s" % (allowrepost))
                         conn.commit()
