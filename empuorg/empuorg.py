@@ -155,7 +155,7 @@ class Empuorg():
         c = conn.cursor()
         t = (self.bot_id, self.group_id)
         memesource = []
-        for row in c.executemany("SELECT subreddit FROM memesource WHERE (botid=? AND groupid=?)", (t)):
+        for row in c.execute("SELECT subreddit FROM memesource WHERE (botid=? AND groupid=?)", (t)):
             memesource.append(row[0])
         print("Inside _getmemesource: memesource should be populated here it is- %s" % (memesource))
         conn.commit()
