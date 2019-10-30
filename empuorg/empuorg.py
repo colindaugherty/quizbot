@@ -27,6 +27,7 @@ class Empuorg():
         keys = []
         values = []
         for dic in quizzing:
+            print(dic)
             value = dic.values()
             key = dic.keys()
             keys.append(key)
