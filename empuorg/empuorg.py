@@ -11,11 +11,19 @@ logging.info("Started program. Hello world!")
 
 reddit = praw.Reddit(client_id="pPp18DiGR-UnFA", client_secret="vmY57gKz-6l01ePkoC2FMmv1nv4", user_agent="groupmebot /u/b1ackzi0n")
 config_file = os.path.join('.', 'data', 'config.json')
+quiz_file = os.path.join('.', 'data', 'quiz_material.json')
 
 class Empuorg():
     def __init__(self, bot_id):
         with open(config_file) as data_file:
             config = json.load(data_file)
+
+        with open(quiz_file) as data_file:
+            quizmaterial = json.load(data_file)
+
+        print("\n\n\nACTS\n\n\n")
+        print(quizmaterial['acts'])
+        print("\n\n\nEND ACTS\n\n\n")
 
         self.bots = config['bots']
         reallist = []
