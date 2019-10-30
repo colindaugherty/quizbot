@@ -23,9 +23,14 @@ class Empuorg():
 
         print("\n\n\nACTS\n\n\n")
         quizzing = quizmaterial['acts']['sections']
-        print(quizzing)
-        answer = quizzing['I wrote the first WHAT?']
-        print(answer)
+        quizSections = []
+        for key in quizzing.keys():
+            quizSections.append(key)
+        print(quizSections)
+        random.shuffle(quizSections)
+        print(quizSections)
+        keys = "none rn"
+        values = "none rn"
         print("\n\nHere are the keys-\n%s" % (keys))
         print("\n\nHere are the values-\n%s" % (values))
         print("\n\n\nEND ACTS\n\n\n")
