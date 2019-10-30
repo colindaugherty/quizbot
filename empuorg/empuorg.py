@@ -26,9 +26,10 @@ class Empuorg():
         print(quizzing)
         keys = []
         values = []
-        for key,value in quizzing:
+        for key in quizzing.keys():
             keys.append(key)
-            value.append(values)
+        for value in quizzing.values():
+            values.append(value)
         print("\n\nHere are the keys-\n%s" % (keys))
         print("\n\nHere are the values-\n%s" % (values))
         print("\n\n\nEND ACTS\n\n\n")
