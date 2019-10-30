@@ -24,6 +24,13 @@ class Empuorg():
         print("\n\n\nACTS\n\n\n")
         quizzing = quizmaterial['acts']['sections']
         print(quizzing)
+        keys = []
+        values = []
+        for key,value in quizzing:
+            keys.append(key)
+            value.append(values)
+        print("\n\nHere are the keys-\n%s" % (keys))
+        print("\n\nHere are the values-\n%s" % (values))
         print("\n\n\nEND ACTS\n\n\n")
 
         self.bots = config['bots']
