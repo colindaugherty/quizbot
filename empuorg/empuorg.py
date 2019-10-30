@@ -22,7 +22,7 @@ class Empuorg():
             quizmaterial = json.load(data_file)
 
         print("\n\n\nACTS\n\n\n")
-        quizzing = quizmaterial['acts']
+        quizzing = quizmaterial['acts']['sections']
         print(quizzing)
         print("\n\n\nEND ACTS\n\n\n")
 
