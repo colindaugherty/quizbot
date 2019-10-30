@@ -22,7 +22,7 @@ class Empuorg():
             quizmaterial = json.load(data_file)
 
         print("\n\n\nACTS\n\n\n")
-        print(quizmaterial['acts']['sections']['Prologue']['acts1.1'][0].values())
+        print(quizmaterial['acts']['sections']['Prologue']['acts1.1']['I wrote the first WHAT?'])
         print("\n\n\nEND ACTS\n\n\n")
 
         self.bots = config['bots']
