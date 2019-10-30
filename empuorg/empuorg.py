@@ -24,12 +24,8 @@ class Empuorg():
         print("\n\n\nACTS\n\n\n")
         quizzing = quizmaterial['acts']['sections']
         print(quizzing)
-        keys = []
-        values = []
-        for key in quizzing.keys():
-            keys.append(key)
-        for value in quizzing.values():
-            values.append(value)
+        answer = quizzing['I wrote the first WHAT?']
+        print(answer)
         print("\n\nHere are the keys-\n%s" % (keys))
         print("\n\nHere are the values-\n%s" % (values))
         print("\n\n\nEND ACTS\n\n\n")
