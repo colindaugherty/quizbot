@@ -304,7 +304,11 @@ class Empuorg():
         response = text.lower()
         print(response)
         cq = self.current_question
-        index = cq - 1
+        if self.current_question != 0:
+            index = cq - 1
+        else:
+            index = 0
+        print(cq)
         print(self.current_quiz[index][4])
         if isinstance(self.current_quiz[index][4], list):
             response = response.split(' ')
