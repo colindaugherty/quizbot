@@ -296,7 +296,8 @@ class Empuorg():
         self.send_message(message)
 
     def continue_quiz(self, mes, att, gid, text, sender_name):
-        response = mes.lower()
+        response = text.lower()
+        print(response)
         if response == self.current_quiz[3]:
             message = "Good job {} you got that one right!".format(sender_name)
             self.awaiting_response = False
