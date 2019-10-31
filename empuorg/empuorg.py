@@ -304,6 +304,7 @@ class Empuorg():
             self.send_message(message)
         else:
             message = "Sorry {}, the answer isn't '{}'".format(sender_name, mes)
+            self.send_message(message)
 
     def update_config(self, mes, att, gid, text, sender_name):
         sender_name = sender_name.lower()
