@@ -291,7 +291,7 @@ class Empuorg():
                 pass
             print(sections)
             counter += 1
-        message = "Here is your question from the section {}: {} ({})".format(self.current_quiz[0], self.current_quiz[2], self.current_quiz[1])
+        message = "Here is your question from the section '{}': {} ({})".format(self.current_quiz[0], self.current_quiz[2], self.current_quiz[1])
         self.awaiting_response = True
         self.send_message(message)
 
@@ -299,11 +299,13 @@ class Empuorg():
         response = text.lower()
         print(response)
         if response == self.current_quiz[3]:
-            message = "Good job {} you got that one right!".format(sender_name)
+            name = sender_name.split(' ')
+            name = name[0]
+            message = "Good job {} you got that one right!".format(name)
             self.awaiting_response = False
             self.send_message(message)
         else:
-            message = "Sorry {}, the answer isn't '{}'".format(sender_name, mes)
+            message = "Sorry {}, the answer isn't '{}'".format(sender_name, text)
             self.send_message(message)
 
     def update_config(self, mes, att, gid, text, sender_name):
