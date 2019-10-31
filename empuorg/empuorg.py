@@ -72,7 +72,8 @@ class Empuorg():
         conn.close()
 
         self.listening_port = config['listening_port']
-        print("Reddit read only is - " + reddit.read_only)
+        print("Reddit read only is -")
+        print(reddit.read_only)
         self.groupme_url = "https://api.groupme.com/v3/bots/post"
 
         self._init_regexes()
