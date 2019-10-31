@@ -309,6 +309,7 @@ class Empuorg():
         else:
             index = 0
         print(cq)
+        print(self.current_question)
         print(self.current_quiz[index][4])
         if isinstance(self.current_quiz[index][4], list):
             response = response.split(' ')
