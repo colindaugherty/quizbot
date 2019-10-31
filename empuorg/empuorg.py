@@ -288,7 +288,7 @@ class Empuorg():
                 pass
             print(sections)
             counter += 1
-        message = "Here is your question from the section {}: {} ({})".format(self.current_quiz[0], self.current_quiz[1], self.current_quiz[2])
+        message = "Here is your question from the section {}: {} ({})".format(self.current_quiz[0], self.current_quiz[2], self.current_quiz[1])
         self.awaiting_response = True
         self.send_message(message)
 
