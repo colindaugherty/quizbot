@@ -19,21 +19,7 @@ class Empuorg():
             config = json.load(data_file)
 
         with open(quiz_file) as data_file:
-            quizmaterial = json.load(data_file)
-
-        print("\n\n\nACTS\n\n\n")
-        quizzing = quizmaterial['acts']['sections']
-        quizSections = []
-        for key in quizzing.keys():
-            quizSections.append(key)
-        print(quizSections)
-        random.shuffle(quizSections)
-        print(quizSections)
-        keys = "none rn"
-        values = "none rn"
-        print("\n\nHere are the keys-\n%s" % (keys))
-        print("\n\nHere are the values-\n%s" % (values))
-        print("\n\n\nEND ACTS\n\n\n")
+            self.quizmaterial = json.load(data_file)
 
         self.bots = config['bots']
         reallist = []
@@ -43,6 +29,10 @@ class Empuorg():
             reallist.append(bot)
         self.bots = reallist
         print(self.bots)
+        self.awaiting_response = False
+        self.current_quiz = []
+        self.last_question = []
+        self.quizbonuses = False
         for name, id, group in self.bots:
             iteration_values = (name, id, group)
             c = conn.cursor()
@@ -81,26 +71,21 @@ class Empuorg():
         conn.commit()
         conn.close()
 
-        # self.bot_id = config['bot_id']
-        # print(self.bot_id)
-        # self.meme_source = config['meme_source']
-        # print(self.meme_source)
-        # self.real_len = len(self.meme_source) - 1
         self.listening_port = config['listening_port']
-        print(self.listening_port)
-        print(reddit.read_only)
+        print("Reddit read only is - " + reddit.read_only)
         self.groupme_url = "https://api.groupme.com/v3/bots/post"
 
         self._init_regexes()
     
     def _init_regexes(self):
-        self.likes = re.compile("(!likes)")
-        self.likesrank = re.compile("(!rank)")
-        self.randommeme = re.compile("(!meme)")
-        self.groupinfo = re.compile("(!info)")
-        self.help_regex = re.compile("(!help)")
+        self.likes = re.compile("(^!likes$)")
+        self.likesrank = re.compile("(^!rank$)")
+        self.randommeme = re.compile("(^!meme$)")
+        self.groupinfo = re.compile("(^!info$)")
+        self.help_regex = re.compile("(^!help$)")
         self.config = re.compile("(^!config)")
         self.authenticate = re.compile("(^!authenticate)")
+        self.quiz = re.compile("(^!quiz)")
 
         self._construct_regexes()
 
@@ -112,7 +97,8 @@ class Empuorg():
             ("Info", self.groupinfo, self.send_info),
             ("Help", self.help_regex, self.send_help),
             ("Config", self.config, self.update_config),
-            ("Authenticate", self.authenticate, self._authenticateUser)
+            ("Authenticate", self.authenticate, self._authenticateUser),
+            ("Quiz", self.quiz, self.start_quizzer)
         ]
         logging.info("Initialized regex.")
 
@@ -230,27 +216,33 @@ class Empuorg():
     def receive_message(self, message, attachments, groupid, sendertype, sender_name):
         print("\n\n\n\n\nreceived message from group: %s\nself.bots: %s\n\n\n\n" % (groupid, self.bots))
         if sendertype != "bot":
-            for type, regex, action in self.regex_actions:
-                mes = regex.match(message)
-                att = attachments
-                gid = groupid
-                for name, id, group in self.bots:
-                    if group != gid:
-                        print("%s and id#%s did not match group id#%s" %(name, id, gid))
-                    else:
-                        # database functions return all the variables
-                        print("%s and id#%s matched group id#%s" % (name, id, gid))
-                        bot_id = id
-                        gid = int(gid)
-                        botname = name
-                        self._init_config(gid, bot_id, botname)
-                if mes:
-                    logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
-                    if att:
-                        action(mes, att, gid, message, sender_name)
-                    else:
-                        att = []
-                        action(mes, att, gid, message, sender_name)
+            if self.awaiting_response == False:
+                for type, regex, action in self.regex_actions:
+                    mes = regex.match(message)
+                    att = attachments
+                    gid = groupid
+                    for name, id, group in self.bots:
+                        if group != gid:
+                            print("%s and id#%s did not match group id#%s" %(name, id, gid))
+                        else:
+                            # database functions return all the variables
+                            print("%s and id#%s matched group id#%s" % (name, id, gid))
+                            bot_id = id
+                            gid = int(gid)
+                            botname = name
+                            self._init_config(gid, bot_id, botname)
+                    if mes:
+                        logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
+                        if att:
+                            action(mes, att, gid, message, sender_name)
+                        else:
+                            att = []
+                            action(mes, att, gid, message, sender_name)
+            elif self.awaiting_response == True:
+                self.continue_quiz(mes, att, gid, message, sender_name)
+            else:
+                self.send_message("Error - awaiting_response is broken, closing program to prevent infinite loop")
+                exit()
     
     def send_likes(self, mes, att, gid, text, sender_name):
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
@@ -260,6 +252,48 @@ class Empuorg():
 
     def send_rank(self, mes, att, gid, text, sender_name):
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
+
+    def start_quizzer(self, mes, att, gid, text, sender_name):
+        counter = 0
+        mes = mes.replace("!quiz ", "")
+        print(mes)
+        while counter < mes:
+            sections = self.quizmaterial['acts']['sections']
+            sections = sections.keys()
+            sections_index = len(sections) - 1
+            rand = random.randint(0,sections_index)
+            quiz_section = sections[rand]
+            print(quiz_section)
+            verse = self.quizmaterial['acts']['sections'][quiz_section]
+            verse = verse.keys()
+            quiz_verse = verse[rand]
+            print(quiz_verse)
+            questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
+            questions = questions.keys()
+            if self.quizbonuses == False:
+                quiz_question = questions[rand]
+                questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
+                quiz_questionanswer = questions.get(quiz_question)
+                self.current_quiz = [quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
+            elif self.quizbonuses == True:
+                pass
+            else:
+                pass
+            if sections_index != len(sections) - 1:
+                pass
+            print(sections)
+            counter += 1
+        message = "Here is your question from the section {}: {} ({})".format(self.current_quiz[0], self.current_quiz[1], self.current_quiz[2])
+        self.send_message(message)
+
+    def continue_quiz(self, mes, att, gid, text, sender_name):
+        response = mes.lower()
+        if response == self.current_quiz[3]:
+            message = "Good job {} you got that one right!".format(sender_name)
+            self.awaiting_response = False
+            self.send_message(message)
+        else:
+            message = "Sorry {}, the answer isn't '{}'".format(sender_name, mes)
 
     def update_config(self, mes, att, gid, text, sender_name):
         sender_name = sender_name.lower()
