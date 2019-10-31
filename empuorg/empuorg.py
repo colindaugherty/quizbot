@@ -31,7 +31,7 @@ class Empuorg():
         print(self.bots)
         self.awaiting_response = False
         self.current_quiz = []
-        self.last_question = []
+        self.current_quiz = 0
         self.quizbonuses = False
         for name, id, group in self.bots:
             iteration_values = (name, id, group)
@@ -295,6 +295,7 @@ class Empuorg():
         print(self.current_quiz)
         message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][2])
         self.awaiting_response = True
+        self.current_question = 1
         self.send_message(message)
 
     def continue_quiz(self, mes, att, gid, text, sender_name):
@@ -304,8 +305,15 @@ class Empuorg():
             name = sender_name.split(' ')
             name = name[0]
             message = "Good job {} you got that one right!".format(name)
-            self.awaiting_response = False
             self.send_message(message)
+            self.current_question += 1
+            if self.current_question < len(self.current_quiz):
+                index = self.current_question - 1
+                message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
+                self.send_message(message)
+            else:
+                self.send_message("Finished quiz! Resuming normal commands.")
+                self.awaiting_response = False
         else:
             message = "Sorry {}, the answer isn't '{}'".format(sender_name, text)
             self.send_message(message)
