@@ -304,11 +304,9 @@ class Empuorg():
         response = text.lower()
         print(response)
         cq = self.current_question
-        if self.current_question != 0:
-            index = cq - 1
-        else:
-            index = 0
+        index = cq
         print(cq)
+        print(index)
         print(self.current_question)
         print(self.current_quiz[index][4])
         if isinstance(self.current_quiz[index][4], list):
