@@ -303,6 +303,7 @@ class Empuorg():
     def continue_quiz(self, mes, att, gid, text, sender_name):
         response = text.lower()
         print(response)
+        self.current_question += 1
         index = self.current_question - 1
         if isinstance(self.current_quiz[index][4], list):
             response = response.split(' ')
@@ -313,7 +314,6 @@ class Empuorg():
             name = name[0]
             message = "Good job {} you got that one right!".format(name)
             self.send_message(message)
-            self.current_question += 1
             index += 1
             if self.current_question < len(self.current_quiz):
                 message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
