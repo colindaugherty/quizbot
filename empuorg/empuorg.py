@@ -262,7 +262,7 @@ class Empuorg():
         counter = 0
         questioncount = text.replace("!quiz ", "")
         print(questioncount)
-        while counter <= int(questioncount):
+        while counter < int(questioncount):
             counter += 1
             sections = self.quizmaterial['acts']['sections']
             sections = list(sections.keys())
@@ -293,7 +293,7 @@ class Empuorg():
             if quiz_indexer != len(sections) - 1:
                 pass
         print(self.current_quiz)
-        message = "Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][2], self.current_quiz[0][1])
+        message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][2])
         self.awaiting_response = True
         self.send_message(message)
 
