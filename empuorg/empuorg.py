@@ -308,6 +308,7 @@ class Empuorg():
             name = name[0]
             message = "Good job {} you got that one right!".format(name)
             self.send_message(message)
+            index += 1
             if self.current_question < len(self.current_quiz):
                 message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
                 self.send_message(message)
