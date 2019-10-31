@@ -256,9 +256,9 @@ class Empuorg():
 
     def start_quizzer(self, mes, att, gid, text, sender_name):
         counter = 0
-        mes = mes.replace("!quiz ", "")
-        print(mes)
-        while counter < mes:
+        questioncount = text.replace("!quiz ", "")
+        print(questioncount)
+        while counter < questioncount:
             sections = self.quizmaterial['acts']['sections']
             sections = sections.keys()
             sections_index = len(sections) - 1
