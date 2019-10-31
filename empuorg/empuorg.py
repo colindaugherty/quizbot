@@ -262,7 +262,9 @@ class Empuorg():
         counter = 0
         questioncount = text.replace("!quiz ", "")
         print(questioncount)
-        while counter < int(questioncount):
+        if int(questioncount) > 15:
+            self.send_message("15 is the max amount of questions I can quiz over at this time.")
+        while counter < int(questioncount) and int(questioncount) <= 15:
             counter += 1
             sections = self.quizmaterial['acts']['sections']
             sections = list(sections.keys())
@@ -303,6 +305,10 @@ class Empuorg():
         print(response)
         self.current_question += 1
         index = self.current_question - 1
+        if isinstance(self.current_quiz[index][4], list):
+            response = response.split(' ')
+            self.current_quiz[index][4] = sorted(self.current_quiz[index][4])
+            response = sorted(response)
         if response == self.current_quiz[index][4]:
             name = sender_name.split(' ')
             name = name[0]
