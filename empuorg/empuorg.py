@@ -258,10 +258,12 @@ class Empuorg():
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
 
     def start_quizzer(self, mes, att, gid, text, sender_name):
+        self.current_quiz = []
         counter = 0
         questioncount = text.replace("!quiz ", "")
         print(questioncount)
-        while counter < int(questioncount):
+        while counter =< int(questioncount):
+            counter += 1
             sections = self.quizmaterial['acts']['sections']
             sections = list(sections.keys())
             quiz_indexer = len(sections) - 1
@@ -282,16 +284,16 @@ class Empuorg():
                 quiz_question = questions[rand]
                 questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
                 quiz_questionanswer = questions.get(quiz_question)
-                self.current_quiz = [quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
+                quiz = [counter, quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
+                self.current_quiz.append(quiz)
             elif self.quizbonuses == True:
                 pass
             else:
                 pass
             if quiz_indexer != len(sections) - 1:
                 pass
-            print(sections)
-            counter += 1
-        message = "Here is your question from the section '{}': {} ({})".format(self.current_quiz[0], self.current_quiz[2], self.current_quiz[1])
+        print(self.current_quiz)
+        message = "Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][2], self.current_quiz[0][1])
         self.awaiting_response = True
         self.send_message(message)
 
