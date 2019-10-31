@@ -258,7 +258,7 @@ class Empuorg():
         counter = 0
         questioncount = text.replace("!quiz ", "")
         print(questioncount)
-        while counter < questioncount:
+        while counter < int(questioncount):
             sections = self.quizmaterial['acts']['sections']
             sections = sections.keys()
             sections_index = len(sections) - 1
