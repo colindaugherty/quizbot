@@ -260,17 +260,17 @@ class Empuorg():
         print(questioncount)
         while counter < int(questioncount):
             sections = self.quizmaterial['acts']['sections']
-            sections = sections.keys()
+            sections = list(sections.keys())
             sections_index = len(sections) - 1
             rand = random.randint(0,sections_index)
             quiz_section = sections[rand]
             print(quiz_section)
             verse = self.quizmaterial['acts']['sections'][quiz_section]
-            verse = verse.keys()
+            verse = list(verse.keys())
             quiz_verse = verse[rand]
             print(quiz_verse)
             questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
-            questions = questions.keys()
+            questions = list(questions.keys())
             if self.quizbonuses == False:
                 quiz_question = questions[rand]
                 questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
