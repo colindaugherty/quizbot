@@ -240,7 +240,7 @@ class Empuorg():
                             att = []
                             action(mes, att, gid, message, sender_name)
             elif self.awaiting_response == True:
-                mes = regex.match(message)
+                mes = "none"
                 att = attachments
                 gid = groupid
                 self.continue_quiz(mes, att, gid, message, sender_name)
