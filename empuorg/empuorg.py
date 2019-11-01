@@ -258,47 +258,52 @@ class Empuorg():
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
 
     def start_quizzer(self, mes, att, gid, text, sender_name):
-        self.current_quiz = []
-        counter = 0
-        questioncount = text.replace("!quiz ", "")
-        print(questioncount)
-        if int(questioncount) > 15:
-            self.send_message("15 is the max amount of questions I can quiz over at this time.")
-        while counter < int(questioncount) and int(questioncount) <= 15:
-            counter += 1
-            sections = self.quizmaterial['acts']['sections']
-            sections = list(sections.keys())
-            quiz_indexer = len(sections) - 1
-            rand = random.randint(0,quiz_indexer)
-            quiz_section = sections[rand]
-            print(quiz_section)
-            verse = self.quizmaterial['acts']['sections'][quiz_section]
-            verse = list(verse.keys())
-            quiz_indexer = len(verse) - 1
-            rand = random.randint(0,quiz_indexer)
-            quiz_verse = verse[rand]
-            print(quiz_verse)
-            questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
-            questions = list(questions.keys())
-            quiz_indexer = len(questions) - 1
-            rand = random.randint(0,quiz_indexer)
-            if self.quizbonuses == False:
-                quiz_question = questions[rand]
+        sender_name = sender_name.lower()
+        sender_name = sender_name.replace(" ", "_")
+        if sender_name in self.authenticatedUsers:
+            self.current_quiz = []
+            counter = 0
+            questioncount = text.replace("!quiz ", "")
+            print(questioncount)
+            if int(questioncount) > 15:
+                self.send_message("15 is the max amount of questions I can quiz over at this time.")
+            while counter < int(questioncount) and int(questioncount) <= 15:
+                counter += 1
+                sections = self.quizmaterial['acts']['sections']
+                sections = list(sections.keys())
+                quiz_indexer = len(sections) - 1
+                rand = random.randint(0,quiz_indexer)
+                quiz_section = sections[rand]
+                print(quiz_section)
+                verse = self.quizmaterial['acts']['sections'][quiz_section]
+                verse = list(verse.keys())
+                quiz_indexer = len(verse) - 1
+                rand = random.randint(0,quiz_indexer)
+                quiz_verse = verse[rand]
+                print(quiz_verse)
                 questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
-                quiz_questionanswer = questions.get(quiz_question)
-                quiz = [counter, quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
-                self.current_quiz.append(quiz)
-            elif self.quizbonuses == True:
-                pass
-            else:
-                pass
-            if quiz_indexer != len(sections) - 1:
-                pass
-        print(self.current_quiz)
-        message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][2])
-        self.awaiting_response = True
-        self.current_question = 0
-        self.send_message(message)
+                questions = list(questions.keys())
+                quiz_indexer = len(questions) - 1
+                rand = random.randint(0,quiz_indexer)
+                if self.quizbonuses == False:
+                    quiz_question = questions[rand]
+                    questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
+                    quiz_questionanswer = questions.get(quiz_question)
+                    quiz = [counter, quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
+                    self.current_quiz.append(quiz)
+                elif self.quizbonuses == True:
+                    pass
+                else:
+                    pass
+                if quiz_indexer != len(sections) - 1:
+                    pass
+            print(self.current_quiz)
+            message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][2])
+            self.awaiting_response = True
+            self.current_question = 0
+            self.send_message(message)
+        else:
+            self.send_message("Sorry, this is only for authenticated users :/")
 
     def continue_quiz(self, mes, att, gid, text, sender_name):
         response = text.lower()
