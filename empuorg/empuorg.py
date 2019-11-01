@@ -327,8 +327,7 @@ class Empuorg():
                 self.send_message("Finished quiz! Resuming normal commands.")
                 self.awaiting_response = False
         else:
-            message = "Sorry {}, the answer isn't '{}'".format(sender_name, text)
-            self.send_message(message)
+            print("Got incorrect answer %s" % (text))
 
     def update_config(self, mes, att, gid, text, sender_name):
         sender_name = sender_name.lower()
