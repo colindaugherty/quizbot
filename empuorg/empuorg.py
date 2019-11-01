@@ -319,7 +319,10 @@ class Empuorg():
         print(self.current_question)
         print(self.current_quiz[index][4])
         if isinstance(self.current_quiz[index][4], list):
-            response = response.split(', ')
+            if "," in response:
+                response = response.split(', ')
+            elif "and" in response:
+                response = response.split(' and ')
             self.current_quiz[index][4] = sorted(self.current_quiz[index][4])
             response = sorted(response)
         if response == self.current_quiz[index][4]:
@@ -332,16 +335,17 @@ class Empuorg():
                 if self.playerindex == len(self.keeping_score):
                     self.keeping_score.append(player)
                     print(self.keeping_score)
+                    self.playerindex += 1
                     break
                 elif name in self.keeping_score[self.playerindex]:
                     self.keeping_score[self.playerindex][1] += 1
                     print(self.keeping_score)
+                    self.playerindex += 1
                     break
                 else:
                     print("Something went wrong with keeping score- error")
                     self.playerindex += 1
-                self.playerindex += 1
-                print(self.playerindex)
+                    break
             self.send_message(message)
             self.current_question += 1
             index += 1
