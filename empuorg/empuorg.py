@@ -352,7 +352,7 @@ class Empuorg():
                 self.send_message("Finished quiz! Resuming normal commands.")
                 message = "Score Results-\n"
                 for player in self.keeping_score:
-                    message += "{}: {}\n".format(player[1],[player[0]])
+                    message += "{}: {}\n".format(player[0],[player[1]])
                 self.send_message(message)
                 self.awaiting_response = False
         else:
