@@ -328,7 +328,8 @@ class Empuorg():
             message = "Good job {} you got that one right!".format(name)
             score = 1
             player = [name, score]
-            while self.playerindex <= len(self.keeping_score):
+            for person in self.keeping_score:
+                print(person)
                 if self.playerindex == len(self.keeping_score):
                     self.keeping_score.append(player)
                     print(self.keeping_score)
