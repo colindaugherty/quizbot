@@ -310,7 +310,7 @@ class Empuorg():
         print(self.current_question)
         print(self.current_quiz[index][4])
         if isinstance(self.current_quiz[index][4], list):
-            response = response.split(' ')
+            response = response.split(', ')
             self.current_quiz[index][4] = sorted(self.current_quiz[index][4])
             response = sorted(response)
         if response == self.current_quiz[index][4]:
