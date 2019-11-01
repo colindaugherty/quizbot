@@ -336,6 +336,7 @@ class Empuorg():
                     print(self.keeping_score)
                 else:
                     print("Something went wrong with keeping score- error")
+                playerindex += 1
             self.send_message(message)
             self.current_question += 1
             index += 1
