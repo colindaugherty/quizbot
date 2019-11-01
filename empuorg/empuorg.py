@@ -33,6 +33,8 @@ class Empuorg():
         self.current_quiz = []
         self.current_question = 0
         self.quizbonuses = False
+        self.useReddit = True
+        self.keeping_score = []
         for name, id, group in self.bots:
             iteration_values = (name, id, group)
             c = conn.cursor()
@@ -322,6 +324,18 @@ class Empuorg():
             name = sender_name.split(' ')
             name = name[0]
             message = "Good job {} you got that one right!".format(name)
+            score = 1
+            player = [name, score]
+            playerindex = 0
+            while playerindex <= len(self.keeping_score):
+                if playerindex == len(self.keeping_score):
+                    self.keeping_score.append(player)
+                    print(self.keeping_score)
+                elif name in self.keeping_score[playerindex]:
+                    self.keeping_score[playerindex][1] += 1
+                    print(self.keeping_score)
+                else:
+                    print("Something went wrong with keeping score- error")
             self.send_message(message)
             self.current_question += 1
             index += 1
@@ -465,33 +479,36 @@ class Empuorg():
 
     def send_meme(self, mes, att, gid, text, sender_name):
         start = time.time()
-        meme_message = "Meme response-\n'"
-        rand = random.randint(0, self.real_len)
-        subreddit = self.meme_source[rand]
-        print(subreddit)
-        submission_list = []
-        for submission in reddit.subreddit(subreddit).hot(limit=10):
-            if submission.stickied != True:
-                submission_list.append(submission)
+        if self.useReddit == True:
+            meme_message = "Meme response-\n'"
+            rand = random.randint(0, self.real_len)
+            subreddit = self.meme_source[rand]
+            print(subreddit)
+            submission_list = []
+            for submission in reddit.subreddit(subreddit).hot(limit=10):
+                if submission.stickied != True:
+                    submission_list.append(submission)
+                else:
+                    print("We don't approve of stickied messages")
+            submission_list_length = len(submission_list) - 1
+            rand = random.randint(0,submission_list_length)
+            print("Got a random submission index of %d out of %d\nIt has an upvote ratio of %d" % (rand, submission_list_length, submission_list[rand].upvote_ratio))
+            print("Printing url link for post '%s'-\n" % (submission_list[rand].title))
+            if submission_list[rand].selftext == "":
+                print(submission_list[rand].url)
+                result = submission_list[rand].url
             else:
-                print("We don't approve of stickied messages")
-        submission_list_length = len(submission_list) - 1
-        rand = random.randint(0,submission_list_length)
-        print("Got a random submission index of %d out of %d\nIt has an upvote ratio of %d" % (rand, submission_list_length, submission_list[rand].upvote_ratio))
-        print("Printing url link for post '%s'-\n" % (submission_list[rand].title))
-        if submission_list[rand].selftext == "":
-            print(submission_list[rand].url)
-            result = submission_list[rand].url
-        else:
-            print(submission_list[rand].shortlink)
-            result = submission_list[rand].shortlink
-        meme_message += submission_list[rand].title
-        meme_message += "' from the subreddit '"
-        meme_message += submission_list[rand].subreddit.display_name
-        meme_message += "'\n"
-        meme_message += result
-        meme_message += "\nI hope you enjoy!\n"
-        meme_message += "response_time: "
+                print(submission_list[rand].shortlink)
+                result = submission_list[rand].shortlink
+            meme_message += submission_list[rand].title
+            meme_message += "' from the subreddit '"
+            meme_message += submission_list[rand].subreddit.display_name
+            meme_message += "'\n"
+            meme_message += result
+            meme_message += "\nI hope you enjoy!\n"
+            meme_message += "response_time: "
+        elif self.useReddit == False:
+            pass
         response_time = time.time() - start
         if time.strftime("%S", time.gmtime(response_time)) == "00":
             meme_message += "< 0s"
