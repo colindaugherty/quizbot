@@ -35,6 +35,7 @@ class Empuorg():
         self.quizbonuses = False
         self.useReddit = True
         self.keeping_score = []
+        self.playerindex = 0
         for name, id, group in self.bots:
             iteration_values = (name, id, group)
             c = conn.cursor()
@@ -260,6 +261,7 @@ class Empuorg():
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
 
     def start_quizzer(self, mes, att, gid, text, sender_name):
+        self.playerindex = 0
         sender_name = sender_name.lower()
         sender_name = sender_name.replace(" ", "_")
         if sender_name in self.authenticatedUsers:
@@ -326,17 +328,16 @@ class Empuorg():
             message = "Good job {} you got that one right!".format(name)
             score = 1
             player = [name, score]
-            playerindex = 0
-            while playerindex <= len(self.keeping_score):
-                if playerindex == len(self.keeping_score):
+            while self.playerindex <= len(self.keeping_score):
+                if self.playerindex == len(self.keeping_score):
                     self.keeping_score.append(player)
                     print(self.keeping_score)
-                elif name in self.keeping_score[playerindex]:
-                    self.keeping_score[playerindex][1] += 1
+                elif name in self.keeping_score[self.playerindex]:
+                    self.keeping_score[self.playerindex][1] += 1
                     print(self.keeping_score)
                 else:
                     print("Something went wrong with keeping score- error")
-                playerindex += 1
+                self.playerindex += 1
             self.send_message(message)
             self.current_question += 1
             index += 1
