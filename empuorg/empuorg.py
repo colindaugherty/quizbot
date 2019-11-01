@@ -112,7 +112,7 @@ class Empuorg():
         text = text.lower()
         text = text.split()
         t = (self.bot_id, self.group_id)
-        c.executemany("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t))
+        c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t))
         authenticatedCheck = c.fetchone()
         print(authenticatedCheck)
         localusers = []
