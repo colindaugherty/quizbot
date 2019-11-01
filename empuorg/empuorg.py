@@ -350,6 +350,10 @@ class Empuorg():
                 self.send_message(message)
             else:
                 self.send_message("Finished quiz! Resuming normal commands.")
+                message = "Score Results-\n"
+                for player in self.keeping_score:
+                    message += "{}: {}\n".format(player[1],[player[0]])
+                self.send_message(message)
                 self.awaiting_response = False
         else:
             print("Got incorrect answer %s" % (text))
