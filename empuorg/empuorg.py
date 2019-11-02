@@ -263,8 +263,8 @@ class Empuorg():
             self.current_quiz = []
             counter = 0
             questioncount = text.replace("!quiz ", "")
-            if int(questioncount) > 15:
-                self.send_message("15 is the max amount of questions I can quiz over at this time.", 1)
+            if int(questioncount) > 25:
+                self.send_message("25 is the max amount of questions I can quiz over at this time.", 1)
             while counter < int(questioncount) and int(questioncount) <= 15:
                 counter += 1
                 sections = self.quizmaterial['acts']['sections']
