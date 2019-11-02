@@ -356,7 +356,7 @@ class Empuorg():
             else:
                 self.send_message("Finished quiz! Resuming normal commands.")
                 message = "Score Results-\n"
-                self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]))
+                self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                 for player in self.keeping_score:
                     message += "{}: {}\n".format(player[0],[player[1]])
                 self.send_message(message)
