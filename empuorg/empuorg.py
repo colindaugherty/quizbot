@@ -229,7 +229,6 @@ class Empuorg():
                         if group != gid:
                             print("%s and id#%s did not match group id#%s" %(name, id, gid))
                         else:
-                            # database functions return all the variables
                             print("%s and id#%s matched group id#%s" % (name, id, gid))
                             bot_id = id
                             gid = int(gid)
@@ -326,44 +325,98 @@ class Empuorg():
                 response = response.split(' and ')
             self.current_quiz[index][4] = sorted(self.current_quiz[index][4])
             response = sorted(response)
-        if response == self.current_quiz[index][4]:
-            name = sender_name.split(' ')
-            name = name[0]
-            message = "Good job {} you got that one right!".format(name)
-            score = 1
-            player = [name, score]
-            while self.playerindex <= len(self.keeping_score):
-                print(self.playerindex)
-                if self.playerindex == len(self.keeping_score):
-                    self.keeping_score.append(player)
-                    print(self.keeping_score)
-                    self.playerindex += 1
-                    break
-                elif name in self.keeping_score[self.playerindex]:
-                    self.keeping_score[self.playerindex][1] += 1
-                    print(self.keeping_score)
-                    self.playerindex += 1
-                    break
+        if isinstance(self.current_quiz[index][4], str):
+            if response in self.current_quiz[index][4]:
+                name = sender_name.split(' ')
+                name = name[0]
+                message = "Good job {} you got that one right!".format(name)
+                score = 1
+                player = [name, score]
+                while self.playerindex <= len(self.keeping_score):
+                    print(self.playerindex)
+                    if self.playerindex == len(self.keeping_score):
+                        self.keeping_score.append(player)
+                        print(self.keeping_score)
+                        self.playerindex += 1
+                        break
+                    elif name in self.keeping_score[self.playerindex]:
+                        self.keeping_score[self.playerindex][1] += 1
+                        print(self.keeping_score)
+                        self.playerindex += 1
+                        break
+                    else:
+                        print("Player not found, iterating again")
+                        self.playerindex += 1
+                self.playerindex = 0
+                self.send_message(message)
+                self.current_question += 1
+                index += 1
+                if self.current_question < len(self.current_quiz):
+                    message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
+                    self.send_message(message)
                 else:
-                    print("Player not found, iterating again")
-                    self.playerindex += 1
-            self.playerindex = 0
-            self.send_message(message)
-            self.current_question += 1
-            index += 1
-            if self.current_question < len(self.current_quiz):
-                message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
-                self.send_message(message)
+                    self.send_message("Finished quiz! Resuming normal commands.")
+                    message = "Score Results-\n"
+                    self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
+                    for player in self.keeping_score:
+                        message += "{}: {}\n".format(player[0],[player[1]])
+                    self.send_message(message)
+                    self.awaiting_response = False
             else:
-                self.send_message("Finished quiz! Resuming normal commands.")
-                message = "Score Results-\n"
-                self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
-                for player in self.keeping_score:
-                    message += "{}: {}\n".format(player[0],[player[1]])
+                print("Got incorrect answer %s" % (text))
+        elif isinstance(self.current_quiz[index][4], list):
+            correctanswers = 0
+            indexer = 0
+            for a in response:
+                if a in self.current_quiz[index][4][indexer]:
+                    indexer += 1
+                    correctanswers += 1
+                else:
+                    print("%a is not correct" % (a))
+            print(correctanswers)
+            print("The number of correct answers is above me")
+            print(len(self.current_quiz[index][4]))
+            print("The number of answers is above me")
+            if correctanswers == len(self.current_quiz[index][4]):
+                name = sender_name.split(' ')
+                name = name[0]
+                message = "Good job {} you got that one right!".format(name)
+                score = 1
+                player = [name, score]
+                while self.playerindex <= len(self.keeping_score):
+                    print(self.playerindex)
+                    if self.playerindex == len(self.keeping_score):
+                        self.keeping_score.append(player)
+                        print(self.keeping_score)
+                        self.playerindex += 1
+                        break
+                    elif name in self.keeping_score[self.playerindex]:
+                        self.keeping_score[self.playerindex][1] += 1
+                        print(self.keeping_score)
+                        self.playerindex += 1
+                        break
+                    else:
+                        print("Player not found, iterating again")
+                        self.playerindex += 1
+                self.playerindex = 0
                 self.send_message(message)
-                self.awaiting_response = False
+                self.current_question += 1
+                index += 1
+                if self.current_question < len(self.current_quiz):
+                    message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
+                    self.send_message(message)
+                else:
+                    self.send_message("Finished quiz! Resuming normal commands.")
+                    message = "Score Results-\n"
+                    self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
+                    for player in self.keeping_score:
+                        message += "{}: {}\n".format(player[0],[player[1]])
+                    self.send_message(message)
+                    self.awaiting_response = False
+            else:
+                print("Got incorrect answer %s" % (text))
         else:
-            print("Got incorrect answer %s" % (text))
+            print("Failed to determine type of answer. (Expected str or list)")
 
     def update_config(self, mes, att, gid, text, sender_name):
         sender_name = sender_name.lower()
