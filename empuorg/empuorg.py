@@ -25,10 +25,9 @@ class Empuorg():
         reallist = []
         for bot in self.bots:
             bot = tuple(bot)
-            print(bot)
+            logging.info("Found bot- {}".format(bot))
             reallist.append(bot)
         self.bots = reallist
-        print(self.bots)
         self.awaiting_response = False
         self.current_quiz = []
         self.current_question = 0
@@ -52,31 +51,28 @@ class Empuorg():
             databasecheckconfig = c.fetchone()
             c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckmemesource = c.fetchone()
-            print(databasecheckconfig)
-            print(databasecheckmemesource)
             if databasecheckconfig == None and databasecheckmemesource == None or None in databasecheckconfig and None in databasecheckmemesource:
-                print("Doing default config for bot %s (id#%s and groupid#%s)" % (name, id, group))
+                logging.info(f"Doing default config for bot {name} (id#{id} and groupid#{group})")
                 insertvalues = [(name, id, group, 'false','false')]
                 c.executemany("INSERT INTO config (name, botid, groupid, allownsfw, allowrepost) VALUES (?,?,?,?,?)", insertvalues)
                 insertvalues = [(name, id, group, 'all')]
                 c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", insertvalues)
-                print("Finished - results:\n")
+                logging.info("Finished - results:\n")
                 for row in c.execute("SELECT * FROM config ORDER BY id"):
-                    print(row)
+                    logging.info(row)
                 for row in c.execute("SELECT * FROM memesource ORDER BY botid"):
-                    print(row)
+                    logging.info(row)
                 conn.commit()
             else:
                 for row in c.execute("SELECT * FROM config ORDER BY id"):
-                    print(row)
+                    logging.info(row)
                 for row in c.execute("SELECT * FROM memesource ORDER BY botid"):
-                    print(row)
+                    logging.info(row)
         conn.commit()
         conn.close()
 
         self.listening_port = config['listening_port']
-        print("Reddit read only is -")
-        print(reddit.read_only)
+        logging.info(f"Reddit read only is - {reddit.read_only}")
         self.groupme_url = "https://api.groupme.com/v3/bots/post"
 
         self._init_regexes()
@@ -109,7 +105,7 @@ class Empuorg():
     def _authenticateUser(self, mes, att, type, text, sender_name):
         sender_name = sender_name.lower()
         sender_name = sender_name.replace(" ", "_")
-        print(sender_name)
+        logging.info(f"Sender name is - {sender_name}")
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         text = text.lower()
@@ -117,7 +113,6 @@ class Empuorg():
         t = (self.bot_id, self.group_id)
         c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t))
         authenticatedCheck = c.fetchone()
-        print(authenticatedCheck)
         localusers = []
         if 0 <= 2 < len(text) and authenticatedCheck == None or 0 <= 2 < len(text) and None in authenticatedCheck:
             if text[1] == str(self.bot_name) and text[2] == str(self.group_id):
@@ -126,11 +121,10 @@ class Empuorg():
                     c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
                     for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
                         localusers.append(row[0])
-                        print(row)
-                    print(localusers)
+                    logging.info(localusers)
                     conn.commit()
                     conn.close()
-                    print("Just authenticated a user, an updated list should be above me")
+                    logging.info("Just authenticated a user, an updated list should be above me")
                     message = sender_name
                     message += " is now authenticated."
                     self.send_message(message)
@@ -145,10 +139,10 @@ class Empuorg():
                     c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
                     for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
                         localusers.append(row[0])
-                    print(localusers)
+                    logging.info(localusers)
                     conn.commit()
                     conn.close()
-                    print("Just authenticated a user, an updated list should be above me")
+                    logging.info("Just authenticated a user, an updated list should be above me")
                     message = "Authenticating user "
                     message += text[1]
                     message += " they will now have access to all commands."
@@ -165,7 +159,7 @@ class Empuorg():
         memesource = []
         for row in c.execute("SELECT subreddit FROM memesource WHERE (botid=? AND groupid=?)", (t)):
             memesource.append(row[0])
-        print("Inside _getmemesource: memesource should be populated here it is- %s" % (memesource))
+        logging.info(f"Inside _getmemesource: memesource should be populated here it is- {memesource}")
         conn.commit()
         conn.close()
         return memesource
@@ -199,7 +193,7 @@ class Empuorg():
         users = []
         for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
             users.append(row[0])
-        print("Current authenticated users %s" % (users))
+        logging.info(f"Current authenticated users {users}")
         conn.commit()
         conn.close()
         return users
@@ -213,12 +207,12 @@ class Empuorg():
         self.allow_reposts = self._getallowreposts()
         self.bot_name = botname
         self.authenticatedUsers = self._getauthenticatedusers()
-        print("\n\n\nLOTS OF SPACE FOR CONFIG INITS\n\nTHESE ARE CONFIG VALUES-\n\nbot_id: %s\nmeme_source: %s\nallow_nsfw: %s\nallow_reposts: %s\nbot_name: %s\ngroup_id: %d\nauthenticatedUsers: %s\n\n\nEND CONFIG VALUES\n\n\n" % (self.bot_id, self.meme_source, self.allow_nsfw, self.allow_reposts, self.bot_name, self.group_id, self.authenticatedUsers))
+        logging.info(f"\n\n\nLOTS OF SPACE FOR CONFIG INITS\n\nTHESE ARE CONFIG VALUES-\n\nbot_id: {self.bot_id}\nmeme_source: {self.meme_source}\nallow_nsfw: {self.allow_nsfw}\nallow_reposts: {self.allow_reposts}\nbot_name: {self.bot_name}\ngroup_id: {self.group_id}\nauthenticatedUsers: {self.authenticatedUsers}\n\n\nEND CONFIG VALUES\n\n\n")
         logging.info("Initialized config for group %s" % (groupid))
         logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
 
     def receive_message(self, message, attachments, groupid, sendertype, sender_name):
-        print("\n\n\n\n\nreceived message from group: %s\nself.bots: %s\n\n\n\n" % (groupid, self.bots))
+        logging.info("\n\n\n\n\nreceived message from group: %s\nself.bots: %s\n\n\n\n" % (groupid, self.bots))
         if sendertype != "bot":
             if self.awaiting_response == False:
                 for type, regex, action in self.regex_actions:
@@ -227,9 +221,9 @@ class Empuorg():
                     gid = groupid
                     for name, id, group in self.bots:
                         if group != gid:
-                            print("%s and id#%s did not match group id#%s" %(name, id, gid))
+                            logging.info("%s and id#%s did not match group id#%s" %(name, id, gid))
                         else:
-                            print("%s and id#%s matched group id#%s" % (name, id, gid))
+                            logging.info("%s and id#%s matched group id#%s" % (name, id, gid))
                             bot_id = id
                             gid = int(gid)
                             botname = name
@@ -267,7 +261,6 @@ class Empuorg():
             self.current_quiz = []
             counter = 0
             questioncount = text.replace("!quiz ", "")
-            print(questioncount)
             if int(questioncount) > 15:
                 self.send_message("15 is the max amount of questions I can quiz over at this time.")
             while counter < int(questioncount) and int(questioncount) <= 15:
@@ -277,13 +270,11 @@ class Empuorg():
                 quiz_indexer = len(sections) - 1
                 rand = random.randint(0,quiz_indexer)
                 quiz_section = sections[rand]
-                print(quiz_section)
                 verse = self.quizmaterial['acts']['sections'][quiz_section]
                 verse = list(verse.keys())
                 quiz_indexer = len(verse) - 1
                 rand = random.randint(0,quiz_indexer)
                 quiz_verse = verse[rand]
-                print(quiz_verse)
                 questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
                 questions = list(questions.keys())
                 quiz_indexer = len(questions) - 1
@@ -300,7 +291,7 @@ class Empuorg():
                     pass
                 if quiz_indexer != len(sections) - 1:
                     pass
-            print(self.current_quiz)
+            logging.info(self.current_quiz)
             message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][2])
             self.awaiting_response = True
             self.current_question = 0
@@ -311,13 +302,13 @@ class Empuorg():
     def continue_quiz(self, mes, att, gid, text, sender_name):
         response = text.lower()
         response = response.rstrip()
-        print(response)
+        logging.info(response)
         cq = self.current_question
         index = cq
-        print(cq)
-        print(index)
-        print(self.current_question)
-        print(self.current_quiz[index][4])
+        logging.info(cq)
+        logging.info(index)
+        logging.info(self.current_question)
+        logging.info(self.current_quiz[index][4])
         if isinstance(self.current_quiz[index][4], list):
             if "," in response:
                 response = response.split(', ')
@@ -333,19 +324,18 @@ class Empuorg():
                 score = 1
                 player = [name, score]
                 while self.playerindex <= len(self.keeping_score):
-                    print(self.playerindex)
                     if self.playerindex == len(self.keeping_score):
                         self.keeping_score.append(player)
-                        print(self.keeping_score)
+                        logging.info(self.keeping_score)
                         self.playerindex += 1
                         break
                     elif name in self.keeping_score[self.playerindex]:
                         self.keeping_score[self.playerindex][1] += 1
-                        print(self.keeping_score)
+                        logging.info(self.keeping_score)
                         self.playerindex += 1
                         break
                     else:
-                        print("Player not found, iterating again")
+                        logging.info("Player not found, iterating again")
                         self.playerindex += 1
                 self.playerindex = 0
                 self.send_message(message)
@@ -363,7 +353,7 @@ class Empuorg():
                     self.send_message(message)
                     self.awaiting_response = False
             else:
-                print("Got incorrect answer %s" % (text))
+                logging.info("Got incorrect answer %s" % (text))
         elif isinstance(self.current_quiz[index][4], list):
             correctanswers = 0
             indexer = 0
@@ -372,11 +362,11 @@ class Empuorg():
                     indexer += 1
                     correctanswers += 1
                 else:
-                    print("%a is not correct" % (a))
-            print(correctanswers)
-            print("The number of correct answers is above me")
-            print(len(self.current_quiz[index][4]))
-            print("The number of answers is above me")
+                    logging.info("%a is not correct" % (a))
+            logging.info(correctanswers)
+            logging.info("The number of correct answers is above me")
+            logging.info(len(self.current_quiz[index][4]))
+            logging.info("The number of answers is above me")
             if correctanswers == len(self.current_quiz[index][4]):
                 name = sender_name.split(' ')
                 name = name[0]
@@ -384,19 +374,18 @@ class Empuorg():
                 score = 1
                 player = [name, score]
                 while self.playerindex <= len(self.keeping_score):
-                    print(self.playerindex)
                     if self.playerindex == len(self.keeping_score):
                         self.keeping_score.append(player)
-                        print(self.keeping_score)
+                        logging.info(self.keeping_score)
                         self.playerindex += 1
                         break
                     elif name in self.keeping_score[self.playerindex]:
                         self.keeping_score[self.playerindex][1] += 1
-                        print(self.keeping_score)
+                        logging.info(self.keeping_score)
                         self.playerindex += 1
                         break
                     else:
-                        print("Player not found, iterating again")
+                        logging.info("Player not found, iterating again")
                         self.playerindex += 1
                 self.playerindex = 0
                 self.send_message(message)
@@ -414,9 +403,9 @@ class Empuorg():
                     self.send_message(message)
                     self.awaiting_response = False
             else:
-                print("Got incorrect answer %s" % (text))
+                logging.info("Got incorrect answer %s" % (text))
         else:
-            print("Failed to determine type of answer. (Expected str or list)")
+            logging.info("Failed to determine type of answer. (Expected str or list)")
 
     def update_config(self, mes, att, gid, text, sender_name):
         sender_name = sender_name.lower()
@@ -425,10 +414,9 @@ class Empuorg():
             conn = sqlite3.connect('config.db')
             c = conn.cursor()
             text = text.lower()
-            print(mes)
             what_config = ['subreddit','allownsfw','allowrepost']
             text = text.split(' ')
-            print(text)
+            logging.info(text)
             configword = text[1]
             if configword in what_config:
                 if what_config[0] == configword:
@@ -442,7 +430,7 @@ class Empuorg():
                                 t = [(self.bot_name),]
                                 for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
                                     memesource.append(row)
-                                print("Just updated memesource here it is- %s" % (memesource))    
+                                logging.info("Just updated memesource here it is- %s" % (memesource))    
                                 conn.commit()
                                 conn.close()
                                 message = "Updated subreddit list, added - "
@@ -459,7 +447,7 @@ class Empuorg():
                                 t = [(self.bot_name),]
                                 for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
                                     memesource.append(row[0])
-                                print("Just updated memesource here it is- %s" % (memesource))    
+                                logging.info("Just updated memesource here it is- %s" % (memesource))    
                                 conn.commit()
                                 conn.close()
                                 message = "Updated subreddit list, removed - "
@@ -484,7 +472,7 @@ class Empuorg():
                                 t = [(self.bot_name),]
                                 c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
                                 allownsfw = c.fetchone()
-                                print("Just updated allownsfw, expected output is 'true', here it is- %s" % (allownsfw))
+                                logging.info("Just updated allownsfw, expected output is 'true', here it is- %s" % (allownsfw))
                                 conn.commit()
                                 conn.close()
                                 message = "Updated status of allownsfw - "
@@ -496,7 +484,7 @@ class Empuorg():
                                 t = [(self.bot_name),]
                                 c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
                                 allownsfw = c.fetchone()
-                                print("Just updated allownsfw, expected output is 'false', here it is- %s" % (allownsfw))
+                                logging.info("Just updated allownsfw, expected output is 'false', here it is- %s" % (allownsfw))
                                 conn.commit()
                                 conn.close()
                                 message = "Updated status of allownsfw - "
@@ -518,7 +506,7 @@ class Empuorg():
                                 t = [(self.bot_name),]
                                 c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
                                 allowrepost = c.fetchone()
-                                print("Just updated allowrepost, expected output is 'true', here it is- %s" % (allowrepost))
+                                logging.info("Just updated allowrepost, expected output is 'true', here it is- %s" % (allowrepost))
                                 conn.commit()
                                 conn.close()
                                 message = "Updated status of allowrepost - "
@@ -530,7 +518,7 @@ class Empuorg():
                                 t = [(self.bot_name),]
                                 c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
                                 allowrepost = c.fetchone()
-                                print("Just updated allowrepost, expected output is 'false', here it is- %s" % (allowrepost))
+                                logging.info("Just updated allowrepost, expected output is 'false', here it is- %s" % (allowrepost))
                                 conn.commit()
                                 conn.close()
                                 message = "Updated status of allowrepost - "
@@ -553,22 +541,22 @@ class Empuorg():
             meme_message = "Meme response-\n'"
             rand = random.randint(0, self.real_len)
             subreddit = self.meme_source[rand]
-            print(subreddit)
+            logging.info(subreddit)
             submission_list = []
             for submission in reddit.subreddit(subreddit).hot(limit=10):
                 if submission.stickied != True:
                     submission_list.append(submission)
                 else:
-                    print("We don't approve of stickied messages")
+                    logging.info("We don't approve of stickied messages")
             submission_list_length = len(submission_list) - 1
             rand = random.randint(0,submission_list_length)
-            print("Got a random submission index of %d out of %d\nIt has an upvote ratio of %d" % (rand, submission_list_length, submission_list[rand].upvote_ratio))
-            print("Printing url link for post '%s'-\n" % (submission_list[rand].title))
+            logging.info("Got a random submission index of %d out of %d\nIt has an upvote ratio of %d" % (rand, submission_list_length, submission_list[rand].upvote_ratio))
+            logging.info("Printing url link for post '%s'-\n" % (submission_list[rand].title))
             if submission_list[rand].selftext == "":
-                print(submission_list[rand].url)
+                logging.info(submission_list[rand].url)
                 result = submission_list[rand].url
             else:
-                print(submission_list[rand].shortlink)
+                logging.info(submission_list[rand].shortlink)
                 result = submission_list[rand].shortlink
             meme_message += submission_list[rand].title
             meme_message += "' from the subreddit '"
