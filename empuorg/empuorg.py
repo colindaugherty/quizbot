@@ -1,4 +1,5 @@
 # fair warning to y'all. this is gonna be wack
+# it is very wack
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json, requests, re, time, os, random, praw, logging, sqlite3
 from .message_routing import MessageRouter
