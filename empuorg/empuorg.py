@@ -329,23 +329,24 @@ class Empuorg():
             name = sender_name.split(' ')
             name = name[0]
             message = "Good job {} you got that one right!".format(name)
-            # score = 1
-            # player = [name, score]
-            # while self.playerindex <= len(self.keeping_score):
-            #     if self.playerindex == len(self.keeping_score):
-            #         self.keeping_score.append(player)
-            #         print(self.keeping_score)
-            #         self.playerindex += 1
-            #         break
-            #     elif name in self.keeping_score[self.playerindex]:
-            #         self.keeping_score[self.playerindex][1] += 1
-            #         print(self.keeping_score)
-            #         self.playerindex += 1
-            #         break
-            #     else:
-            #         print("Something went wrong with keeping score- error")
-            #         self.playerindex += 1
-            #         break
+            score = 1
+            player = [name, score]
+            while self.playerindex <= len(self.keeping_score):
+                if name in self.keeping_score[self.playerindex]:
+                    self.keeping_score[self.playerindex][1] += 1
+                    print(self.keeping_score)
+                    self.playerindex += 1
+                    break
+                elif self.playerindex == len(self.keeping_score):
+                    self.keeping_score.append(player)
+                    print(self.keeping_score)
+                    self.playerindex += 1
+                    break
+                else:
+                    print("Something went wrong with keeping score- error")
+                    self.playerindex += 1
+                    break
+            self.playerindex = 0
             self.send_message(message)
             self.current_question += 1
             index += 1
