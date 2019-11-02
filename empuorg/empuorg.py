@@ -359,7 +359,7 @@ class Empuorg():
                 index += 1
                 if self.current_question < len(self.current_quiz):
                     message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
-                    self.send_message(message, 3)
+                    self.send_message(message, 5)
                 else:
                     self.send_message("Finished quiz! Resuming normal commands.", 1)
                     self.quiztime = time.time() - self.quizstop
@@ -412,7 +412,7 @@ class Empuorg():
                 index += 1
                 if self.current_question < len(self.current_quiz):
                     message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
-                    self.send_message(message, 3)
+                    self.send_message(message, 5)
                 else:
                     self.send_message("Finished quiz! Resuming normal commands.", 1)
                     self.quiztime = time.time() - self.quizstop
