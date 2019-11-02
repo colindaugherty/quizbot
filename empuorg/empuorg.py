@@ -606,7 +606,7 @@ class Empuorg():
         self.send_message(help_message, 1)
 
     def hack_joke(self, mes, att, type, text, sender_name):
-        message = "Begining hacking sequence...\nSetting variables....\nsender_name: {}\ngroup_id:{}\ndate{}\nattempting remote login....\nsuccess".format(sender_name, self.group_id, time.strftime("%j/%m/%Y", time.gmtime(time.time())))
+        message = "Begining hacking sequence...\nSetting variables....\n\nsender_name: {}\ngroup_id: {}\ndate: {}\n\nattempting remote login....\nsuccess\n\n{} you are now totally in the system. Good job. Proud of you.".format(sender_name, self.group_id, time.strftime("%j/%m/%Y", time.gmtime(time.time())), sender_name)
         self.send_message(message, 1)
     
     def send_message(self, message, t):
