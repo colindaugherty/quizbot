@@ -1,0 +1,38 @@
+{
+    "<topic>" : {
+        "sections" : {
+            "<example_section>" : {
+                "<subsection>" : {
+                    "Question" : "Answer",
+                    "Question2" : "Answer"
+                },
+                "<second_subsection>" : {
+                    "Question" : "Answer"
+                }
+            },
+            "<another_example_section" : {
+                "<subsection" : {
+                    "Question" : "Answer"
+                }
+            }
+        }
+    },
+    "<second_topic" : {
+        "sections" : {
+            "<example_section>" : {
+                "<subsection>" : {
+                    "Question" : "Answer",
+                    "Question2" : "Answer"
+                },
+                "<second_subsection>" : {
+                    "Question" : "Answer"
+                }
+            },
+            "<another_example_section" : {
+                "<subsection" : {
+                    "Question" : "Answer"
+                }
+            }
+        }
+    }
+}

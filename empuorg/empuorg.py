@@ -592,7 +592,7 @@ class Empuorg():
 
 
     def send_help(self, mes, att, gid, text, sender_name):
-        help_message = "Empuorg Bot Commands-\n" + "Version 0.1b\n" + "!memes - searches for a random meme from your meme suppliers in the config\n" + "!info - prints information for the group\n" + "!config - edits group config\n" + "!help - displays help commands\n"
+        help_message = "Empuorg Bot Commands-\n" + "Version 0.2b\n" + "!memes - searches for a random meme from your meme suppliers in the config\n" + "!info - prints information for the group\n" + "!config - edits group config\n" + "!help - displays help commands\n"
 
         self.send_message(help_message, 1)
     

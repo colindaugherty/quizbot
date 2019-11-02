@@ -1,0 +1,6 @@
+{
+    "bots" : [
+        ["examplebot", "<bot_id_here>", "<group_id_here>"]
+    ],
+    "listening_port" : 5000
+}
