@@ -35,6 +35,7 @@ class Empuorg():
         self.useReddit = True
         self.keeping_score = []
         self.playerindex = 0
+        self.quiztime = 0
         for name, id, group in self.bots:
             iteration_values = (name, id, group)
             c = conn.cursor()
@@ -254,6 +255,7 @@ class Empuorg():
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
 
     def start_quizzer(self, mes, att, gid, text, sender_name):
+        self.quizstop = time.time()
         self.playerindex = 0
         sender_name = sender_name.lower()
         sender_name = sender_name.replace(" ", "_")
@@ -346,7 +348,10 @@ class Empuorg():
                     self.send_message(message)
                 else:
                     self.send_message("Finished quiz! Resuming normal commands.")
-                    message = "Score Results-\n"
+                    self.quiztime = time.time() - self.quizstop
+                    self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
+                    message = "Time took: {}\nScore Results-\n".format(self.quiztime)
+                    self.quiztime = 0
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     for player in self.keeping_score:
                         message += "{}: {}\n".format(player[0],[player[1]])
@@ -396,7 +401,10 @@ class Empuorg():
                     self.send_message(message)
                 else:
                     self.send_message("Finished quiz! Resuming normal commands.")
-                    message = "Score Results-\n"
+                    self.quiztime = time.time() - self.quizstop
+                    self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
+                    message = "Time took: {}\nScore Results-\n".format(self.quiztime)
+                    self.quiztime = 0
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     for player in self.keeping_score:
                         message += "{}: {}\n".format(player[0],[player[1]])
