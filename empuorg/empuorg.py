@@ -344,9 +344,8 @@ class Empuorg():
                     self.playerindex += 1
                     break
                 else:
-                    print("Something went wrong with keeping score- error")
+                    print("Player not found, iterating again")
                     self.playerindex += 1
-                    break
             self.playerindex = 0
             self.send_message(message)
             self.current_question += 1
