@@ -128,11 +128,11 @@ class Empuorg():
                     logging.info("Just authenticated a user, an updated list should be above me")
                     message = sender_name
                     message += " is now authenticated."
-                    self.send_message(message)
+                    self.send_message(message, 1)
                 else:
-                    self.send_message("Error - user already authenticated")
+                    self.send_message("Error - user already authenticated", 1)
             else:
-                self.send_message("Include bot_id and group_id.")
+                self.send_message("Include bot_id and group_id.", 1)
         elif sender_name in self.authenticatedUsers:
             if 0 <= 1 < len(text):
                 if text[1] not in self.authenticatedUsers:
@@ -147,11 +147,11 @@ class Empuorg():
                     message = "Authenticating user "
                     message += text[1]
                     message += " they will now have access to all commands."
-                    self.send_message(message)
+                    self.send_message(message, 1)
                 else:
-                    self.send_message("Error - user is already authenticated.")
+                    self.send_message("Error - user is already authenticated.", 1)
         else:
-            self.send_message("I'm sorry, but you can not authenticate anyone :/")
+            self.send_message("I'm sorry, but you can not authenticate anyone :/", 1)
 
     def _getmemesource(self):
         conn = sqlite3.connect('config.db')
@@ -242,17 +242,17 @@ class Empuorg():
                 gid = groupid
                 self.continue_quiz(mes, att, gid, message, sender_name)
             else:
-                self.send_message("Error - awaiting_response is broken, setting it to False in order to avoid an infinite loop")
+                self.send_message("Error - awaiting_response is broken, setting it to False in order to avoid an infinite loop", 1)
                 self.awaiting_response = False
     
     def send_likes(self, mes, att, gid, text, sender_name):
-        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
+        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name), 1)
 
     def send_info(self, mes, att, gid, text, sender_name):
-        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
+        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name), 1)
 
     def send_rank(self, mes, att, gid, text, sender_name):
-        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
+        self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name), 1)
 
     def start_quizzer(self, mes, att, gid, text, sender_name):
         self.quizstop = time.time()
@@ -264,7 +264,7 @@ class Empuorg():
             counter = 0
             questioncount = text.replace("!quiz ", "")
             if int(questioncount) > 15:
-                self.send_message("15 is the max amount of questions I can quiz over at this time.")
+                self.send_message("15 is the max amount of questions I can quiz over at this time.", 1)
             while counter < int(questioncount) and int(questioncount) <= 15:
                 counter += 1
                 sections = self.quizmaterial['acts']['sections']
@@ -297,9 +297,9 @@ class Empuorg():
             message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][2])
             self.awaiting_response = True
             self.current_question = 0
-            self.send_message(message)
+            self.send_message(message, 1)
         else:
-            self.send_message("Sorry, this is only for authenticated users :/")
+            self.send_message("Sorry, this is only for authenticated users :/", 1)
 
     def continue_quiz(self, mes, att, gid, text, sender_name):
         response = text.lower()
@@ -340,14 +340,14 @@ class Empuorg():
                         logging.info("Player not found, iterating again")
                         self.playerindex += 1
                 self.playerindex = 0
-                self.send_message(message)
+                self.send_message(message, 1)
                 self.current_question += 1
                 index += 1
                 if self.current_question < len(self.current_quiz):
                     message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
-                    self.send_message(message)
+                    self.send_message(message, 5)
                 else:
-                    self.send_message("Finished quiz! Resuming normal commands.")
+                    self.send_message("Finished quiz! Resuming normal commands.", 1)
                     self.quiztime = time.time() - self.quizstop
                     self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
                     message = "Time took: {}\nScore Results-\n".format(self.quiztime)
@@ -355,7 +355,7 @@ class Empuorg():
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     for player in self.keeping_score:
                         message += "{}: {}\n".format(player[0],[player[1]])
-                    self.send_message(message)
+                    self.send_message(message, 1)
                     self.awaiting_response = False
             else:
                 logging.info("Got incorrect answer %s" % (text))
@@ -393,14 +393,14 @@ class Empuorg():
                         logging.info("Player not found, iterating again")
                         self.playerindex += 1
                 self.playerindex = 0
-                self.send_message(message)
+                self.send_message(message, 1)
                 self.current_question += 1
                 index += 1
                 if self.current_question < len(self.current_quiz):
                     message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
-                    self.send_message(message)
+                    self.send_message(message, 5)
                 else:
-                    self.send_message("Finished quiz! Resuming normal commands.")
+                    self.send_message("Finished quiz! Resuming normal commands.", 1)
                     self.quiztime = time.time() - self.quizstop
                     self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
                     message = "Time took: {}\nScore Results-\n".format(self.quiztime)
@@ -408,7 +408,7 @@ class Empuorg():
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     for player in self.keeping_score:
                         message += "{}: {}\n".format(player[0],[player[1]])
-                    self.send_message(message)
+                    self.send_message(message, 1)
                     self.awaiting_response = False
             else:
                 logging.info("Got incorrect answer %s" % (text))
@@ -443,9 +443,9 @@ class Empuorg():
                                 conn.close()
                                 message = "Updated subreddit list, added - "
                                 message += text[3]
-                                self.send_message(message)
+                                self.send_message(message, 1)
                             else:
-                                self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
+                                self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>", 1)
                         elif text[2] == 'delete':
                             if 0 <= 3 < len(text):
                                 isString = isinstance(text[3], str)
@@ -460,16 +460,16 @@ class Empuorg():
                                 conn.close()
                                 message = "Updated subreddit list, removed - "
                                 message += text[3]
-                                self.send_message(message)
+                                self.send_message(message, 1)
                             else:
-                                self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>")
+                                self.send_message("You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>", 1)
                         else:
-                            self.send_message("Incorrect usage, expected add|delete\nUsage - !config subreddit <add|delete>")
+                            self.send_message("Incorrect usage, expected add|delete\nUsage - !config subreddit <add|delete>", 1)
                     else:
                         message = "Current enabled subreddits to pull from -"
                         for subreddit in self.meme_source:
                             message += "\n{}".format(subreddit)
-                        self.send_message(message)
+                        self.send_message(message, 1)
                 elif what_config[1] == configword:
                     if 0 <= 2 < len(text):
                         isString = isinstance(text[2], str)
@@ -485,7 +485,7 @@ class Empuorg():
                                 conn.close()
                                 message = "Updated status of allownsfw - "
                                 message += text[2]
-                                self.send_message(message)
+                                self.send_message(message, 1)
                             elif text[2] == 'false':
                                 t = (text[2],self.bot_id,self.group_id)
                                 c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
@@ -497,13 +497,13 @@ class Empuorg():
                                 conn.close()
                                 message = "Updated status of allownsfw - "
                                 message += text[2]
-                                self.send_message(message)
+                                self.send_message(message, 1)
                             else:
-                                self.send_message("Incorrect usage, expected true|false\nUsage !config allownsfw <true|false>")
+                                self.send_message("Incorrect usage, expected true|false\nUsage !config allownsfw <true|false>", 1)
                     else:
                         message = "Current status of allownsfw - "
                         message += self.allow_nsfw
-                        self.send_message(message)
+                        self.send_message(message, 1)
                 elif what_config[2] == configword:
                     if 0 <= 2 < len(text):
                         isString = isinstance(text[2], str)
@@ -519,7 +519,7 @@ class Empuorg():
                                 conn.close()
                                 message = "Updated status of allowrepost - "
                                 message += text[2]
-                                self.send_message(message)
+                                self.send_message(message, 1)
                             elif text[2] == 'false':
                                 t = (text[2],self.bot_id,self.group_id)
                                 c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
@@ -531,17 +531,17 @@ class Empuorg():
                                 conn.close()
                                 message = "Updated status of allowrepost - "
                                 message += text[2]
-                                self.send_message(message)
+                                self.send_message(message, 1)
                             else:
-                                self.send_message("Incorrect usage, expected true|false\nUsage !config allowrepost <true|false>")
+                                self.send_message("Incorrect usage, expected true|false\nUsage !config allowrepost <true|false>", 1)
                     else:
                         message = "Current status of allowrepost - "
                         message += self.allow_reposts
-                        self.send_message(message)
+                        self.send_message(message, 1)
                 else:
-                    self.send_message("Sorry, I can't find that config! This is the config message I received-\n%s" % (text))
+                    self.send_message("Sorry, I can't find that config! This is the config message I received-\n%s" % (text), 1)
         else:
-            self.send_message("Sorry, this is only for authenticated users.")
+            self.send_message("Sorry, this is only for authenticated users.", 1)
 
     def send_meme(self, mes, att, gid, text, sender_name):
         start = time.time()
@@ -581,20 +581,17 @@ class Empuorg():
         else:
             meme_message += time.strftime("%Ss", time.gmtime(response_time))
 
-        self.send_message(meme_message)
+        self.send_message(meme_message, 1)
 
 
     def send_help(self, mes, att, gid, text, sender_name):
         help_message = "Empuorg Bot Commands-\n" + "Version 0.1b\n" + "!memes - searches for a random meme from your meme suppliers in the config\n" + "!info - prints information for the group\n" + "!config - edits group config\n" + "!help - displays help commands\n"
 
-        self.send_message(help_message)
+        self.send_message(help_message, 1)
     
-    def send_message(self, message):
+    def send_message(self, message, time):
         data = {"bot_id": self.bot_id, "text": str(message)}
-        if self.awaiting_response == True:
-            time.sleep(5)
-        else:
-            time.sleep(1)
+        time.sleep(time)
         requests.post(self.groupme_url, json=data)
         logging.info(f"Just sent a message-\n{message}\n")
 
