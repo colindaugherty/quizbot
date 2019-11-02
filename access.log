@@ -1,0 +1,1689 @@
+02-Nov-19 18:11:59 - INFO - Started program. Hello world!
+02-Nov-19 18:11:59 - INFO - Found bot- ('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853')
+02-Nov-19 18:11:59 - INFO - Found bot- ('quizzer', '7b457d1c28cb593e902511d864', '55232995')
+02-Nov-19 18:11:59 - INFO - Found bot- ('quizbot', '909fa376de5fb4a0326418f851', '50963800')
+02-Nov-19 18:11:59 - INFO - (1, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'false', 'false')
+02-Nov-19 18:11:59 - INFO - (2, 'quizzer', '7b457d1c28cb593e902511d864', 55232995, 'false', 'false')
+02-Nov-19 18:11:59 - INFO - (3, 'quizbot', '909fa376de5fb4a0326418f851', 50963800, 'false', 'false')
+02-Nov-19 18:11:59 - INFO - (3, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'dankmemes')
+02-Nov-19 18:11:59 - INFO - (4, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'memes')
+02-Nov-19 18:11:59 - INFO - (5, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'pewdiepiesubmissions')
+02-Nov-19 18:11:59 - INFO - (2, 'quizzer', '7b457d1c28cb593e902511d864', 55232995, 'all')
+02-Nov-19 18:11:59 - INFO - (1, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'false', 'false')
+02-Nov-19 18:11:59 - INFO - (2, 'quizzer', '7b457d1c28cb593e902511d864', 55232995, 'false', 'false')
+02-Nov-19 18:11:59 - INFO - (3, 'quizbot', '909fa376de5fb4a0326418f851', 50963800, 'false', 'false')
+02-Nov-19 18:11:59 - INFO - (3, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'dankmemes')
+02-Nov-19 18:11:59 - INFO - (4, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'memes')
+02-Nov-19 18:11:59 - INFO - (5, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'pewdiepiesubmissions')
+02-Nov-19 18:11:59 - INFO - (2, 'quizzer', '7b457d1c28cb593e902511d864', 55232995, 'all')
+02-Nov-19 18:11:59 - INFO - (1, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'false', 'false')
+02-Nov-19 18:11:59 - INFO - (2, 'quizzer', '7b457d1c28cb593e902511d864', 55232995, 'false', 'false')
+02-Nov-19 18:11:59 - INFO - (3, 'quizbot', '909fa376de5fb4a0326418f851', 50963800, 'false', 'false')
+02-Nov-19 18:11:59 - INFO - (3, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'dankmemes')
+02-Nov-19 18:11:59 - INFO - (4, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'memes')
+02-Nov-19 18:11:59 - INFO - (5, 'groupmebot', '3c69fddbb7c852afc8b88c8594', 55232853, 'pewdiepiesubmissions')
+02-Nov-19 18:11:59 - INFO - (2, 'quizzer', '7b457d1c28cb593e902511d864', 55232995, 'all')
+02-Nov-19 18:11:59 - INFO - Reddit read only is - True
+02-Nov-19 18:11:59 - INFO - Initialized regex.
+02-Nov-19 18:12:11 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:12:11 - INFO - groupmebot and id#3c69fddbb7c852afc8b88c8594 matched group id#55232853
+02-Nov-19 18:12:11 - INFO - Inside _getmemesource: memesource should be populated here it is- ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - Current authenticated users ['colin_daugherty']
+02-Nov-19 18:12:11 - INFO - 
+
+
+LOTS OF SPACE FOR CONFIG INITS
+
+THESE ARE CONFIG VALUES-
+
+bot_id: 3c69fddbb7c852afc8b88c8594
+meme_source: ['dankmemes', 'memes', 'pewdiepiesubmissions']
+allow_nsfw: false
+allow_reposts: false
+bot_name: groupmebot
+group_id: 55232853
+authenticatedUsers: ['colin_daugherty']
+
+
+END CONFIG VALUES
+
+
+
+02-Nov-19 18:12:11 - INFO - Initialized config for group 55232853
+02-Nov-19 18:12:11 - INFO - Variables are -
+bot_id : 3c69fddbb7c852afc8b88c8594
+listening_port : 2000
+meme_source : ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - quizzer and id#7b457d1c28cb593e902511d864 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - quizbot and id#909fa376de5fb4a0326418f851 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - groupmebot and id#3c69fddbb7c852afc8b88c8594 matched group id#55232853
+02-Nov-19 18:12:11 - INFO - Inside _getmemesource: memesource should be populated here it is- ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - Current authenticated users ['colin_daugherty']
+02-Nov-19 18:12:11 - INFO - 
+
+
+LOTS OF SPACE FOR CONFIG INITS
+
+THESE ARE CONFIG VALUES-
+
+bot_id: 3c69fddbb7c852afc8b88c8594
+meme_source: ['dankmemes', 'memes', 'pewdiepiesubmissions']
+allow_nsfw: false
+allow_reposts: false
+bot_name: groupmebot
+group_id: 55232853
+authenticatedUsers: ['colin_daugherty']
+
+
+END CONFIG VALUES
+
+
+
+02-Nov-19 18:12:11 - INFO - Initialized config for group 55232853
+02-Nov-19 18:12:11 - INFO - Variables are -
+bot_id : 3c69fddbb7c852afc8b88c8594
+listening_port : 2000
+meme_source : ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - quizzer and id#7b457d1c28cb593e902511d864 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - quizbot and id#909fa376de5fb4a0326418f851 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - groupmebot and id#3c69fddbb7c852afc8b88c8594 matched group id#55232853
+02-Nov-19 18:12:11 - INFO - Inside _getmemesource: memesource should be populated here it is- ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - Current authenticated users ['colin_daugherty']
+02-Nov-19 18:12:11 - INFO - 
+
+
+LOTS OF SPACE FOR CONFIG INITS
+
+THESE ARE CONFIG VALUES-
+
+bot_id: 3c69fddbb7c852afc8b88c8594
+meme_source: ['dankmemes', 'memes', 'pewdiepiesubmissions']
+allow_nsfw: false
+allow_reposts: false
+bot_name: groupmebot
+group_id: 55232853
+authenticatedUsers: ['colin_daugherty']
+
+
+END CONFIG VALUES
+
+
+
+02-Nov-19 18:12:11 - INFO - Initialized config for group 55232853
+02-Nov-19 18:12:11 - INFO - Variables are -
+bot_id : 3c69fddbb7c852afc8b88c8594
+listening_port : 2000
+meme_source : ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - quizzer and id#7b457d1c28cb593e902511d864 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - quizbot and id#909fa376de5fb4a0326418f851 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - groupmebot and id#3c69fddbb7c852afc8b88c8594 matched group id#55232853
+02-Nov-19 18:12:11 - INFO - Inside _getmemesource: memesource should be populated here it is- ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - Current authenticated users ['colin_daugherty']
+02-Nov-19 18:12:11 - INFO - 
+
+
+LOTS OF SPACE FOR CONFIG INITS
+
+THESE ARE CONFIG VALUES-
+
+bot_id: 3c69fddbb7c852afc8b88c8594
+meme_source: ['dankmemes', 'memes', 'pewdiepiesubmissions']
+allow_nsfw: false
+allow_reposts: false
+bot_name: groupmebot
+group_id: 55232853
+authenticatedUsers: ['colin_daugherty']
+
+
+END CONFIG VALUES
+
+
+
+02-Nov-19 18:12:11 - INFO - Initialized config for group 55232853
+02-Nov-19 18:12:11 - INFO - Variables are -
+bot_id : 3c69fddbb7c852afc8b88c8594
+listening_port : 2000
+meme_source : ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - quizzer and id#7b457d1c28cb593e902511d864 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - quizbot and id#909fa376de5fb4a0326418f851 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - groupmebot and id#3c69fddbb7c852afc8b88c8594 matched group id#55232853
+02-Nov-19 18:12:11 - INFO - Inside _getmemesource: memesource should be populated here it is- ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - Current authenticated users ['colin_daugherty']
+02-Nov-19 18:12:11 - INFO - 
+
+
+LOTS OF SPACE FOR CONFIG INITS
+
+THESE ARE CONFIG VALUES-
+
+bot_id: 3c69fddbb7c852afc8b88c8594
+meme_source: ['dankmemes', 'memes', 'pewdiepiesubmissions']
+allow_nsfw: false
+allow_reposts: false
+bot_name: groupmebot
+group_id: 55232853
+authenticatedUsers: ['colin_daugherty']
+
+
+END CONFIG VALUES
+
+
+
+02-Nov-19 18:12:11 - INFO - Initialized config for group 55232853
+02-Nov-19 18:12:11 - INFO - Variables are -
+bot_id : 3c69fddbb7c852afc8b88c8594
+listening_port : 2000
+meme_source : ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - quizzer and id#7b457d1c28cb593e902511d864 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - quizbot and id#909fa376de5fb4a0326418f851 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - groupmebot and id#3c69fddbb7c852afc8b88c8594 matched group id#55232853
+02-Nov-19 18:12:11 - INFO - Inside _getmemesource: memesource should be populated here it is- ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - Current authenticated users ['colin_daugherty']
+02-Nov-19 18:12:11 - INFO - 
+
+
+LOTS OF SPACE FOR CONFIG INITS
+
+THESE ARE CONFIG VALUES-
+
+bot_id: 3c69fddbb7c852afc8b88c8594
+meme_source: ['dankmemes', 'memes', 'pewdiepiesubmissions']
+allow_nsfw: false
+allow_reposts: false
+bot_name: groupmebot
+group_id: 55232853
+authenticatedUsers: ['colin_daugherty']
+
+
+END CONFIG VALUES
+
+
+
+02-Nov-19 18:12:11 - INFO - Initialized config for group 55232853
+02-Nov-19 18:12:11 - INFO - Variables are -
+bot_id : 3c69fddbb7c852afc8b88c8594
+listening_port : 2000
+meme_source : ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - quizzer and id#7b457d1c28cb593e902511d864 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - quizbot and id#909fa376de5fb4a0326418f851 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - groupmebot and id#3c69fddbb7c852afc8b88c8594 matched group id#55232853
+02-Nov-19 18:12:11 - INFO - Inside _getmemesource: memesource should be populated here it is- ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - Current authenticated users ['colin_daugherty']
+02-Nov-19 18:12:11 - INFO - 
+
+
+LOTS OF SPACE FOR CONFIG INITS
+
+THESE ARE CONFIG VALUES-
+
+bot_id: 3c69fddbb7c852afc8b88c8594
+meme_source: ['dankmemes', 'memes', 'pewdiepiesubmissions']
+allow_nsfw: false
+allow_reposts: false
+bot_name: groupmebot
+group_id: 55232853
+authenticatedUsers: ['colin_daugherty']
+
+
+END CONFIG VALUES
+
+
+
+02-Nov-19 18:12:11 - INFO - Initialized config for group 55232853
+02-Nov-19 18:12:11 - INFO - Variables are -
+bot_id : 3c69fddbb7c852afc8b88c8594
+listening_port : 2000
+meme_source : ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - quizzer and id#7b457d1c28cb593e902511d864 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - quizbot and id#909fa376de5fb4a0326418f851 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - groupmebot and id#3c69fddbb7c852afc8b88c8594 matched group id#55232853
+02-Nov-19 18:12:11 - INFO - Inside _getmemesource: memesource should be populated here it is- ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - Current authenticated users ['colin_daugherty']
+02-Nov-19 18:12:11 - INFO - 
+
+
+LOTS OF SPACE FOR CONFIG INITS
+
+THESE ARE CONFIG VALUES-
+
+bot_id: 3c69fddbb7c852afc8b88c8594
+meme_source: ['dankmemes', 'memes', 'pewdiepiesubmissions']
+allow_nsfw: false
+allow_reposts: false
+bot_name: groupmebot
+group_id: 55232853
+authenticatedUsers: ['colin_daugherty']
+
+
+END CONFIG VALUES
+
+
+
+02-Nov-19 18:12:11 - INFO - Initialized config for group 55232853
+02-Nov-19 18:12:11 - INFO - Variables are -
+bot_id : 3c69fddbb7c852afc8b88c8594
+listening_port : 2000
+meme_source : ['dankmemes', 'memes', 'pewdiepiesubmissions']
+02-Nov-19 18:12:11 - INFO - quizzer and id#7b457d1c28cb593e902511d864 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - quizbot and id#909fa376de5fb4a0326418f851 did not match group id#55232853
+02-Nov-19 18:12:11 - INFO - Received message with type:Quiz and message:<_sre.SRE_Match object; span=(0, 5), match='!quiz'>
+from group:55232853 so bot groupmebot should reply
+02-Nov-19 18:12:11 - INFO - [[1, 'Lying to the Holy Spirit', 'acts5.2', 'However, he kept back part of the WHAT?', 'proceeds'], [2, "Israel's Rebellion Against God", 'acts7.46', "He found favor in God's sight and asked that he might provide a WHAT?", 'dwelling place'], [3, 'Stephen Accused of Blasphemy', 'acts6.10', 'And the WHAT by whom he was speaking?', 'spirit'], [4, 'In and Out of Prison', 'acts5.20', "'Go and stand in the WHAT'?", 'temple'], [5, 'The Apostoles on Trial Again', 'acts5.23', "'but when we opened them, we found WHAT'?", 'no one inside'], [6, 'The Patriarchs in Egypt', 'acts7.11', 'Now WHAT came over all of Egypt and Canaan?', ['a famine', 'great suffering']], [7, 'Seven Chosen To Serve', 'acts6.5', 'Stephen, a man full of WHAT?', ['faith', 'the holy spirit']], [8, "Stephen's Sermon", 'acts7.3', 'And said to him: Leave your WHAT and come to the land that I will show you?', ['country', 'relatives']], [9, 'The First Christian Martyr', 'acts7.54', 'And gnashed their WHAT at him?', 'teeth'], [10, 'Apostolic Signs and Wonders', 'acts5.16', 'Bringing the WHAT?', 'sick'], [11, 'The Apostoles on Trial Again', 'acts5.26', 'Because they were afraid the people might DO WHAT TO them?', 'stone'], [12, 'The Apostoles on Trial Again', 'acts5.26', 'Then the commander went with the servants and brought them in without WHAT?', 'force'], [13, 'Moses, a Rejected Savior', 'acts7.31', 'When Moses saw it, he was WHAT at the sight?', 'amazed'], [14, 'Apostolic Signs and Wonders', 'acts5.13', 'But the people spoke HOW of them?', 'well'], [15, "Gamaliel's Advice", 'acts5.38', "'And leave them HOW'?", 'alone'], [16, "Stephen's Sermon", 'acts7.4', 'God had him move to this land in which you are now DOING WHAT?', 'living'], [17, 'Apostolic Signs and Wonders', 'acts5.16', 'Bringing the WHAT?', 'sick'], [18, 'Moses, a Rejected Savior', 'acts7.22', 'So Moses was WHAT in all the wisdom of the Egyptians?', 'educated'], [19, 'The First Christian Martyr', 'acts7.60', 'He DID WHAT and cried out with a loud voice?', 'knelt down'], [20, "Israel's Rebellion Against God", 'acts7.42', 'As it is written in the book of the WHAT?', 'prophets'], [21, 'Stephen Accused of Blasphemy', 'acts6.10', 'But they were unable to stand up against his WHAT?', 'wisdom'], [22, 'In and Out of Prison', 'acts5.19', 'But WHO opened the doors of the jail?', 'an angel of the lord'], [23, "Stephen's Sermon", 'acts7.4', 'From there, after his father DID WHAT?', 'died'], [24, 'Moses, a Rejected Savior', 'acts7.19', 'By making them abandon their WHAT outside?', 'infants'], [25, "Israel's Rebellion Against God", 'acts7.50', 'Did not my WHAT make all these things?', 'hand']]
+02-Nov-19 18:12:12 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:12:13 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:12:13 - INFO - Just sent a message-
+1) Here is your question from the section 'Lying to the Holy Spirit': However, he kept back part of the WHAT? (acts5.2)
+
+02-Nov-19 18:12:13 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:12:17 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:12:17 - INFO - proceeds
+02-Nov-19 18:12:17 - INFO - 0
+02-Nov-19 18:12:17 - INFO - 0
+02-Nov-19 18:12:17 - INFO - 0
+02-Nov-19 18:12:17 - INFO - proceeds
+02-Nov-19 18:12:17 - INFO - [['Colin', 1]]
+02-Nov-19 18:12:18 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:12:19 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:12:19 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:12:24 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:12:24 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:12:24 - INFO - Just sent a message-
+2) Here is your question from the section 'Israel's Rebellion Against God': He found favor in God's sight and asked that he might provide a WHAT? (acts7.46)
+
+02-Nov-19 18:12:24 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:12:24 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:12:53 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:12:53 - INFO - dwelling place
+02-Nov-19 18:12:53 - INFO - 1
+02-Nov-19 18:12:53 - INFO - 1
+02-Nov-19 18:12:53 - INFO - 1
+02-Nov-19 18:12:53 - INFO - dwelling place
+02-Nov-19 18:12:53 - INFO - [['Colin', 2]]
+02-Nov-19 18:12:54 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:12:54 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:12:54 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:12:59 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:13:00 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:13:00 - INFO - Just sent a message-
+3) Here is your question from the section 'Stephen Accused of Blasphemy': And the WHAT by whom he was speaking? (acts6.10)
+
+02-Nov-19 18:13:00 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:13:00 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:13:07 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:13:07 - INFO - spirit
+02-Nov-19 18:13:07 - INFO - 2
+02-Nov-19 18:13:07 - INFO - 2
+02-Nov-19 18:13:07 - INFO - 2
+02-Nov-19 18:13:07 - INFO - spirit
+02-Nov-19 18:13:07 - INFO - [['Colin', 3]]
+02-Nov-19 18:13:08 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:13:08 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:13:08 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:13:13 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:13:14 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:13:14 - INFO - Just sent a message-
+4) Here is your question from the section 'In and Out of Prison': 'Go and stand in the WHAT'? (acts5.20)
+
+02-Nov-19 18:13:14 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:13:14 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:13:19 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:13:19 - INFO - temple
+02-Nov-19 18:13:19 - INFO - 3
+02-Nov-19 18:13:19 - INFO - 3
+02-Nov-19 18:13:19 - INFO - 3
+02-Nov-19 18:13:19 - INFO - temple
+02-Nov-19 18:13:19 - INFO - [['Colin', 4]]
+02-Nov-19 18:13:20 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:13:20 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:13:20 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:13:25 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:13:26 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:13:26 - INFO - Just sent a message-
+5) Here is your question from the section 'The Apostoles on Trial Again': 'but when we opened them, we found WHAT'? (acts5.23)
+
+02-Nov-19 18:13:26 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:13:26 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:13:44 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:13:44 - INFO - no one
+02-Nov-19 18:13:44 - INFO - 4
+02-Nov-19 18:13:44 - INFO - 4
+02-Nov-19 18:13:44 - INFO - 4
+02-Nov-19 18:13:44 - INFO - no one inside
+02-Nov-19 18:13:44 - INFO - [['Colin', 5]]
+02-Nov-19 18:13:45 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:13:45 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:13:45 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:13:50 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:13:51 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:13:51 - INFO - Just sent a message-
+6) Here is your question from the section 'The Patriarchs in Egypt': Now WHAT came over all of Egypt and Canaan? (acts7.11)
+
+02-Nov-19 18:13:51 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:13:51 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:14:12 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:14:12 - INFO - a famine, great suffering
+02-Nov-19 18:14:12 - INFO - 5
+02-Nov-19 18:14:12 - INFO - 5
+02-Nov-19 18:14:12 - INFO - 5
+02-Nov-19 18:14:12 - INFO - ['a famine', 'great suffering']
+02-Nov-19 18:14:12 - INFO - 2
+02-Nov-19 18:14:12 - INFO - The number of correct answers is above me
+02-Nov-19 18:14:12 - INFO - 2
+02-Nov-19 18:14:12 - INFO - The number of answers is above me
+02-Nov-19 18:14:12 - INFO - [['Colin', 6]]
+02-Nov-19 18:14:13 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:14:14 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:14:14 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:14:19 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:14:19 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:14:19 - INFO - Just sent a message-
+7) Here is your question from the section 'Seven Chosen To Serve': Stephen, a man full of WHAT? (acts6.5)
+
+02-Nov-19 18:14:19 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:14:19 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:14:37 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:14:37 - INFO - faith, holy spirit
+02-Nov-19 18:14:37 - INFO - 6
+02-Nov-19 18:14:37 - INFO - 6
+02-Nov-19 18:14:37 - INFO - 6
+02-Nov-19 18:14:37 - INFO - ['faith', 'the holy spirit']
+02-Nov-19 18:14:37 - INFO - 2
+02-Nov-19 18:14:37 - INFO - The number of correct answers is above me
+02-Nov-19 18:14:37 - INFO - 2
+02-Nov-19 18:14:37 - INFO - The number of answers is above me
+02-Nov-19 18:14:37 - INFO - [['Colin', 7]]
+02-Nov-19 18:14:38 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:14:38 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:14:38 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:14:43 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:14:44 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:14:44 - INFO - Just sent a message-
+8) Here is your question from the section 'Stephen's Sermon': And said to him: Leave your WHAT and come to the land that I will show you? (acts7.3)
+
+02-Nov-19 18:14:44 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:14:44 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:14:56 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:14:56 - INFO - country, relatives
+02-Nov-19 18:14:56 - INFO - 7
+02-Nov-19 18:14:56 - INFO - 7
+02-Nov-19 18:14:56 - INFO - 7
+02-Nov-19 18:14:56 - INFO - ['country', 'relatives']
+02-Nov-19 18:14:56 - INFO - 2
+02-Nov-19 18:14:56 - INFO - The number of correct answers is above me
+02-Nov-19 18:14:56 - INFO - 2
+02-Nov-19 18:14:56 - INFO - The number of answers is above me
+02-Nov-19 18:14:56 - INFO - [['Colin', 8]]
+02-Nov-19 18:14:57 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:14:57 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:14:57 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:15:02 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:15:02 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:15:02 - INFO - Just sent a message-
+9) Here is your question from the section 'The First Christian Martyr': And gnashed their WHAT at him? (acts7.54)
+
+02-Nov-19 18:15:02 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:02 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:07 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:07 - INFO - teeth
+02-Nov-19 18:15:07 - INFO - 8
+02-Nov-19 18:15:07 - INFO - 8
+02-Nov-19 18:15:07 - INFO - 8
+02-Nov-19 18:15:07 - INFO - teeth
+02-Nov-19 18:15:07 - INFO - [['Colin', 9]]
+02-Nov-19 18:15:08 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:15:08 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:15:08 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:15:13 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:15:14 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:15:14 - INFO - Just sent a message-
+10) Here is your question from the section 'Apostolic Signs and Wonders': Bringing the WHAT? (acts5.16)
+
+02-Nov-19 18:15:14 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:14 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:26 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:26 - INFO - false witnesses
+02-Nov-19 18:15:26 - INFO - 9
+02-Nov-19 18:15:26 - INFO - 9
+02-Nov-19 18:15:26 - INFO - 9
+02-Nov-19 18:15:26 - INFO - sick
+02-Nov-19 18:15:26 - INFO - Got incorrect answer false witnesses
+02-Nov-19 18:15:37 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:37 - INFO - sick
+02-Nov-19 18:15:37 - INFO - 9
+02-Nov-19 18:15:37 - INFO - 9
+02-Nov-19 18:15:37 - INFO - 9
+02-Nov-19 18:15:37 - INFO - sick
+02-Nov-19 18:15:37 - INFO - [['Colin', 10]]
+02-Nov-19 18:15:38 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:15:39 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:15:39 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:15:44 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:15:44 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:15:44 - INFO - Just sent a message-
+11) Here is your question from the section 'The Apostoles on Trial Again': Because they were afraid the people might DO WHAT TO them? (acts5.26)
+
+02-Nov-19 18:15:44 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:44 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:50 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:50 - INFO - stone
+02-Nov-19 18:15:50 - INFO - 10
+02-Nov-19 18:15:50 - INFO - 10
+02-Nov-19 18:15:50 - INFO - 10
+02-Nov-19 18:15:50 - INFO - stone
+02-Nov-19 18:15:50 - INFO - [['Colin', 11]]
+02-Nov-19 18:15:51 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:15:51 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:15:51 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:15:56 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:15:56 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:15:56 - INFO - Just sent a message-
+12) Here is your question from the section 'The Apostoles on Trial Again': Then the commander went with the servants and brought them in without WHAT? (acts5.26)
+
+02-Nov-19 18:15:56 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:15:57 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:02 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:02 - INFO - force
+02-Nov-19 18:16:02 - INFO - 11
+02-Nov-19 18:16:02 - INFO - 11
+02-Nov-19 18:16:02 - INFO - 11
+02-Nov-19 18:16:02 - INFO - force
+02-Nov-19 18:16:02 - INFO - [['Colin', 12]]
+02-Nov-19 18:16:03 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:16:03 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:16:03 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:16:08 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:16:09 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:16:09 - INFO - Just sent a message-
+13) Here is your question from the section 'Moses, a Rejected Savior': When Moses saw it, he was WHAT at the sight? (acts7.31)
+
+02-Nov-19 18:16:09 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:09 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:18 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:18 - INFO - terrified
+02-Nov-19 18:16:18 - INFO - 12
+02-Nov-19 18:16:18 - INFO - 12
+02-Nov-19 18:16:18 - INFO - 12
+02-Nov-19 18:16:18 - INFO - amazed
+02-Nov-19 18:16:18 - INFO - Got incorrect answer terrified
+02-Nov-19 18:16:22 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:22 - INFO - marveled
+02-Nov-19 18:16:22 - INFO - 12
+02-Nov-19 18:16:22 - INFO - 12
+02-Nov-19 18:16:22 - INFO - 12
+02-Nov-19 18:16:22 - INFO - amazed
+02-Nov-19 18:16:22 - INFO - Got incorrect answer marveled
+02-Nov-19 18:16:32 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:32 - INFO - amazed
+02-Nov-19 18:16:32 - INFO - 12
+02-Nov-19 18:16:32 - INFO - 12
+02-Nov-19 18:16:32 - INFO - 12
+02-Nov-19 18:16:32 - INFO - amazed
+02-Nov-19 18:16:32 - INFO - [['Colin', 13]]
+02-Nov-19 18:16:33 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:16:33 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:16:33 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:16:38 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:16:38 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:16:38 - INFO - Just sent a message-
+14) Here is your question from the section 'Apostolic Signs and Wonders': But the people spoke HOW of them? (acts5.13)
+
+02-Nov-19 18:16:38 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:38 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:44 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:44 - INFO - well
+02-Nov-19 18:16:44 - INFO - 13
+02-Nov-19 18:16:44 - INFO - 13
+02-Nov-19 18:16:44 - INFO - 13
+02-Nov-19 18:16:44 - INFO - well
+02-Nov-19 18:16:44 - INFO - [['Colin', 14]]
+02-Nov-19 18:16:45 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:16:45 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:16:45 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:16:50 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:16:51 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:16:51 - INFO - Just sent a message-
+15) Here is your question from the section 'Gamaliel's Advice': 'And leave them HOW'? (acts5.38)
+
+02-Nov-19 18:16:51 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:16:51 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:01 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:01 - INFO - alone
+02-Nov-19 18:17:01 - INFO - 14
+02-Nov-19 18:17:01 - INFO - 14
+02-Nov-19 18:17:01 - INFO - 14
+02-Nov-19 18:17:01 - INFO - alone
+02-Nov-19 18:17:01 - INFO - [['Colin', 15]]
+02-Nov-19 18:17:02 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:17:02 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:17:02 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:17:07 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:17:07 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:17:07 - INFO - Just sent a message-
+16) Here is your question from the section 'Stephen's Sermon': God had him move to this land in which you are now DOING WHAT? (acts7.4)
+
+02-Nov-19 18:17:07 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:07 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:17 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:17 - INFO - living
+02-Nov-19 18:17:17 - INFO - 15
+02-Nov-19 18:17:17 - INFO - 15
+02-Nov-19 18:17:17 - INFO - 15
+02-Nov-19 18:17:17 - INFO - living
+02-Nov-19 18:17:17 - INFO - [['Colin', 16]]
+02-Nov-19 18:17:18 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:17:18 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:17:18 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:17:23 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:17:23 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:17:23 - INFO - Just sent a message-
+17) Here is your question from the section 'Apostolic Signs and Wonders': Bringing the WHAT? (acts5.16)
+
+02-Nov-19 18:17:23 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:24 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:28 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:28 - INFO - sick
+02-Nov-19 18:17:28 - INFO - 16
+02-Nov-19 18:17:28 - INFO - 16
+02-Nov-19 18:17:28 - INFO - 16
+02-Nov-19 18:17:28 - INFO - sick
+02-Nov-19 18:17:28 - INFO - [['Colin', 17]]
+02-Nov-19 18:17:29 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:17:29 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:17:29 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:17:34 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:17:35 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:17:35 - INFO - Just sent a message-
+18) Here is your question from the section 'Moses, a Rejected Savior': So Moses was WHAT in all the wisdom of the Egyptians? (acts7.22)
+
+02-Nov-19 18:17:35 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:35 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:42 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:42 - INFO - raised
+02-Nov-19 18:17:42 - INFO - 17
+02-Nov-19 18:17:42 - INFO - 17
+02-Nov-19 18:17:42 - INFO - 17
+02-Nov-19 18:17:42 - INFO - educated
+02-Nov-19 18:17:42 - INFO - Got incorrect answer raised
+02-Nov-19 18:17:46 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:46 - INFO - raised, taught
+02-Nov-19 18:17:46 - INFO - 17
+02-Nov-19 18:17:46 - INFO - 17
+02-Nov-19 18:17:46 - INFO - 17
+02-Nov-19 18:17:46 - INFO - educated
+02-Nov-19 18:17:46 - INFO - Got incorrect answer raised, taught
+02-Nov-19 18:17:59 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:17:59 - INFO - educated
+02-Nov-19 18:17:59 - INFO - 17
+02-Nov-19 18:17:59 - INFO - 17
+02-Nov-19 18:17:59 - INFO - 17
+02-Nov-19 18:17:59 - INFO - educated
+02-Nov-19 18:17:59 - INFO - [['Colin', 18]]
+02-Nov-19 18:18:00 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:18:00 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:18:00 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:18:05 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:18:05 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:18:05 - INFO - Just sent a message-
+19) Here is your question from the section 'The First Christian Martyr': He DID WHAT and cried out with a loud voice? (acts7.60)
+
+02-Nov-19 18:18:05 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:05 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:12 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:12 - INFO - knelt down
+02-Nov-19 18:18:12 - INFO - 18
+02-Nov-19 18:18:12 - INFO - 18
+02-Nov-19 18:18:12 - INFO - 18
+02-Nov-19 18:18:12 - INFO - knelt down
+02-Nov-19 18:18:12 - INFO - [['Colin', 19]]
+02-Nov-19 18:18:13 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:18:13 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:18:13 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:18:18 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:18:18 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:18:18 - INFO - Just sent a message-
+20) Here is your question from the section 'Israel's Rebellion Against God': As it is written in the book of the WHAT? (acts7.42)
+
+02-Nov-19 18:18:18 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:18 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:23 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:23 - INFO - prophets
+02-Nov-19 18:18:23 - INFO - 19
+02-Nov-19 18:18:23 - INFO - 19
+02-Nov-19 18:18:23 - INFO - 19
+02-Nov-19 18:18:23 - INFO - prophets
+02-Nov-19 18:18:23 - INFO - [['Colin', 20]]
+02-Nov-19 18:18:24 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:18:25 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:18:25 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:18:30 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:18:30 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:18:30 - INFO - Just sent a message-
+21) Here is your question from the section 'Stephen Accused of Blasphemy': But they were unable to stand up against his WHAT? (acts6.10)
+
+02-Nov-19 18:18:30 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:30 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:35 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:35 - INFO - wisdom
+02-Nov-19 18:18:35 - INFO - 20
+02-Nov-19 18:18:35 - INFO - 20
+02-Nov-19 18:18:35 - INFO - 20
+02-Nov-19 18:18:35 - INFO - wisdom
+02-Nov-19 18:18:35 - INFO - [['Colin', 21]]
+02-Nov-19 18:18:36 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:18:36 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:18:36 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:18:41 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:18:42 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:18:42 - INFO - Just sent a message-
+22) Here is your question from the section 'In and Out of Prison': But WHO opened the doors of the jail? (acts5.19)
+
+02-Nov-19 18:18:42 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:42 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:50 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:50 - INFO - an angel
+02-Nov-19 18:18:50 - INFO - 21
+02-Nov-19 18:18:50 - INFO - 21
+02-Nov-19 18:18:50 - INFO - 21
+02-Nov-19 18:18:50 - INFO - an angel of the lord
+02-Nov-19 18:18:50 - INFO - [['Colin', 22]]
+02-Nov-19 18:18:51 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:18:51 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:18:51 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:18:56 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:18:56 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:18:56 - INFO - Just sent a message-
+23) Here is your question from the section 'Stephen's Sermon': From there, after his father DID WHAT? (acts7.4)
+
+02-Nov-19 18:18:56 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:18:56 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:07 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:07 - INFO - died
+02-Nov-19 18:19:07 - INFO - 22
+02-Nov-19 18:19:07 - INFO - 22
+02-Nov-19 18:19:07 - INFO - 22
+02-Nov-19 18:19:07 - INFO - died
+02-Nov-19 18:19:07 - INFO - [['Colin', 23]]
+02-Nov-19 18:19:08 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:19:08 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:19:08 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:19:13 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:19:14 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:19:14 - INFO - Just sent a message-
+24) Here is your question from the section 'Moses, a Rejected Savior': By making them abandon their WHAT outside? (acts7.19)
+
+02-Nov-19 18:19:14 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:14 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:18 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:18 - INFO - sons
+02-Nov-19 18:19:18 - INFO - 23
+02-Nov-19 18:19:18 - INFO - 23
+02-Nov-19 18:19:18 - INFO - 23
+02-Nov-19 18:19:18 - INFO - infants
+02-Nov-19 18:19:18 - INFO - Got incorrect answer sons
+02-Nov-19 18:19:23 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:23 - INFO - children
+02-Nov-19 18:19:23 - INFO - 23
+02-Nov-19 18:19:23 - INFO - 23
+02-Nov-19 18:19:23 - INFO - 23
+02-Nov-19 18:19:23 - INFO - infants
+02-Nov-19 18:19:23 - INFO - Got incorrect answer children
+02-Nov-19 18:19:25 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:25 - INFO - babies
+02-Nov-19 18:19:25 - INFO - 23
+02-Nov-19 18:19:25 - INFO - 23
+02-Nov-19 18:19:25 - INFO - 23
+02-Nov-19 18:19:25 - INFO - infants
+02-Nov-19 18:19:25 - INFO - Got incorrect answer babies
+02-Nov-19 18:19:26 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:26 - INFO - infants
+02-Nov-19 18:19:26 - INFO - 23
+02-Nov-19 18:19:26 - INFO - 23
+02-Nov-19 18:19:26 - INFO - 23
+02-Nov-19 18:19:26 - INFO - infants
+02-Nov-19 18:19:26 - INFO - [['Colin', 24]]
+02-Nov-19 18:19:27 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:19:27 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:19:27 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:19:32 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:19:33 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:19:33 - INFO - Just sent a message-
+25) Here is your question from the section 'Israel's Rebellion Against God': Did not my WHAT make all these things? (acts7.50)
+
+02-Nov-19 18:19:33 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:33 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:44 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:44 - INFO - hand
+02-Nov-19 18:19:44 - INFO - 24
+02-Nov-19 18:19:44 - INFO - 24
+02-Nov-19 18:19:44 - INFO - 24
+02-Nov-19 18:19:44 - INFO - hand
+02-Nov-19 18:19:44 - INFO - [['Colin', 25]]
+02-Nov-19 18:19:45 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:19:46 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:19:46 - INFO - Just sent a message-
+Good job Colin you got that one right!
+
+02-Nov-19 18:19:47 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:19:47 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:19:47 - INFO - Just sent a message-
+Finished quiz! Resuming normal commands.
+
+02-Nov-19 18:19:48 - DEBUG - Starting new HTTPS connection (1): api.groupme.com:443
+02-Nov-19 18:19:48 - DEBUG - https://api.groupme.com:443 "POST /v3/bots/post HTTP/1.1" 202 1
+02-Nov-19 18:19:48 - INFO - Just sent a message-
+Time taken: 07:35s
+Score Results-
+Colin: [25]
+
+
+02-Nov-19 18:19:48 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:48 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
+02-Nov-19 18:19:48 - INFO - 
+
+
+
+
+received message from group: 55232853
+self.bots: [('groupmebot', '3c69fddbb7c852afc8b88c8594', '55232853'), ('quizzer', '7b457d1c28cb593e902511d864', '55232995'), ('quizbot', '909fa376de5fb4a0326418f851', '50963800')]
+
+
+
+
