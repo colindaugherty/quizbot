@@ -248,8 +248,8 @@ class Empuorg():
                 gid = groupid
                 self.continue_quiz(mes, att, gid, message, sender_name)
             else:
-                self.send_message("Error - awaiting_response is broken, closing program to prevent infinite loop")
-                exit()
+                self.send_message("Error - awaiting_response is broken, setting it to False in order to avoid an infinite loop")
+                self.awaiting_response = False
     
     def send_likes(self, mes, att, gid, text, sender_name):
         self.send_message("Unfortunately, %s this is not currently working. Stay tuned!" % (sender_name))
