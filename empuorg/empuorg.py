@@ -325,6 +325,11 @@ class Empuorg():
                 response = response.split(' and ')
             self.current_quiz[index][4] = sorted(self.current_quiz[index][4])
             response = sorted(response)
+            response = [x.lower for x in response]
+        if isinstance(self.current_quiz[index][4], list):
+            pass
+        else:
+            self.current_quiz[index][4] = self.current_quiz[index][4].lower()
         if response == self.current_quiz[index][4]:
             name = sender_name.split(' ')
             name = name[0]
