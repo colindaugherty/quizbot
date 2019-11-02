@@ -311,6 +311,7 @@ class Empuorg():
 
     def continue_quiz(self, mes, att, gid, text, sender_name):
         response = text.lower()
+        response = response.rstrip()
         print(response)
         cq = self.current_question
         index = cq
