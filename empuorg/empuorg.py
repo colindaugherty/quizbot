@@ -228,6 +228,7 @@ class Empuorg():
                             gid = int(gid)
                             botname = name
                             self._init_config(gid, bot_id, botname)
+                            break
                     if mes:
                         logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
                         if att:
