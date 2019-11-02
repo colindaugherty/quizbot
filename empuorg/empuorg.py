@@ -265,8 +265,7 @@ class Empuorg():
             questioncount = text.replace("!quiz ", "")
             if int(questioncount) > 25:
                 self.send_message("25 is the max amount of questions I can quiz over at this time.", 1)
-            while counter < int(questioncount) and int(questioncount) <= 15:
-                counter += 1
+            while counter < int(questioncount) and int(questioncount) <= 25:
                 sections = self.quizmaterial['acts']['sections']
                 sections = list(sections.keys())
                 quiz_indexer = len(sections) - 1
@@ -285,8 +284,16 @@ class Empuorg():
                     quiz_question = questions[rand]
                     questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
                     quiz_questionanswer = questions.get(quiz_question)
-                    quiz = [counter, quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
-                    self.current_quiz.append(quiz)
+                    quizid = counter + 1
+                    quiz = [quizid, quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
+                    if quiz in self.current_quiz:
+                        logging.info("This question was already selected.")
+                    elif quiz not in self.current_quiz:
+                        self.current_quiz.append(quiz)
+                        counter += 1
+                    else:
+                        logging.info("Failure to select a question, adding 1 to counter to avoid infinite loop")
+                        counter += 1
                 elif self.quizbonuses == True:
                     pass
                 else:
