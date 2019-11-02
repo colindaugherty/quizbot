@@ -591,7 +591,10 @@ class Empuorg():
     
     def send_message(self, message):
         data = {"bot_id": self.bot_id, "text": str(message)}
-        time.sleep(1)
+        if self.awaiting_response = True:
+            time.sleep(5)
+        else:
+            time.sleep(1)
         requests.post(self.groupme_url, json=data)
         logging.info(f"Just sent a message-\n{message}\n")
 
