@@ -332,13 +332,13 @@ class Empuorg():
             score = 1
             player = [name, score]
             while self.playerindex <= len(self.keeping_score):
-                if name in self.keeping_score[self.playerindex]:
-                    self.keeping_score[self.playerindex][1] += 1
+                if self.playerindex == len(self.keeping_score):
+                    self.keeping_score.append(player)
                     print(self.keeping_score)
                     self.playerindex += 1
                     break
-                elif self.playerindex == len(self.keeping_score):
-                    self.keeping_score.append(player)
+                elif name in self.keeping_score[self.playerindex]:
+                    self.keeping_score[self.playerindex][1] += 1
                     print(self.keeping_score)
                     self.playerindex += 1
                     break
