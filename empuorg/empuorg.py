@@ -591,7 +591,7 @@ class Empuorg():
     
     def send_message(self, message):
         data = {"bot_id": self.bot_id, "text": str(message)}
-        if self.awaiting_response = True:
+        if self.awaiting_response == True:
             time.sleep(5)
         else:
             time.sleep(1)
