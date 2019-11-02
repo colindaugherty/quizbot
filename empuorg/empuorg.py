@@ -350,7 +350,7 @@ class Empuorg():
                     self.send_message("Finished quiz! Resuming normal commands.", 1)
                     self.quiztime = time.time() - self.quizstop
                     self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
-                    message = "Time took: {}\nScore Results-\n".format(self.quiztime)
+                    message = "Time taken: {}\nScore Results-\n".format(self.quiztime)
                     self.quiztime = 0
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     for player in self.keeping_score:
@@ -403,7 +403,7 @@ class Empuorg():
                     self.send_message("Finished quiz! Resuming normal commands.", 1)
                     self.quiztime = time.time() - self.quizstop
                     self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
-                    message = "Time took: {}\nScore Results-\n".format(self.quiztime)
+                    message = "Time taken: {}\nScore Results-\n".format(self.quiztime)
                     self.quiztime = 0
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     for player in self.keeping_score:
