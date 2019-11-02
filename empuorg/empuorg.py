@@ -94,6 +94,7 @@ class Empuorg():
         self.config = re.compile("(^!config)")
         self.authenticate = re.compile("(^!authenticate)")
         self.quiz = re.compile("(^!quiz)")
+        self.hacking_joke = re.compile("(^!hack)")
 
         self._construct_regexes()
 
@@ -106,7 +107,8 @@ class Empuorg():
             ("Help", self.help_regex, self.send_help),
             ("Config", self.config, self.update_config),
             ("Authenticate", self.authenticate, self._authenticateUser),
-            ("Quiz", self.quiz, self.start_quizzer)
+            ("Quiz", self.quiz, self.start_quizzer),
+            ("Joke/EasterEgg", self.hacking_joke, self.hack_joke)
         ]
         logging.info("Initialized regex.")
 
@@ -602,6 +604,10 @@ class Empuorg():
         help_message = "Empuorg Bot Commands-\n" + "Version 0.2b\n" + "!memes - searches for a random meme from your meme suppliers in the config\n" + "!info - prints information for the group\n" + "!config - edits group config\n" + "!help - displays help commands\n"
 
         self.send_message(help_message, 1)
+
+    def hack_joke(self, mes, att, type, text, sender_name):
+        message = "Begining hacking sequence...\nSetting variables....\nsender_name: {}\ngroup_id:{}\ndate{}\nattempting remote login....\nsuccess".format(sender_name, self.group_id, time.strftime("%j/%m/%Y", time.gmtime(time.time())))
+        self.send_message(message, 1)
     
     def send_message(self, message, t):
         data = {"bot_id": self.bot_id, "text": str(message)}
