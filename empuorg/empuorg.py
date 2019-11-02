@@ -16,12 +16,14 @@ quiz_file = os.path.join('.', 'data', 'quiz_material.json')
 
 class Empuorg():
     def __init__(self, bot_id):
+        # grab config from files
         with open(config_file) as data_file:
             config = json.load(data_file)
 
         with open(quiz_file) as data_file:
             self.quizmaterial = json.load(data_file)
 
+        # start bot variables
         self.bots = config['bots']
         reallist = []
         for bot in self.bots:
@@ -29,6 +31,11 @@ class Empuorg():
             logging.info("Found bot- {}".format(bot))
             reallist.append(bot)
         self.bots = reallist
+        self.listening_port = config['listening_port']
+        logging.info(f"Reddit read only is - {reddit.read_only}")
+        self.groupme_url = "https://api.groupme.com/v3/bots/post"
+
+        # quizzing variables
         self.awaiting_response = False
         self.current_quiz = []
         self.current_question = 0
@@ -37,6 +44,8 @@ class Empuorg():
         self.keeping_score = []
         self.playerindex = 0
         self.quiztime = 0
+        
+        # initializing database defaults for any new bots
         for name, id, group in self.bots:
             iteration_values = (name, id, group)
             c = conn.cursor()
@@ -73,10 +82,7 @@ class Empuorg():
         conn.commit()
         conn.close()
 
-        self.listening_port = config['listening_port']
-        logging.info(f"Reddit read only is - {reddit.read_only}")
-        self.groupme_url = "https://api.groupme.com/v3/bots/post"
-
+        # all finished here, init regex time now
         self._init_regexes()
     
     def _init_regexes(self):
@@ -603,11 +609,15 @@ class Empuorg():
         requests.post(self.groupme_url, json=data)
         logging.info(f"Just sent a message-\n{message}\n")
 
+
+# init bot
 def init(bot_id=0):
     global bot
     bot = Empuorg(bot_id=bot_id)
     return bot
 
+
+# listen and send all messages to the message router
 def listen(server_class=HTTPServer, handler_class=MessageRouter, port=80):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)

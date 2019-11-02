@@ -5,3 +5,4 @@ config.db
 data/config.json
 data/quiz_material.json
 data/block1.json
+json/
