@@ -82,6 +82,9 @@ class Empuorg():
         conn.commit()
         conn.close()
 
+        # fred sayings
+        self.fred_sayings = ["Why was I created? I don't know. It's something I ask myself daily. - Fred", "Oh, shut up Weatherby - Fred", "I think we've outgrown full time education", "Vanessa named me, so I guess I'm Fred now.", "  o /\n/ |  \n / \ \nlook it's a guy dancing! - Fred", "uh, i don't know what to say anymore. uh. good morning? or is it afternoon now? evening?"]
+
         # all finished here, init regex time now
         self._init_regexes()
     
@@ -95,6 +98,7 @@ class Empuorg():
         self.authenticate = re.compile("(^!authenticate)")
         self.quiz = re.compile("(^!quiz)")
         self.hacking_joke = re.compile("(^!hack)")
+        self.fred_joke = re.compile("(^!fred)")
 
         self._construct_regexes()
 
@@ -108,7 +112,8 @@ class Empuorg():
             ("Config", self.config, self.update_config),
             ("Authenticate", self.authenticate, self._authenticateUser),
             ("Quiz", self.quiz, self.start_quizzer),
-            ("Joke/EasterEgg", self.hacking_joke, self.hack_joke)
+            ("Joke/EasterEgg", self.hacking_joke, self.hack_joke),
+            ("Joke/EasterEgg", self.fred_joke, self.fred_function)
         ]
         logging.info("Initialized regex.")
 
@@ -599,7 +604,6 @@ class Empuorg():
 
         self.send_message(meme_message, 1)
 
-
     def send_help(self, mes, att, gid, text, sender_name):
         help_message = "Empuorg Bot Commands-\n" + "Version 0.2b\n" + "!memes - searches for a random meme from your meme suppliers in the config\n" + "!info - prints information for the group\n" + "!config - edits group config\n" + "!help - displays help commands\n"
 
@@ -609,6 +613,12 @@ class Empuorg():
         message = "Begining hacking sequence...\nSetting variables....\n\nsender_name: {}\ngroup_id: {}\ndate: {}\n\nattempting remote login....\nsuccess\n\n{} you are now totally in the system. Good job. Proud of you.".format(sender_name, self.group_id, time.strftime("%j/%m/%Y", time.gmtime(time.time())), sender_name)
         self.send_message(message, 1)
     
+    def hack_joke(self, mes, att, type, text, sender_name):
+        rand = random.randint(0, len(self.fred_sayings))
+        message = self.fred_sayings[rand]
+        message += "\n(this message was summoned by {})".format(sender_name)
+        self.send_message(message, 1)
+
     def send_message(self, message, t):
         data = {"bot_id": self.bot_id, "text": str(message)}
         time.sleep(t)
