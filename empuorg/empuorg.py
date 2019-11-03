@@ -325,6 +325,8 @@ class Empuorg():
     def continue_quiz(self, mes, att, gid, text, sender_name):
         response = text.lower()
         response = response.strip()
+        if "'" in response:
+            response = response.replace("'", "’")
         logging.info(response)
         cq = self.current_question
         index = cq
