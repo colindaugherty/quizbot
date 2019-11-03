@@ -613,7 +613,7 @@ class Empuorg():
         message = "Begining hacking sequence...\nSetting variables....\n\nsender_name: {}\ngroup_id: {}\ndate: {}\n\nattempting remote login....\nsuccess\n\n{} you are now totally in the system. Good job. Proud of you.".format(sender_name, self.group_id, time.strftime("%j/%m/%Y", time.gmtime(time.time())), sender_name)
         self.send_message(message, 1)
     
-    def hack_joke(self, mes, att, type, text, sender_name):
+    def fred_function(self, mes, att, type, text, sender_name):
         rand = random.randint(0, len(self.fred_sayings))
         message = self.fred_sayings[rand]
         message += "\n(this message was summoned by {})".format(sender_name)
