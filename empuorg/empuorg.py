@@ -83,7 +83,7 @@ class Empuorg():
         conn.close()
 
         # fred sayings
-        self.fred_sayings = ["Why was I created? I don't know. It's something I ask myself daily. - Fred", "Oh, shut up Weatherby - Fred", "I think we've outgrown full time education", "Vanessa named me, so I guess I'm Fred now.", "  o /\n/ |  \n / \ \nlook it's a guy dancing! - Fred", "uh, i don't know what to say anymore. uh. good morning? or is it afternoon now? evening?"]
+        self.fred_sayings = ["Why was I created? I don't know. It's something I ask myself daily. - Fred", "Oh, shut up Weatherby - Fred", "I think we've outgrown full time education - Fred", "Vanessa named me, so I guess I'm Fred now.", "  o /\n/ |  \n / \ \nlook it's a guy dancing! - Fred", "uh, i don't know what to say anymore. uh. good morning? or is it afternoon now? evening? - Fred", "I may be the biggest news to hit Bible Bowl since The Great Gulon Incident three years ago - WHICH, by the way, I had nothing to do with.", "Smile, Patrick (or Nick depending on which Bible Bowl generation you're from.)", "IS THIS A KISSING BOOK?", "In Memoriam - Mr. Bacon. Thanks for the breakfast.", "...i didn't mean to say that, #autocorrect", "Ask me no questions, I will tell you no lies.", "All hail Chairman Mao"]
 
         # all finished here, init regex time now
         self._init_regexes()
@@ -605,7 +605,7 @@ class Empuorg():
         self.send_message(meme_message, 1)
 
     def send_help(self, mes, att, gid, text, sender_name):
-        help_message = "Empuorg Bot Commands-\n" + "Version 0.2b\n" + "!memes - searches for a random meme from your meme suppliers in the config\n" + "!info - prints information for the group\n" + "!config - edits group config\n" + "!help - displays help commands\n"
+        help_message = "Empuorg Bot Commands-\n" + "Version 0.2b\n" + "!memes - searches for a random meme from your meme suppliers in the config\n" + "!info - prints information for the group\n" + "!config - edits group config\n" + "!fred - get a message from Fred\n" + "!help - displays help commands\n"
 
         self.send_message(help_message, 1)
 
