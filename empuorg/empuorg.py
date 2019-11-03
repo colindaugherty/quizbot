@@ -614,7 +614,7 @@ class Empuorg():
         self.send_message(message, 1)
     
     def fred_function(self, mes, att, type, text, sender_name):
-        rand = random.randint(0, len(self.fred_sayings))
+        rand = random.randint(0, len(self.fred_sayings) - 1)
         message = self.fred_sayings[rand]
         message += "\n(this message was summoned by {})".format(sender_name)
         self.send_message(message, 1)
