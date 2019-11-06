@@ -1,8 +1,10 @@
 # fair warning to y'all. this is gonna be wack
 # it is very wack
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import json, requests, re, time, os, random, praw, logging, sqlite3
-from .message_routing import MessageRouter
+import json, requests, re, time, os, random, logging, sqlite3
+from .message_routing import GroupMeMessageRouter
+from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
+from .modules.QuizBotSendInstaMeme import QuizBotSendInstaMeme
 
 logging.basicConfig(level=logging.DEBUG,filename='access.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
@@ -10,11 +12,10 @@ conn = sqlite3.connect('config.db')
 
 logging.info("Started program. Hello world!")
 
-reddit = praw.Reddit(client_id="pPp18DiGR-UnFA", client_secret="vmY57gKz-6l01ePkoC2FMmv1nv4", user_agent="groupmebot /u/b1ackzi0n")
 config_file = os.path.join('.', 'data', 'config.json')
 quiz_file = os.path.join('.', 'data', 'quiz_material.json')
 
-class Empuorg():
+class QuizBotGroupMe():
     def __init__(self, bot_id):
         # grab config from files
         with open(config_file) as data_file:
@@ -32,7 +33,6 @@ class Empuorg():
             reallist.append(bot)
         self.bots = reallist
         self.listening_port = config['listening_port']
-        logging.info(f"Reddit read only is - {reddit.read_only}")
         self.groupme_url = "https://api.groupme.com/v3/bots/post"
 
         # quizzing variables
@@ -567,44 +567,11 @@ class Empuorg():
             self.send_message("Sorry, this is only for authenticated users.", 1)
 
     def send_meme(self, mes, att, gid, text, sender_name):
-        start = time.time()
         if self.useReddit == True:
-            meme_message = "Meme response-\n'"
-            rand = random.randint(0, self.real_len)
-            subreddit = self.meme_source[rand]
-            logging.info(subreddit)
-            submission_list = []
-            for submission in reddit.subreddit(subreddit).hot(limit=10):
-                if submission.stickied != True:
-                    submission_list.append(submission)
-                else:
-                    logging.info("We don't approve of stickied messages")
-            submission_list_length = len(submission_list) - 1
-            rand = random.randint(0,submission_list_length)
-            logging.info("Got a random submission index of %d out of %d\nIt has an upvote ratio of %d" % (rand, submission_list_length, submission_list[rand].upvote_ratio))
-            logging.info("Printing url link for post '%s'-\n" % (submission_list[rand].title))
-            if submission_list[rand].selftext == "":
-                logging.info(submission_list[rand].url)
-                result = submission_list[rand].url
-            else:
-                logging.info(submission_list[rand].shortlink)
-                result = submission_list[rand].shortlink
-            meme_message += submission_list[rand].title
-            meme_message += "' from the subreddit '"
-            meme_message += submission_list[rand].subreddit.display_name
-            meme_message += "'\n"
-            meme_message += result
-            meme_message += "\nI hope you enjoy!\n"
-            meme_message += "response_time: "
+            x = QuizBotSendRedditMeme(self.meme_source, self.real_len)
         elif self.useReddit == False:
-            pass
-        response_time = time.time() - start
-        if time.strftime("%S", time.gmtime(response_time)) == "00":
-            meme_message += "< 0s"
-        else:
-            meme_message += time.strftime("%Ss", time.gmtime(response_time))
-
-        self.send_message(meme_message, 1)
+            x = QuizBotSendInstaMeme(self.meme_source, self.real_len)
+        self.send_message(x.response, 1)
 
     def send_help(self, mes, att, gid, text, sender_name):
         help_message = "Empuorg Bot Commands-\n" + "Version 0.2b\n" + "!memes - searches for a random meme from your meme suppliers in the config\n" + "!info - prints information for the group\n" + "!config - edits group config\n" + "!fred - get a message from Fred\n" + "!help - displays help commands\n"
@@ -631,12 +598,12 @@ class Empuorg():
 # init bot
 def init(bot_id=0):
     global bot
-    bot = Empuorg(bot_id=bot_id)
+    bot = QuizBotGroupMe(bot_id=bot_id)
     return bot
 
 
 # listen and send all messages to the message router
-def listen(server_class=HTTPServer, handler_class=MessageRouter, port=80):
+def listen(server_class=HTTPServer, handler_class=GroupMeMessageRouter, port=80):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     httpd.serve_forever()

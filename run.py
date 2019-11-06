@@ -3,7 +3,7 @@ import os
 import json
 from threading import Thread
 
-import empuorg.empuorg as empuorg
+import quizbot.QuizBotGroupMe as QuizBotGroupMe
 
 if len(sys.argv) is 2: #config file is specified
     config_file = os.path.normpath(sys.argv[1])
@@ -13,6 +13,6 @@ else:
 with open(config_file) as data_file:
     config = json.load(data_file)
 
-empuorg.init()
+QuizBotGroupMe.init()
 
-empuorg.listen(port=config['listening_port'])
+QuizBotGroupMe.listen(port=config['listening_port'])
