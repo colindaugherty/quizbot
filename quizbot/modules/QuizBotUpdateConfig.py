@@ -19,6 +19,7 @@ class QuizBotUpdateConfig:
             if configword in what_config:
                 logging.info("Made it into the if configword in what_config block")
                 if what_config[0] == configword:
+                    logging.info("Updating subreddits")
                     if 0 <= 2 < len(text):
                         if text[2] == 'add':
                             if 0 <= 3 < len(text):
@@ -60,6 +61,7 @@ class QuizBotUpdateConfig:
                             message += "\n{}".format(subreddit)
                         self.response = message
                 elif what_config[1] == configword:
+                    logging.info("Updating allownsfw")
                     if 0 <= 2 <= len(text):
                         if text[2] == 'true':
                             t = (text[2],botid,groupid)
@@ -92,6 +94,7 @@ class QuizBotUpdateConfig:
                         message += currentnsfw
                         self.response = message
                 elif what_config[2] == configword:
+                    logging.info("Updating allowrepost")
                     if 0 <= 2 <= len(text):
                         if text[2] == 'true':
                             t = (text[2],botid,groupid)
