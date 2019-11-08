@@ -14,7 +14,10 @@ class QuizBotUpdateConfig:
             text = text.split(' ')
             logging.info(text)
             configword = text[1]
+            logging.info(configword)
+            logging.info(what_config)
             if configword in what_config:
+                logging.info("Made it into the if configword in what_config block")
                 if what_config[0] == configword:
                     if 0 <= 2 < len(text):
                         if text[2] == 'add':
