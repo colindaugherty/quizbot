@@ -10,6 +10,7 @@ from .modules.QuizBotSendInstaMeme import QuizBotSendInstaMeme
 from .modules.QuizBotFunSayings import QuizBotFunSayings
 from .modules.QuizBotHackingJoke import QuizBotHackingJoke
 from .modules.QuizBotHelp import QuizBotHelp
+from .modules.QuizBotQuizzer import QuizBotQuizzer
 
 # config functions - database manipulation
 from .modules.QuizBotUpdateConfig import QuizBotUpdateConfig
@@ -44,15 +45,11 @@ class QuizBotGroupMe():
         self.listening_port = config['listening_port']
         self.groupme_url = "https://api.groupme.com/v3/bots/post"
 
+        self.useReddit = True
+
         # quizzing variables
         self.awaiting_response = False
-        self.current_quiz = []
-        self.current_question = 0
         self.quizbonuses = False
-        self.useReddit = True
-        self.keeping_score = []
-        self.playerindex = 0
-        self.quiztime = 0
         
         # initializing database defaults for any new bots
         for name, id, group in self.bots:
@@ -117,7 +114,7 @@ class QuizBotGroupMe():
             ("Help", self.help_regex, self.send_help),
             ("Config", self.config, self.update_config),
             ("Authenticate", self.authenticate, self._authenticateUser),
-            ("Quiz", self.quiz, self.start_quizzer),
+            ("Quiz", self.quiz, self.quizzer),
             ("Joke/EasterEgg", self.hacking_joke, self.hack_joke),
             ("Joke/EasterEgg", self.fred_joke, self.fred_function)
         ]
@@ -252,7 +249,7 @@ class QuizBotGroupMe():
                 mes = "none"
                 att = attachments
                 gid = groupid
-                self.continue_quiz(mes, att, gid, message, sender_name)
+                self.quizzer(mes, att, gid, message, sender_name)
             else:
                 self.send_message("Error - awaiting_response is broken, setting it to False in order to avoid an infinite loop", 1)
                 self.awaiting_response = False
@@ -266,175 +263,192 @@ class QuizBotGroupMe():
     def send_rank(self, mes, att, gid, text, sender_name):
         self.send_message("Unfortunately, %s, this is not currently working. Stay tuned!" % (sender_name), 1)
 
-    def start_quizzer(self, mes, att, gid, text, sender_name):
-        self.quizstop = time.time()
-        self.playerindex = 0
-        sender_name = sender_name.lower()
-        sender_name = sender_name.replace(" ", "_")
-        if sender_name in self.authenticatedUsers:
-            self.current_quiz = []
-            counter = 0
-            questioncount = text.replace("!quiz ", "")
-            if int(questioncount) > 25:
-                self.send_message("25 is the max amount of questions I can quiz over at this time.", 1)
-            while counter < int(questioncount) and int(questioncount) <= 25:
-                sections = self.quizmaterial['acts']['sections']
-                sections = list(sections.keys())
-                quiz_indexer = len(sections) - 1
-                rand = random.randint(0,quiz_indexer)
-                quiz_section = sections[rand]
-                verse = self.quizmaterial['acts']['sections'][quiz_section]
-                verse = list(verse.keys())
-                quiz_indexer = len(verse) - 1
-                rand = random.randint(0,quiz_indexer)
-                quiz_verse = verse[rand]
-                questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
-                questions = list(questions.keys())
-                quiz_indexer = len(questions) - 1
-                rand = random.randint(0,quiz_indexer)
-                if self.quizbonuses == False:
-                    quiz_question = questions[rand]
-                    questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
-                    quiz_questionanswer = questions.get(quiz_question)
-                    quizid = counter + 1
-                    quiz = [quizid, quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
-                    if quiz in self.current_quiz:
-                        logging.info("This question was already selected.")
-                    elif quiz not in self.current_quiz:
-                        self.current_quiz.append(quiz)
-                        counter += 1
-                    else:
-                        logging.info("Failure to select a question, adding 1 to counter to avoid infinite loop")
-                        counter += 1
-                elif self.quizbonuses == True:
-                    pass
-                else:
-                    pass
-                if quiz_indexer != len(sections) - 1:
-                    pass
-            logging.info(self.current_quiz)
-            message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][2])
-            self.awaiting_response = True
-            self.current_question = 0
-            self.send_message(message, 1)
-        else:
-            self.send_message("Sorry, this is only for authenticated users :/", 1)
+    def quizzer(self, mes, att, gid, text, sender_name):
+        if self.awaiting_response == False:
+            self.quizzerbot = QuizBotQuizzer(self.authenticatedUsers, sender_name, self.quizbonuses)
+            self.quizzerbot.start_quiz(text)
+            self.send_message(self.quizzerbot.response, 1)
+            self.awaiting_response = self.quizzerbot.awaiting_response 
+        elif self.awaiting_response == True:
+            self.quizzerbot.continue_quiz(text, sender_name)
+            if self.quizzerbot.finishedQuiz == False:
+                self.send_message(self.quizzerbot.response, 5)
+            elif self.quizzerbot.finishedQuiz == True:
+                self.send_message("Finished quiz! Generating results", 1)
+                self.send_message(self.quizzerbot.response, 1)
+            else:
+                logging.info("Finished quiz is broken, error")
+            self.awaiting_response = self.quizzerbot.awaiting_response
 
-    def continue_quiz(self, mes, att, gid, text, sender_name):
-        response = text.lower()
-        response = response.strip()
-        if "'" in response:
-            response = response.replace("'", "’")
-        logging.info(response)
-        cq = self.current_question
-        index = cq
-        logging.info(cq)
-        logging.info(index)
-        logging.info(self.current_question)
-        logging.info(self.current_quiz[index][4])
-        if isinstance(self.current_quiz[index][4], list):
-            if "," in response:
-                response = response.split(', ')
-            elif "and" in response:
-                response = response.split(' and ')
-            self.current_quiz[index][4] = sorted(self.current_quiz[index][4])
-            response = sorted(response)
-        if isinstance(self.current_quiz[index][4], str):
-            if response in self.current_quiz[index][4]:
-                name = sender_name.split(' ')
-                name = name[0]
-                message = "Good job {} you got that one right!".format(name)
-                score = 1
-                player = [name, score]
-                while self.playerindex <= len(self.keeping_score):
-                    if self.playerindex == len(self.keeping_score):
-                        self.keeping_score.append(player)
-                        logging.info(self.keeping_score)
-                        self.playerindex += 1
-                        break
-                    elif name in self.keeping_score[self.playerindex]:
-                        self.keeping_score[self.playerindex][1] += 1
-                        logging.info(self.keeping_score)
-                        self.playerindex += 1
-                        break
-                    else:
-                        logging.info("Player not found, iterating again")
-                        self.playerindex += 1
-                self.playerindex = 0
-                self.send_message(message, 1)
-                self.current_question += 1
-                index += 1
-                if self.current_question < len(self.current_quiz):
-                    message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
-                    self.send_message(message, 5)
-                else:
-                    self.send_message("Finished quiz! Resuming normal commands.", 1)
-                    self.quiztime = time.time() - self.quizstop
-                    self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
-                    message = "Time taken: {}\nScore Results-\n".format(self.quiztime)
-                    self.quiztime = 0
-                    self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
-                    for player in self.keeping_score:
-                        message += "{}: {}\n".format(player[0],[player[1]])
-                    self.send_message(message, 1)
-                    self.awaiting_response = False
-            else:
-                logging.info("Got incorrect answer %s" % (text))
-        elif isinstance(self.current_quiz[index][4], list):
-            correctanswers = 0
-            indexer = 0
-            for a in response:
-                if a in self.current_quiz[index][4][indexer]:
-                    indexer += 1
-                    correctanswers += 1
-                else:
-                    logging.info("%a is not correct" % (a))
-            logging.info(correctanswers)
-            logging.info("The number of correct answers is above me")
-            logging.info(len(self.current_quiz[index][4]))
-            logging.info("The number of answers is above me")
-            if correctanswers == len(self.current_quiz[index][4]):
-                name = sender_name.split(' ')
-                name = name[0]
-                message = "Good job {} you got that one right!".format(name)
-                score = 1
-                player = [name, score]
-                while self.playerindex <= len(self.keeping_score):
-                    if self.playerindex == len(self.keeping_score):
-                        self.keeping_score.append(player)
-                        logging.info(self.keeping_score)
-                        self.playerindex += 1
-                        break
-                    elif name in self.keeping_score[self.playerindex]:
-                        self.keeping_score[self.playerindex][1] += 1
-                        logging.info(self.keeping_score)
-                        self.playerindex += 1
-                        break
-                    else:
-                        logging.info("Player not found, iterating again")
-                        self.playerindex += 1
-                self.playerindex = 0
-                self.send_message(message, 1)
-                self.current_question += 1
-                index += 1
-                if self.current_question < len(self.current_quiz):
-                    message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
-                    self.send_message(message, 5)
-                else:
-                    self.send_message("Finished quiz! Resuming normal commands.", 1)
-                    self.quiztime = time.time() - self.quizstop
-                    self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
-                    message = "Time taken: {}\nScore Results-\n".format(self.quiztime)
-                    self.quiztime = 0
-                    self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
-                    for player in self.keeping_score:
-                        message += "{}: {}\n".format(player[0],[player[1]])
-                    self.send_message(message, 1)
-                    self.awaiting_response = False
-            else:
-                logging.info("Got incorrect answer %s" % (text))
-        else:
-            logging.info("Failed to determine type of answer. (Expected str or list)")
+    # def start_quizzer(self, mes, att, gid, text, sender_name):
+    #     self.quizstop = time.time()
+    #     self.playerindex = 0
+    #     sender_name = sender_name.lower()
+    #     sender_name = sender_name.replace(" ", "_")
+    #     if sender_name in self.authenticatedUsers:
+    #         self.current_quiz = []
+    #         counter = 0
+    #         questioncount = text.replace("!quiz ", "")
+    #         if int(questioncount) > 25:
+    #             self.send_message("25 is the max amount of questions I can quiz over at this time.", 1)
+    #         while counter < int(questioncount) and int(questioncount) <= 25:
+    #             sections = self.quizmaterial['acts']['sections']
+    #             sections = list(sections.keys())
+    #             quiz_indexer = len(sections) - 1
+    #             rand = random.randint(0,quiz_indexer)
+    #             quiz_section = sections[rand]
+    #             verse = self.quizmaterial['acts']['sections'][quiz_section]
+    #             verse = list(verse.keys())
+    #             quiz_indexer = len(verse) - 1
+    #             rand = random.randint(0,quiz_indexer)
+    #             quiz_verse = verse[rand]
+    #             questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
+    #             questions = list(questions.keys())
+    #             quiz_indexer = len(questions) - 1
+    #             rand = random.randint(0,quiz_indexer)
+    #             if self.quizbonuses == False:
+    #                 quiz_question = questions[rand]
+    #                 questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
+    #                 quiz_questionanswer = questions.get(quiz_question)
+    #                 quizid = counter + 1
+    #                 quiz = [quizid, quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
+    #                 if quiz in self.current_quiz:
+    #                     logging.info("This question was already selected.")
+    #                 elif quiz not in self.current_quiz:
+    #                     self.current_quiz.append(quiz)
+    #                     counter += 1
+    #                 else:
+    #                     logging.info("Failure to select a question, adding 1 to counter to avoid infinite loop")
+    #                     counter += 1
+    #             elif self.quizbonuses == True:
+    #                 pass
+    #             else:
+    #                 pass
+    #             if quiz_indexer != len(sections) - 1:
+    #                 pass
+    #         logging.info(self.current_quiz)
+    #         message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][2])
+    #         self.awaiting_response = True
+    #         self.current_question = 0
+    #         self.send_message(message, 1)
+    #     else:
+    #         self.send_message("Sorry, this is only for authenticated users :/", 1)
+
+    # def continue_quiz(self, mes, att, gid, text, sender_name):
+    #     response = text.lower()
+    #     response = response.strip()
+    #     if "'" in response:
+    #         response = response.replace("'", "’")
+    #     logging.info(response)
+    #     cq = self.current_question
+    #     index = cq
+    #     logging.info(cq)
+    #     logging.info(index)
+    #     logging.info(self.current_question)
+    #     logging.info(self.current_quiz[index][4])
+    #     if isinstance(self.current_quiz[index][4], list):
+    #         if "," in response:
+    #             response = response.split(', ')
+    #         elif "and" in response:
+    #             response = response.split(' and ')
+    #         self.current_quiz[index][4] = sorted(self.current_quiz[index][4])
+    #         response = sorted(response)
+    #     if isinstance(self.current_quiz[index][4], str):
+    #         if response in self.current_quiz[index][4]:
+    #             name = sender_name.split(' ')
+    #             name = name[0]
+    #             message = "Good job {} you got that one right!".format(name)
+    #             score = 1
+    #             player = [name, score]
+    #             while self.playerindex <= len(self.keeping_score):
+    #                 if self.playerindex == len(self.keeping_score):
+    #                     self.keeping_score.append(player)
+    #                     logging.info(self.keeping_score)
+    #                     self.playerindex += 1
+    #                     break
+    #                 elif name in self.keeping_score[self.playerindex]:
+    #                     self.keeping_score[self.playerindex][1] += 1
+    #                     logging.info(self.keeping_score)
+    #                     self.playerindex += 1
+    #                     break
+    #                 else:
+    #                     logging.info("Player not found, iterating again")
+    #                     self.playerindex += 1
+    #             self.playerindex = 0
+    #             self.send_message(message, 1)
+    #             self.current_question += 1
+    #             index += 1
+    #             if self.current_question < len(self.current_quiz):
+    #                 message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
+    #                 self.send_message(message, 5)
+    #             else:
+    #                 self.send_message("Finished quiz! Resuming normal commands.", 1)
+    #                 self.quiztime = time.time() - self.quizstop
+    #                 self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
+    #                 message = "Time taken: {}\nScore Results-\n".format(self.quiztime)
+    #                 self.quiztime = 0
+    #                 self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
+    #                 for player in self.keeping_score:
+    #                     message += "{}: {}\n".format(player[0],[player[1]])
+    #                 self.send_message(message, 1)
+    #                 self.awaiting_response = False
+    #         else:
+    #             logging.info("Got incorrect answer %s" % (text))
+    #     elif isinstance(self.current_quiz[index][4], list):
+    #         correctanswers = 0
+    #         indexer = 0
+    #         for a in response:
+    #             if a in self.current_quiz[index][4][indexer]:
+    #                 indexer += 1
+    #                 correctanswers += 1
+    #             else:
+    #                 logging.info("%a is not correct" % (a))
+    #         logging.info(correctanswers)
+    #         logging.info("The number of correct answers is above me")
+    #         logging.info(len(self.current_quiz[index][4]))
+    #         logging.info("The number of answers is above me")
+    #         if correctanswers == len(self.current_quiz[index][4]):
+    #             name = sender_name.split(' ')
+    #             name = name[0]
+    #             message = "Good job {} you got that one right!".format(name)
+    #             score = 1
+    #             player = [name, score]
+    #             while self.playerindex <= len(self.keeping_score):
+    #                 if self.playerindex == len(self.keeping_score):
+    #                     self.keeping_score.append(player)
+    #                     logging.info(self.keeping_score)
+    #                     self.playerindex += 1
+    #                     break
+    #                 elif name in self.keeping_score[self.playerindex]:
+    #                     self.keeping_score[self.playerindex][1] += 1
+    #                     logging.info(self.keeping_score)
+    #                     self.playerindex += 1
+    #                     break
+    #                 else:
+    #                     logging.info("Player not found, iterating again")
+    #                     self.playerindex += 1
+    #             self.playerindex = 0
+    #             self.send_message(message, 1)
+    #             self.current_question += 1
+    #             index += 1
+    #             if self.current_question < len(self.current_quiz):
+    #                 message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
+    #                 self.send_message(message, 5)
+    #             else:
+    #                 self.send_message("Finished quiz! Resuming normal commands.", 1)
+    #                 self.quiztime = time.time() - self.quizstop
+    #                 self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
+    #                 message = "Time taken: {}\nScore Results-\n".format(self.quiztime)
+    #                 self.quiztime = 0
+    #                 self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
+    #                 for player in self.keeping_score:
+    #                     message += "{}: {}\n".format(player[0],[player[1]])
+    #                 self.send_message(message, 1)
+    #                 self.awaiting_response = False
+    #         else:
+    #             logging.info("Got incorrect answer %s" % (text))
+    #     else:
+    #         logging.info("Failed to determine type of answer. (Expected str or list)")
 
     def update_config(self, mes, att, gid, text, sender_name):
         x = QuizBotUpdateConfig(self.authenticatedUsers, self.bot_name, self.bot_id, self.group_id, sender_name, self.allow_nsfw, self.allow_reposts, self.meme_source, text)
