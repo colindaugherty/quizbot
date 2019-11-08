@@ -75,6 +75,7 @@ class QuizBotQuizzer():
 
     def continue_quiz(self, answer, sender_name):
         self.goodjob = False
+        self.correct = False
         playeranswer = answer.lower()
         playeranswer = playeranswer.strip()
         if "'" in playeranswer:
@@ -116,6 +117,7 @@ class QuizBotQuizzer():
                         self.playerindex += 1
                 self.playerindex = 0
                 self.goodjob = message
+                self.correct = True
                 self.current_question += 1
                 index += 1
                 if self.current_question < len(self.current_quiz):
@@ -169,6 +171,7 @@ class QuizBotQuizzer():
                         self.playerindex += 1
                 self.playerindex = 0
                 self.goodjob = message
+                self.correct = True
                 self.current_question += 1
                 index += 1
                 if self.current_question < len(self.current_quiz):
