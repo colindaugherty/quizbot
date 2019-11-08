@@ -64,7 +64,7 @@ class QuizBotUpdateConfig:
                     logging.info("Updating allownsfw")
                     if 0 <= 2 <= len(text):
                         if text[2] == 'true':
-                            t = (text[2],botid,groupid)
+                            t = [(text[2],botid,groupid),]
                             c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
                             t = [(botname),]
                             c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
@@ -76,7 +76,7 @@ class QuizBotUpdateConfig:
                             message += text[2]
                             self.response = message
                         elif text[2] == 'false':
-                            t = (text[2],botid,groupid)
+                            t = [(text[2],botid,groupid),]
                             c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
                             t = [(botname),]
                             c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
@@ -96,8 +96,6 @@ class QuizBotUpdateConfig:
                 elif what_config[2] == configword:
                     logging.info("Updating allowrepost")
                     if 0 <= 2 <= len(text):
-                        logging.info(text[2])
-                        logging.info("Attempting to change value to the one above me")
                         if text[2] == 'true':
                             t = [(text[2],botid,groupid),]
                             c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
@@ -111,7 +109,7 @@ class QuizBotUpdateConfig:
                             message += text[2]
                             self.response = message
                         elif text[2] == 'false':
-                            t = (text[2],botid,groupid)
+                            t = [(text[2],botid,groupid),]
                             c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
                             t = [(botname),]
                             c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
