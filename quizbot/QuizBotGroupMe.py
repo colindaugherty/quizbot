@@ -271,6 +271,8 @@ class QuizBotGroupMe():
             self.awaiting_response = self.quizzerbot.awaiting_response 
         elif self.awaiting_response == True:
             self.quizzerbot.continue_quiz(text, sender_name)
+            if self.quizzerbot.goodjob:
+                self.send_message(self.quizzerbot.goodjob, 1)
             if self.quizzerbot.finishedQuiz == False:
                 self.send_message(self.quizzerbot.response, 5)
             elif self.quizzerbot.finishedQuiz == True:

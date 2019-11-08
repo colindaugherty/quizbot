@@ -74,6 +74,7 @@ class QuizBotQuizzer():
             self.response = "Sorry, this is only for authenticated users :/"
 
     def continue_quiz(self, answer, sender_name):
+        self.goodjob = False
         playeranswer = answer.lower()
         playeranswer = playeranswer.strip()
         if "'" in playeranswer:
@@ -114,7 +115,7 @@ class QuizBotQuizzer():
                         logging.info("Player not found, iterating again")
                         self.playerindex += 1
                 self.playerindex = 0
-                self.response = message
+                self.goodjob = message
                 self.current_question += 1
                 index += 1
                 if self.current_question < len(self.current_quiz):
@@ -167,7 +168,7 @@ class QuizBotQuizzer():
                         logging.info("Player not found, iterating again")
                         self.playerindex += 1
                 self.playerindex = 0
-                self.response = message
+                self.goodjob = message
                 self.current_question += 1
                 index += 1
                 if self.current_question < len(self.current_quiz):
