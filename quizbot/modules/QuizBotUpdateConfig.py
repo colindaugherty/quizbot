@@ -57,7 +57,7 @@ class QuizBotUpdateConfig:
                             message += "\n{}".format(subreddit)
                         self.response = message
                 elif what_config[1] == configword:
-                    if 0 <= 2 < len(text):
+                    if 0 <= 2 <= len(text):
                         if text[2] == 'true':
                             t = (text[2],botid,groupid)
                             c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
@@ -89,7 +89,7 @@ class QuizBotUpdateConfig:
                         message += currentnsfw
                         self.response = message
                 elif what_config[2] == configword:
-                    if 0 <= 2 < len(text):
+                    if 0 <= 2 <= len(text):
                         if text[2] == 'true':
                             t = (text[2],botid,groupid)
                             c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
