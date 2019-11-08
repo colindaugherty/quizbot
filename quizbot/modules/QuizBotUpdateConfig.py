@@ -19,7 +19,6 @@ class QuizBotUpdateConfig:
                     if 0 <= 2 < len(text):
                         if text[2] == 'add':
                             if 0 <= 3 < len(text):
-                                isString = isinstance(text[3], str)
                                 t = [(botname, botid, groupid, text[3])]
                                 c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", t)
                                 memesource = []
@@ -36,7 +35,6 @@ class QuizBotUpdateConfig:
                                 self.response = "You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>"
                         elif text[2] == 'delete':
                             if 0 <= 3 < len(text):
-                                isString = isinstance(text[3], str)
                                 t = [(text[3],botname)]
                                 c.executemany("DELETE FROM memesource WHERE (subreddit=? AND name=?)", (t))
                                 memesource = []
@@ -60,68 +58,64 @@ class QuizBotUpdateConfig:
                         self.response = message
                 elif what_config[1] == configword:
                     if 0 <= 2 < len(text):
-                        isString = isinstance(text[2], str)
-                        if isString:
-                            if text[2] == 'true':
-                                t = (text[2],botid,groupid)
-                                c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
-                                t = [(botname),]
-                                c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
-                                allownsfw = c.fetchone()
-                                logging.info("Just updated allownsfw, expected output is 'true', here it is- %s" % (allownsfw))
-                                conn.commit()
-                                conn.close()
-                                message = "Updated status of allownsfw - "
-                                message += text[2]
-                                self.response = message
-                            elif text[2] == 'false':
-                                t = (text[2],botid,groupid)
-                                c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
-                                t = [(botname),]
-                                c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
-                                allownsfw = c.fetchone()
-                                logging.info("Just updated allownsfw, expected output is 'false', here it is- %s" % (allownsfw))
-                                conn.commit()
-                                conn.close()
-                                message = "Updated status of allownsfw - "
-                                message += text[2]
-                                self.response = message
-                            else:
-                                self.response = "Incorrect usage, expected true|false\nUsage !config allownsfw <true|false>"
+                        if text[2] == 'true':
+                            t = (text[2],botid,groupid)
+                            c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
+                            t = [(botname),]
+                            c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
+                            allownsfw = c.fetchone()
+                            logging.info("Just updated allownsfw, expected output is 'true', here it is- %s" % (allownsfw))
+                            conn.commit()
+                            conn.close()
+                            message = "Updated status of allownsfw - "
+                            message += text[2]
+                            self.response = message
+                        elif text[2] == 'false':
+                            t = (text[2],botid,groupid)
+                            c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
+                            t = [(botname),]
+                            c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
+                            allownsfw = c.fetchone()
+                            logging.info("Just updated allownsfw, expected output is 'false', here it is- %s" % (allownsfw))
+                            conn.commit()
+                            conn.close()
+                            message = "Updated status of allownsfw - "
+                            message += text[2]
+                            self.response = message
+                        else:
+                            self.response = "Incorrect usage, expected true|false\nUsage !config allownsfw <true|false>"
                     else:
                         message = "Current status of allownsfw - "
                         message += currentnsfw
                         self.response = message
                 elif what_config[2] == configword:
                     if 0 <= 2 < len(text):
-                        isString = isinstance(text[2], str)
-                        if isString:
-                            if text[2] == 'true':
-                                t = (text[2],botid,groupid)
-                                c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
-                                t = [(botname),]
-                                c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
-                                allowrepost = c.fetchone()
-                                logging.info("Just updated allowrepost, expected output is 'true', here it is- %s" % (allowrepost))
-                                conn.commit()
-                                conn.close()
-                                message = "Updated status of allowrepost - "
-                                message += text[2]
-                                self.response = message
-                            elif text[2] == 'false':
-                                t = (text[2],botid,groupid)
-                                c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
-                                t = [(botname),]
-                                c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
-                                allowrepost = c.fetchone()
-                                logging.info("Just updated allowrepost, expected output is 'false', here it is- %s" % (allowrepost))
-                                conn.commit()
-                                conn.close()
-                                message = "Updated status of allowrepost - "
-                                message += text[2]
-                                self.response = message
-                            else:
-                                self.response = "Incorrect usage, expected true|false\nUsage !config allowrepost <true|false>"
+                        if text[2] == 'true':
+                            t = (text[2],botid,groupid)
+                            c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
+                            t = [(botname),]
+                            c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
+                            allowrepost = c.fetchone()
+                            logging.info("Just updated allowrepost, expected output is 'true', here it is- %s" % (allowrepost))
+                            conn.commit()
+                            conn.close()
+                            message = "Updated status of allowrepost - "
+                            message += text[2]
+                            self.response = message
+                        elif text[2] == 'false':
+                            t = (text[2],botid,groupid)
+                            c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
+                            t = [(botname),]
+                            c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
+                            allowrepost = c.fetchone()
+                            logging.info("Just updated allowrepost, expected output is 'false', here it is- %s" % (allowrepost))
+                            conn.commit()
+                            conn.close()
+                            message = "Updated status of allowrepost - "
+                            message += text[2]
+                            self.response = message
+                        else:
+                            self.response = "Incorrect usage, expected true|false\nUsage !config allowrepost <true|false>"
                     else:
                         message = "Current status of allowrepost - "
                         message += currentrepost
