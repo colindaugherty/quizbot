@@ -273,7 +273,7 @@ class QuizBotGroupMe():
             self.quizzerbot.continue_quiz(text, sender_name)
             if self.quizzerbot.goodjob:
                 self.send_message(self.quizzerbot.goodjob, 1)
-            if self.quizzerbot.finishedQuiz == False and self.quizzerbot.correct == False:
+            if self.quizzerbot.finishedQuiz == False and self.quizzerbot.correct == True:
                 self.send_message(self.quizzerbot.response, 5)
             elif self.quizzerbot.finishedQuiz == True:
                 self.send_message("Finished quiz! Generating results", 1)
