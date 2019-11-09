@@ -1,36 +1,43 @@
 {
-    "<topic>" : {
-        "sections" : {
-            "<example_section>" : {
-                "<subsection>" : {
-                    "Question" : "answer",
-                    "Question2" : "answer"
-                },
-                "<second_subsection>" : {
-                    "Question" : "answer"
-                }
-            },
-            "<another_example_section>" : {
-                "<subsection>" : {
-                    "Question" : "answer"
-                }
-            }
+    "rules" : {
+        "interchangeable" : {
+            "<ruleset name>" : ["word1", "word2", "word3"]
         }
     },
-    "<second_topic>" : {
-        "sections" : {
-            "<example_section>" : {
-                "<subsection>" : {
-                    "Question" : "answer",
-                    "Question2" : "answer"
+    "material" : {
+        "<topic>" : {
+            "sections" : {
+                "<example_section>" : {
+                    "<subsection>" : {
+                        "Question" : "answer",
+                        "Question2" : "answer"
+                    },
+                    "<second_subsection>" : {
+                        "Question" : "answer"
+                    }
                 },
-                "<second_subsection>" : {
-                    "Question" : "answer"
+                "<another_example_section>" : {
+                    "<subsection>" : {
+                        "Question" : "answer"
+                    }
                 }
-            },
-            "<another_example_section>" : {
-                "<subsection>" : {
-                    "Question" : "answer"
+            }
+        },
+        "<second_topic>" : {
+            "sections" : {
+                "<example_section>" : {
+                    "<subsection>" : {
+                        "Question" : "answer",
+                        "Question2" : "answer"
+                    },
+                    "<second_subsection>" : {
+                        "Question" : "answer"
+                    }
+                },
+                "<another_example_section>" : {
+                    "<subsection>" : {
+                        "Question" : "answer"
+                    }
                 }
             }
         }
