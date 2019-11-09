@@ -48,7 +48,12 @@ class QuizBotQuizzer():
             if int(questioncount) > 25:
                 self.response = "25 is the max amount of questions I can quiz over at this time."
             while counter < int(questioncount) and int(questioncount) <= 25:
-                sections = self.quizmaterial['acts']['sections']
+                topics = self.quizmaterial
+                topics = list(topics.keys())
+                quiz_indexer = len(topics) - 1
+                rand = random.randint(0,quiz_indexer)
+                quiz_topic = topics[rand]
+                sections = self.quizmaterial[quiz_topic]['sections']
                 sections = list(sections.keys())
                 quiz_indexer = len(sections) - 1
                 rand = random.randint(0,quiz_indexer)
