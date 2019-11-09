@@ -25,7 +25,7 @@ class QuizBotQuizzer():
         ratio = SequenceMatcher(None, answer, correct).ratio()
         ans_as_list = list(answer)
         
-        letterratio = 1 / len(ans_as_list)
+        letterratio = len(ans_as_list) / 3 / len(ans_as_list)
         if ratio > letterratio:
             result = True
         else:
