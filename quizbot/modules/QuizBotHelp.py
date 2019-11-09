@@ -2,7 +2,7 @@
 
 class QuizBotHelp:
     def __init__(self):
-        message = "QuizBot Bot Commands-\nVersion 0.2b\n"
+        message = "QuizBot Bot Commands-\nVersion 0.3b\n"
         message += "!meme - searches for a random meme from your meme suppliers in the config\n"
         message += "!info - prints information about the group\n"
         message += "!config - edits group config\n"
