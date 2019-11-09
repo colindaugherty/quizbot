@@ -3,34 +3,34 @@
         "sections" : {
             "<example_section>" : {
                 "<subsection>" : {
-                    "Question" : "Answer",
-                    "Question2" : "Answer"
+                    "Question" : "answer",
+                    "Question2" : "answer"
                 },
                 "<second_subsection>" : {
-                    "Question" : "Answer"
+                    "Question" : "answer"
                 }
             },
-            "<another_example_section" : {
-                "<subsection" : {
-                    "Question" : "Answer"
+            "<another_example_section>" : {
+                "<subsection>" : {
+                    "Question" : "answer"
                 }
             }
         }
     },
-    "<second_topic" : {
+    "<second_topic>" : {
         "sections" : {
             "<example_section>" : {
                 "<subsection>" : {
-                    "Question" : "Answer",
-                    "Question2" : "Answer"
+                    "Question" : "answer",
+                    "Question2" : "answer"
                 },
                 "<second_subsection>" : {
-                    "Question" : "Answer"
+                    "Question" : "answer"
                 }
             },
-            "<another_example_section" : {
-                "<subsection" : {
-                    "Question" : "Answer"
+            "<another_example_section>" : {
+                "<subsection>" : {
+                    "Question" : "answer"
                 }
             }
         }
