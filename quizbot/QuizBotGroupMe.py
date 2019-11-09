@@ -230,7 +230,7 @@ class QuizBotGroupMe():
                     att = attachments
                     gid = groupid
                     for name, id, group in self.bots:
-                        if group != gid:
+                        if group == gid:
                             logging.info("%s and id#%s matched group id#%s" % (name, id, gid))
                             bot_id = id
                             gid = int(gid)
