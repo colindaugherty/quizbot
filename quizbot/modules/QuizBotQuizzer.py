@@ -24,10 +24,11 @@ class QuizBotQuizzer():
         logging.info("Comparing strings {} and {}".format(answer, correct))
         ratio = SequenceMatcher(None, answer, correct).ratio()
         ans_as_list = list(answer)
+        cor_as_list = list(correct)
         
-        letterratio = len(ans_as_list) / 10 * 9.5 / len(ans_as_list)
+        letterratio = len(ans_as_list) / len(cor_as_list)
         logging.info("letterratio - {}".format(letterratio))
-        if ratio > letterratio:
+        if ratio > 0.3 and letterratio > 0.90:
             result = True
         else:
             result = False
