@@ -1,5 +1,6 @@
 #rewrite of the quizzing function, put into module form
 
+from difflib import SequenceMatcher
 import time, random, os, logging, json
 
 quiz_file = os.path.join('.', 'data', 'quiz_material.json')
@@ -18,6 +19,20 @@ class QuizBotQuizzer():
 
         with open(quiz_file) as data_file:
             self.quizmaterial = json.load(data_file)
+
+    def similar(self, answer, correct):
+        logging.info("Comparing strings {} and {}".format(answer, correct))
+        ratio = SequenceMatcher(None, answer, correct).ratio()
+        ans_as_list = list(answer)
+        
+        letterratio = 1 / len(ans_as_list)
+        if ratio > letterratio:
+            result = True
+        else:
+            result = False
+        
+        logging.info("Results of comparison-\n{} has a letter ratio of {} and the ratio between {} and {} is {}".format(answer, letterratio, answer, correct, ratio))
+        return result
 
     def start_quiz(self, text):
         self.quizstop = time.time()
@@ -95,7 +110,7 @@ class QuizBotQuizzer():
             self.current_quiz[index][4] = sorted(self.current_quiz[index][4])
             playeranswer = sorted(playeranswer)
         if isinstance(self.current_quiz[index][4], str):
-            if playeranswer in self.current_quiz[index][4]:
+            if self.similar(playeranswer, self.current_quiz[index][4]):
                 name = sender_name.split(' ')
                 name = name[0]
                 message = "Good job {} you got that one right!".format(name)
@@ -140,7 +155,7 @@ class QuizBotQuizzer():
             correctanswers = 0
             indexer = 0
             for a in answer:
-                if a in self.current_quiz[index][4][indexer]:
+                if self.similar(a, self.current_quiz[index][4][indexer]):
                     indexer += 1
                     correctanswers += 1
                 else:
