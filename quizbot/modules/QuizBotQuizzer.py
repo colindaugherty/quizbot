@@ -103,10 +103,11 @@ class QuizBotQuizzer():
                 if quiz_indexer != len(sections) - 1:
                     pass
             logging.info(self.current_quiz)
-            message = "{}) Here is your question from the section '{}': {} ({}-{})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][5], self.current_quiz[0][2])
-            self.awaiting_response = True
-            self.current_question = 0
-            self.response = message
+            if self.current_quiz != []:
+                message = "{}) Here is your question from the section '{}': {} ({}-{})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][5], self.current_quiz[0][2])
+                self.awaiting_response = True
+                self.current_question = 0
+                self.response = message
         else:
             self.response = "Sorry, this is only for authenticated users :/"
 
