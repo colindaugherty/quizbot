@@ -176,7 +176,7 @@ class QuizBotQuizzer():
         elif isinstance(self.current_quiz[index][4], list):
             correctanswers = 0
             indexer = 0
-            for a in answer:
+            for a in playeranswer:
                 if self.similar(a, self.current_quiz[index][4][indexer]) or self.rulechecker(playeranswer, self.current_quiz[index][4]):
                     indexer += 1
                     correctanswers += 1
