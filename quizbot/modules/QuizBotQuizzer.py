@@ -20,6 +20,9 @@ class QuizBotQuizzer():
         with open(quiz_file) as data_file:
             self.quizmaterial = json.load(data_file)
 
+        self.rules = self.quizmaterial["rules"]
+        self.quizmaterial = self.quizmaterial["material"]
+
     def similar(self, answer, correct):
         logging.info("Comparing strings {} and {}".format(answer, correct))
         ratio = SequenceMatcher(None, answer, correct).ratio()
@@ -35,6 +38,18 @@ class QuizBotQuizzer():
         
         logging.info("Results of comparison-\n{} has a letter ratio of {} and the ratio between {} and {} is {}".format(answer, letterratio, answer, correct, ratio))
         return result
+
+    def rulechecker(self, playeranswer, correctanswer):
+        interchangeables = self.rules["interchangeable"]
+        inter_list = list(interchangeables.keys())
+        for key in inter_list:
+            values = interchangeables.get(key)
+            if playeranswer in values and correctanswer in values:
+                return True
+            elif playeranswer not in values and correctanswer in values:
+                return False
+            else:
+                logging.info("Player answer not found in this rule set, retrying.")
 
     def start_quiz(self, text):
         self.quizstop = time.time()
@@ -72,7 +87,7 @@ class QuizBotQuizzer():
                     questions = self.quizmaterial[quiz_topic]['sections'][quiz_section][quiz_verse]
                     quiz_questionanswer = questions.get(quiz_question)
                     quizid = counter + 1
-                    quiz = [quizid, quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
+                    quiz = [quizid, quiz_section, quiz_verse, quiz_question, quiz_questionanswer, quiz_topic]
                     if quiz in self.current_quiz:
                         logging.info("This question was already selected.")
                     elif quiz not in self.current_quiz:
@@ -88,7 +103,7 @@ class QuizBotQuizzer():
                 if quiz_indexer != len(sections) - 1:
                     pass
             logging.info(self.current_quiz)
-            message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][2])
+            message = "{}) Here is your question from the section '{}': {} ({}-{})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][5], self.current_quiz[0][2])
             self.awaiting_response = True
             self.current_question = 0
             self.response = message
@@ -117,7 +132,7 @@ class QuizBotQuizzer():
             self.current_quiz[index][4] = sorted(self.current_quiz[index][4])
             playeranswer = sorted(playeranswer)
         if isinstance(self.current_quiz[index][4], str):
-            if self.similar(playeranswer, self.current_quiz[index][4]):
+            if self.similar(playeranswer, self.current_quiz[index][4]) or self.rulechecker(playeranswer, self.current_quiz[index][4]):
                 name = sender_name.split(' ')
                 name = name[0]
                 message = "Good job {} you got that one right!".format(name)
@@ -143,7 +158,7 @@ class QuizBotQuizzer():
                 self.current_question += 1
                 index += 1
                 if self.current_question < len(self.current_quiz):
-                    message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
+                    message = "{}) Here is your question from the section '{}': {} ({}-{})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][5], self.current_quiz[index][2])
                     self.response = message
                 else:
                     self.awaiting_response = False
@@ -162,7 +177,7 @@ class QuizBotQuizzer():
             correctanswers = 0
             indexer = 0
             for a in answer:
-                if self.similar(a, self.current_quiz[index][4][indexer]):
+                if self.similar(a, self.current_quiz[index][4][indexer]) or self.rulechecker(playeranswer, self.current_quiz[index][4]):
                     indexer += 1
                     correctanswers += 1
                 else:
@@ -197,7 +212,7 @@ class QuizBotQuizzer():
                 self.current_question += 1
                 index += 1
                 if self.current_question < len(self.current_quiz):
-                    message = "{}) Here is your question from the section '{}': {} ({})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][2])
+                    message = "{}) Here is your question from the section '{}': {} ({}-{})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][5], self.current_quiz[index][2])
                     self.response = message
                 else:
                     self.awaiting_response = False
