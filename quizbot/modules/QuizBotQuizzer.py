@@ -58,18 +58,18 @@ class QuizBotQuizzer():
                 quiz_indexer = len(sections) - 1
                 rand = random.randint(0,quiz_indexer)
                 quiz_section = sections[rand]
-                verse = self.quizmaterial['acts']['sections'][quiz_section]
+                verse = self.quizmaterial[quiz_topic]['sections'][quiz_section]
                 verse = list(verse.keys())
                 quiz_indexer = len(verse) - 1
                 rand = random.randint(0,quiz_indexer)
                 quiz_verse = verse[rand]
-                questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
+                questions = self.quizmaterial[quiz_topic]['sections'][quiz_section][quiz_verse]
                 questions = list(questions.keys())
                 quiz_indexer = len(questions) - 1
                 rand = random.randint(0,quiz_indexer)
                 if self.quizbonuses == False:
                     quiz_question = questions[rand]
-                    questions = self.quizmaterial['acts']['sections'][quiz_section][quiz_verse]
+                    questions = self.quizmaterial[quiz_topic]['sections'][quiz_section][quiz_verse]
                     quiz_questionanswer = questions.get(quiz_question)
                     quizid = counter + 1
                     quiz = [quizid, quiz_section, quiz_verse, quiz_question, quiz_questionanswer]
