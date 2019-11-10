@@ -11,6 +11,7 @@ from .modules.QuizBotFunSayings import QuizBotFunSayings
 from .modules.QuizBotHackingJoke import QuizBotHackingJoke
 from .modules.QuizBotHelp import QuizBotHelp
 from .modules.QuizBotQuizzer import QuizBotQuizzer
+from .modules.QuizBotOptIO import QuizBotOptIO
 
 # config functions - database manipulation
 from .modules.QuizBotUpdateConfig import QuizBotUpdateConfig
@@ -64,6 +65,9 @@ class QuizBotGroupMe():
             c.execute("""CREATE TABLE IF NOT EXISTS authenticate
             (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, users text)
             """)
+            c.execute("""CREATE TABLE IF NOT EXISTS opt
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, user text, newsroom text, elimination text)
+            """)
             c.execute("SELECT * FROM config WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckconfig = c.fetchone()
             c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND groupid=?", iteration_values)
@@ -102,6 +106,7 @@ class QuizBotGroupMe():
         self.quiz = re.compile("(^!quiz)")
         self.hacking_joke = re.compile("(^!hack)")
         self.fred_joke = re.compile("(^!fred)")
+        self.optregex = re.compile("(^!opt)")
 
         self._construct_regexes()
 
@@ -116,7 +121,8 @@ class QuizBotGroupMe():
             ("Authenticate", self.authenticate, self._authenticateUser),
             ("Quiz", self.quiz, self.quizzer),
             ("Joke/EasterEgg", self.hacking_joke, self.hack_joke),
-            ("Joke/EasterEgg", self.fred_joke, self.fred_function)
+            ("Joke/EasterEgg", self.fred_joke, self.fred_function),
+            ("Opting In/Out", self.optregex, self.opt)
         ]
         logging.info("Initialized regex.")
 
@@ -262,6 +268,10 @@ class QuizBotGroupMe():
 
     def send_rank(self, mes, att, gid, text, sender_name):
         self.send_message("Unfortunately, %s, this is not currently working. Stay tuned!" % (sender_name), 1)
+
+    def opt(self, mes, att, gid, text, sender_name):
+        x = QuizBotOptIO(sender_name, text, self.bot_id, self.group_id, self.bot_name)
+        self.send_message(x.response, 1)
 
     def quizzer(self, mes, att, gid, text, sender_name):
         if self.awaiting_response == False:
