@@ -17,6 +17,7 @@ class QuizBotOptIO():
                     t = (sender_name, botid, groupid)
                     c.execute("SELECT user FROM opt WHERE (user=? AND botid=? AND groupid=?)", (t))
                     userCheck = c.fetchone()
+                    logging.info(userCheck)
                     if userCheck == None or None in userCheck:
                         insertvalues = [(name, botid, groupid, sender_name, "true", "false")]
                         c.executemany("INSERT INTO opt (name, botid, groupid, user, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
@@ -43,6 +44,7 @@ class QuizBotOptIO():
                     t = (sender_name, botid, groupid)
                     c.execute("SELECT user FROM opt WHERE (user=? AND botid=? AND groupid=?)", (t))
                     userCheck = c.fetchone()
+                    logging.info(userCheck)
                     if userCheck == None or None in userCheck:
                         insertvalues = [(name, botid, groupid, sender_name, "false", "true")]
                         c.executemany("INSERT INTO opt (name, botid, groupid, user, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
@@ -72,6 +74,7 @@ class QuizBotOptIO():
                     t = (sender_name, botid, groupid)
                     c.execute("SELECT user FROM opt WHERE (user=? AND botid=? AND groupid=?)", (t))
                     userCheck = c.fetchone()
+                    logging.info(userCheck)
                     if userCheck == None or None in userCheck:
                         insertvalues = [(name, botid, groupid, sender_name, "false", "false")]
                         c.executemany("INSERT INTO opt (name, botid, groupid, user, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
@@ -98,6 +101,7 @@ class QuizBotOptIO():
                     t = (sender_name, botid, groupid)
                     c.execute("SELECT user FROM opt WHERE (user=? AND botid=? AND groupid=?)", (t))
                     userCheck = c.fetchone()
+                    logging.info(userCheck)
                     if userCheck == None or None in userCheck:
                         insertvalues = [(name, botid, groupid, sender_name, "false", "false")]
                         c.executemany("INSERT INTO opt (name, botid, groupid, user, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
@@ -128,6 +132,7 @@ class QuizBotOptIO():
             t = (sender_name, botid, groupid)
             c.execute("SELECT user FROM opt WHERE (user=? AND botid=? AND groupid=?)", (t))
             userCheck = c.fetchone()
+            logging.info(userCheck)
             if userCheck == None or None in userCheck:
                 insertvalues = [(name, botid, groupid, sender_name, "true", "true")]
                 c.executemany("INSERT INTO opt (name, botid, groupid, user, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
@@ -154,6 +159,7 @@ class QuizBotOptIO():
             t = (sender_name, botid, groupid)
             c.execute("SELECT user FROM opt WHERE (user=? AND botid=? AND groupid=?)", (t))
             userCheck = c.fetchone()
+            logging.info(userCheck)
             if userCheck == None or None in userCheck:
                 insertvalues = [(name, botid, groupid, sender_name, "false", "false")]
                 c.executemany("INSERT INTO opt (name, botid, groupid, user, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
