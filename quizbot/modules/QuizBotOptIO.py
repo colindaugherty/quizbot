@@ -167,6 +167,7 @@ class QuizBotOptIO():
             c.execute("SELECT users FROM opt WHERE (users=? AND botid=? AND groupid=?)", (t))
             userCheck = c.fetchone()
             logging.info(userCheck)
+            logging.info("userCheck is {} and whether or not it is a list: {}".format(userCheck, isinstance(userCheck, list)))
             if userCheck == None or None in userCheck:
                 insertvalues = [(name, botid, groupid, sender_name, "false", "false")]
                 c.executemany("INSERT INTO opt (name, botid, groupid, users, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
