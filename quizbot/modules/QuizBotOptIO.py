@@ -91,6 +91,7 @@ class QuizBotOptIO():
                     else:
                         logging.info("Inside the else block of opting out of newsroom")
                         insertvalues = [(name, botid, groupid, sender_name)]
+                        logging.info(c.execute("UPDATE opt SET newsroom = 'false' WHERE (name=?, botid=?, groupid=?, user=?)", insertvalues))
                         c.execute("UPDATE opt SET newsroom = 'false' WHERE (name=?, botid=?, groupid=?, user=?)", insertvalues)
                         t = (botid, groupid)
                         for row in c.execute("SELECT user FROM opt WHERE (botid=? AND groupid=?)", (t)):
@@ -100,6 +101,7 @@ class QuizBotOptIO():
                         self.response = "{} has opted out of newsroom".format(sender_name)
                         conn.commit()
                         conn.close()
+                        logging.info("Finished the else block of opting out of newsroom")
                 elif text[1] == "elimination":
                     t = (sender_name, botid, groupid)
                     c.execute("SELECT user FROM opt WHERE (user=? AND botid=? AND groupid=?)", (t))
@@ -129,7 +131,7 @@ class QuizBotOptIO():
                         conn.commit()
                         conn.close()
                 else:
-                    self.response = "Can't opt into {}, doesn't exist!".format(text[1])
+                    self.response = "Can't opt out of {}, doesn't exist!".format(text[1])
             else:
                 self.response = "Incorrect usage, expected - !opt <in|out> <newsroom|elimination>"
         elif text[0] == "in":
