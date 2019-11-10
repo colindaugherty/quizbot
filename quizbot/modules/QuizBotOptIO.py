@@ -30,6 +30,7 @@ class QuizBotOptIO():
                         conn.commit()
                         conn.close()
                     else:
+                        logging.info("Inside the else block of opting in to newsroom")
                         insertvalues = [(name, botid, groupid, sender_name)]
                         c.executemany("UPDATE opt SET newsroom = 'true' WHERE (name=?, botid=?, groupid=?, user=?)", insertvalues)
                         t = (botid, groupid)
@@ -57,6 +58,7 @@ class QuizBotOptIO():
                         conn.commit()
                         conn.close()
                     else:
+                        logging.info("Inside the else block of opting in to elimination")
                         insertvalues = [(name, botid, groupid, sender_name)]
                         c.executemany("UPDATE opt SET elimination = 'true' WHERE (name=?, botid=?, groupid=?, user=?)", insertvalues)
                         t = (botid, groupid)
@@ -87,6 +89,7 @@ class QuizBotOptIO():
                         conn.commit()
                         conn.close()
                     else:
+                        logging.info("Inside the else block of opting out of newsroom")
                         insertvalues = [(name, botid, groupid, sender_name)]
                         c.executemany("UPDATE opt SET newsroom = 'false' WHERE (name=?, botid=?, groupid=?, user=?)", insertvalues)
                         t = (botid, groupid)
@@ -114,6 +117,7 @@ class QuizBotOptIO():
                         conn.commit()
                         conn.close()
                     else:
+                        logging.info("Inside the else block of opting out of elimination")
                         insertvalues = [(name, botid, groupid, sender_name)]
                         c.executemany("UPDATE opt SET elimination = 'false' WHERE (name=?, botid=?, groupid=?, user=?)", insertvalues)
                         t = (botid, groupid)
@@ -145,6 +149,7 @@ class QuizBotOptIO():
                 conn.commit()
                 conn.close()
             else:
+                logging.info("Inside the else block of opting in to newsroom and elimination")
                 insertvalues = [(name, botid, groupid, sender_name)]
                 c.executemany("UPDATE opt SET newsroom = 'true', elimination = 'true' WHERE (name=?, botid=?, groupid=?, user=?)", insertvalues)
                 t = (botid, groupid)
@@ -172,6 +177,7 @@ class QuizBotOptIO():
                 conn.commit()
                 conn.close()
             else:
+                logging.info("Inside the else block of opting out of newsroom and elimination")
                 insertvalues = [(name, botid, groupid, sender_name)]
                 c.executemany("UPDATE opt SET newsroom = 'false', elimination = 'false' WHERE (name=?, botid=?, groupid=?, user=?)", insertvalues)
                 t = (botid, groupid)
