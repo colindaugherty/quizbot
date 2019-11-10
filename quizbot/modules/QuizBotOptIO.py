@@ -32,7 +32,7 @@ class QuizBotOptIO():
                     else:
                         logging.info("Inside the else block of opting in to newsroom")
                         insertvalues = [(name, botid, groupid, sender_name)]
-                        c.execute("UPDATE opt SET newsroom == 'true' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
+                        c.executemany("UPDATE opt SET newsroom == 'true' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
                         t = (botid, groupid)
                         for row in c.execute("SELECT users FROM opt WHERE (botid=? AND groupid=?)", (t)):
                             user_list.append(row)
@@ -60,7 +60,7 @@ class QuizBotOptIO():
                     else:
                         logging.info("Inside the else block of opting in to elimination")
                         insertvalues = [(name, botid, groupid, sender_name)]
-                        c.execute("UPDATE opt SET elimination == 'true' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
+                        c.executemany("UPDATE opt SET elimination == 'true' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
                         t = (botid, groupid)
                         for row in c.execute("SELECT users FROM opt WHERE (botid=? AND groupid=?)", (t)):
                             user_list.append(row)
@@ -91,8 +91,8 @@ class QuizBotOptIO():
                     else:
                         logging.info("Inside the else block of opting out of newsroom")
                         insertvalues = [(name, botid, groupid, sender_name)]
-                        logging.info(c.execute("UPDATE opt SET newsroom == 'false' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues))
-                        c.execute("UPDATE opt SET newsroom == 'false' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
+                        logging.info(c.executemany("UPDATE opt SET newsroom == 'false' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues))
+                        c.executemany("UPDATE opt SET newsroom == 'false' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
                         t = (botid, groupid)
                         for row in c.execute("SELECT users FROM opt WHERE (botid=? AND groupid=?)", (t)):
                             user_list.append(row)
@@ -121,7 +121,7 @@ class QuizBotOptIO():
                     else:
                         logging.info("Inside the else block of opting out of elimination")
                         insertvalues = [(name, botid, groupid, sender_name)]
-                        c.execute("UPDATE opt SET elimination == 'false' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
+                        c.executemany("UPDATE opt SET elimination == 'false' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
                         t = (botid, groupid)
                         for row in c.execute("SELECT users FROM opt WHERE (botid=? AND groupid=?)", (t)):
                             user_list.append(row)
@@ -153,7 +153,7 @@ class QuizBotOptIO():
             else:
                 logging.info("Inside the else block of opting in to newsroom and elimination")
                 insertvalues = [(name, botid, groupid, sender_name)]
-                c.execute("UPDATE opt SET newsroom == 'true', elimination == 'true' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
+                c.executemany("UPDATE opt SET newsroom == 'true', elimination == 'true' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
                 t = (botid, groupid)
                 for row in c.execute("SELECT users FROM opt WHERE (botid=? AND groupid=?)", (t)):
                     user_list.append(row)
@@ -167,7 +167,7 @@ class QuizBotOptIO():
             c.execute("SELECT users FROM opt WHERE (users=? AND botid=? AND groupid=?)", (t))
             userCheck = c.fetchone()
             logging.info(userCheck)
-            logging.info("userCheck is {} and whether or not it is a list: {}".format(userCheck, isinstance(userCheck, tuple)))
+            logging.info("userCheck is {} and whether or not it is a tuple: {}".format(userCheck, isinstance(userCheck, tuple)))
             if userCheck == None or None in userCheck:
                 insertvalues = [(name, botid, groupid, sender_name, "false", "false")]
                 c.executemany("INSERT INTO opt (name, botid, groupid, users, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
@@ -182,7 +182,7 @@ class QuizBotOptIO():
             elif isinstance(userCheck, tuple):
                 logging.info("Inside the else block of opting out of newsroom and elimination")
                 insertvalues = [(name, botid, groupid, sender_name)]
-                c.execute("UPDATE opt SET newsroom == 'false', elimination == 'false' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
+                c.executemany("UPDATE opt SET newsroom == 'false', elimination == 'false' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
                 t = (botid, groupid)
                 for row in c.execute("SELECT users FROM opt WHERE (botid=? AND groupid=?)", (t)):
                     user_list.append(row)
