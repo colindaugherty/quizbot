@@ -178,7 +178,7 @@ class QuizBotOptIO():
                 self.response = "{} has opted out of newsroom and elimination".format(sender_name)
                 conn.commit()
                 conn.close()
-            else:
+            elif isinstance(userCheck, list):
                 logging.info("Inside the else block of opting out of newsroom and elimination")
                 insertvalues = [(name, botid, groupid, sender_name)]
                 c.execute("UPDATE opt SET newsroom == 'false', elimination == 'false' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
@@ -190,6 +190,8 @@ class QuizBotOptIO():
                 self.response = "{} has opted out of newsroom and elimination".format(sender_name)
                 conn.commit()
                 conn.close()
+            else:
+                logging.info("Failed")
         else:
             self.response = "Incorrect usage, expected - !opt <in|out>"
             
