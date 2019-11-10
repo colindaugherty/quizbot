@@ -66,7 +66,7 @@ class QuizBotGroupMe():
             (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, users text)
             """)
             c.execute("""CREATE TABLE IF NOT EXISTS opt
-            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, user text, newsroom text, elimination text)
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, users text, newsroom text, elimination text)
             """)
             c.execute("SELECT * FROM config WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckconfig = c.fetchone()
