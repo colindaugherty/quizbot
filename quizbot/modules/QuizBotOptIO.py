@@ -167,7 +167,7 @@ class QuizBotOptIO():
             c.execute("SELECT users FROM opt WHERE (users=? AND botid=? AND groupid=?)", (t))
             userCheck = c.fetchone()
             logging.info(userCheck)
-            logging.info("userCheck is {} and whether or not it is a list: {}".format(userCheck, isinstance(userCheck, list)))
+            logging.info("userCheck is {} and whether or not it is a list: {}".format(userCheck, isinstance(userCheck, tuple)))
             if userCheck == None or None in userCheck:
                 insertvalues = [(name, botid, groupid, sender_name, "false", "false")]
                 c.executemany("INSERT INTO opt (name, botid, groupid, users, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
@@ -179,7 +179,7 @@ class QuizBotOptIO():
                 self.response = "{} has opted out of newsroom and elimination".format(sender_name)
                 conn.commit()
                 conn.close()
-            elif isinstance(userCheck, list):
+            elif isinstance(userCheck, tuple):
                 logging.info("Inside the else block of opting out of newsroom and elimination")
                 insertvalues = [(name, botid, groupid, sender_name)]
                 c.execute("UPDATE opt SET newsroom == 'false', elimination == 'false' WHERE (name=?, botid=?, groupid=?, users=?)", insertvalues)
