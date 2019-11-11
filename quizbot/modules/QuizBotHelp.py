@@ -7,6 +7,7 @@ class QuizBotHelp:
         self.found_command = False
         text = text.lower()
         text = text.split()
+        logging.info(text)
         if len(text) == 2:
             command_help = [
                 ["help","!help <command>","Displays commands and their syntax/usage"],
