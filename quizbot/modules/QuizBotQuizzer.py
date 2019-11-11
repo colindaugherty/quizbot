@@ -31,7 +31,7 @@ class QuizBotQuizzer():
         
         letterratio = len(ans_as_list) / len(cor_as_list)
         logging.info("letterratio - {}".format(letterratio))
-        if ratio > 0.90 and letterratio > 0.90:
+        if ratio > 0.80 and letterratio > 0.90:
             result = True
         else:
             result = False
