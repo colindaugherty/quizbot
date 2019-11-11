@@ -304,7 +304,7 @@ class QuizBotGroupMe():
         self.send_message(x.response, 1)
 
     def send_help(self, mes, att, gid, text, sender_name):
-        x = QuizBotHelp()
+        x = QuizBotHelp(text)
         self.send_message(x.response, 1)
 
     def hack_joke(self, mes, att, type, text, sender_name):
