@@ -16,6 +16,7 @@ class QuizBotHelp:
                 ["meme","!meme","Meme generator, will pull a random meme from your meme sources."]
             ]
             for command in command_help:
+                logging.info(command)
                 if text[1] == command[0]:
                     self.response = "Usage: {}\n{}: {}".format(command[1], command[0], command[2])
                     self.found_command = True
