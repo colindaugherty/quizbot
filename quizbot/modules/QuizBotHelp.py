@@ -9,14 +9,14 @@ class QuizBotHelp:
         text = text.split()
         if len(text) == 2:
             command_help = [
-                ["Help","!help <command>","Displays commands and their syntax/usage"],
-                ["Opt","!opt <in|out> (optional:elimination|newsroom)","Will opt you in or out of specific quizbot events, such as newsroom and elimination"],
-                ["Config","requires auth\n!config <configname>","Edits config per group, must be used by authenticated users"],
-                ["Fred","!fred","A funny phrase generator, name idea by Vanessa"],
-                ["Meme","!meme","Meme generator, will pull a random meme from your meme sources."]
+                ["help","!help <command>","Displays commands and their syntax/usage"],
+                ["opt","!opt <in|out> (optional:elimination|newsroom)","Will opt you in or out of specific quizbot events, such as newsroom and elimination"],
+                ["config","requires auth\n!config <configname>","Edits config per group, must be used by authenticated users"],
+                ["fred","!fred","A funny phrase generator, name idea by Vanessa"],
+                ["meme","!meme","Meme generator, will pull a random meme from your meme sources."]
             ]
             for command in command_help:
-                if text[1] == command[0].lower():
+                if text[1] == command[0]:
                     self.response = "Usage: {}\n{}: {}".format(command[1], command[0], command[2])
                     self.found_command = True
             if self.found_command == True:
@@ -29,7 +29,7 @@ class QuizBotHelp:
         elif len(text) == 1:
             message = "QuizBot Bot Commands-\nVersion 0.4b\n"
             message += "!meme - searches for a random meme from your meme suppliers in the config\n"
-            message += "!opt <in|out>- opt in and out of events run by the bot, include the event for more specific opting\n"
+            message += "!opt - opt in and out of events run by the bot, include the event for more specific opting\n"
             message += "!config - edits group config\n"
             message += "!fred - get a message from Fred\n"
             message += "!help - displays help commands\n"
