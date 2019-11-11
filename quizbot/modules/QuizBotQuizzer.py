@@ -1,4 +1,5 @@
 #rewrite of the quizzing function, put into module form
+# can probably be done better, but it's working for now
 
 from difflib import SequenceMatcher
 import time, random, os, logging, json
@@ -31,12 +32,12 @@ class QuizBotQuizzer():
         
         letterratio = len(ans_as_list) / len(cor_as_list)
         logging.info("letterratio - {}".format(letterratio))
-        if ratio > 0.80 and letterratio > 0.80:
+        if ratio > 0.65 and letterratio > 0.80:
             result = True
         else:
             result = False
         
-        logging.info("Results of comparison-\n{} has a letter ratio of {} and the ratio between {} and {} is {}".format(answer, letterratio, answer, correct, ratio))
+        logging.info("Results of comparison-\n{} has a spellcheck ratio of {} and the length ratio between {} and {} is {}".format(answer, letterratio, answer, correct, ratio))
         return result
 
     def rulechecker(self, playeranswer, correctanswer):
@@ -178,11 +179,11 @@ class QuizBotQuizzer():
             correctanswers = 0
             indexer = 0
             for a in playeranswer:
-                if self.similar(a, self.current_quiz[index][4][indexer]) or self.rulechecker(playeranswer, self.current_quiz[index][4]):
+                if self.similar(a, self.current_quiz[index][4][indexer]) or self.rulechecker(a, self.current_quiz[index][4]):
                     indexer += 1
                     correctanswers += 1
                 else:
-                    logging.info("%a is not correct" % (a))
+                    logging.info("%s is not correct" % (a))
             logging.info(correctanswers)
             logging.info("The number of correct answers is above me")
             logging.info(len(self.current_quiz[index][4]))

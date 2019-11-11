@@ -288,7 +288,7 @@ class QuizBotGroupMe():
             elif self.quizzerbot.finishedQuiz == True:
                 self.send_message("Finished quiz! Generating results", 1)
                 self.send_message(self.quizzerbot.response, 1)
-            else:
+            elif self.quizzerbot.finishedQuiz != True and self.quizzerbot.finishedQuiz != False:
                 logging.info("Finished quiz is broken, error")
             self.awaiting_response = self.quizzerbot.awaiting_response
 
