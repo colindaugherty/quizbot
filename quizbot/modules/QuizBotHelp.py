@@ -19,7 +19,7 @@ class QuizBotHelp:
             for command in command_help:
                 logging.info(command)
                 if text[1] == command[0]:
-                    self.response = "Usage: {}\n{}: {}".format(command[1], command[0], command[2])
+                    self.response = "Usage-\n{}\n\n{}: {}".format(command[1], command[0], command[2])
                     self.found_command = True
             if self.found_command == True:
                 logging.info("Found command {} successfully.".format(text[1]))
