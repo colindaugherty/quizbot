@@ -100,7 +100,7 @@ class QuizBotGroupMe():
         self.likesrank = re.compile("(^!rank$)")
         self.randommeme = re.compile("(^!meme$)")
         self.groupinfo = re.compile("(^!info$)")
-        self.help_regex = re.compile("(^!help$)")
+        self.help_regex = re.compile("(^!help)")
         self.config = re.compile("(^!config)")
         self.authenticate = re.compile("(^!authenticate)")
         self.quiz = re.compile("(^!quiz)")
