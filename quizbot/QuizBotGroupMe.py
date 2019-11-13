@@ -12,6 +12,7 @@ from .modules.QuizBotHackingJoke import QuizBotHackingJoke
 from .modules.QuizBotHelp import QuizBotHelp
 from .modules.QuizBotQuizzer import QuizBotQuizzer
 from .modules.QuizBotOptIO import QuizBotOptIO
+from .modules.QuizBotReturnStats import QuizBotReturnStats
 
 # config functions - database manipulation
 from .modules.QuizBotUpdateConfig import QuizBotUpdateConfig
@@ -115,6 +116,7 @@ class QuizBotGroupMe():
         self.likesrank = re.compile("(^!rank$)")
         self.randommeme = re.compile("(^!meme$)")
         self.groupinfo = re.compile("(^!info$)")
+        self.stats = re.compile("(^!stats$)")
         self.help_regex = re.compile("(^!help)")
         self.config = re.compile("(^!config)")
         self.authenticate = re.compile("(^!authenticate)")
@@ -131,6 +133,7 @@ class QuizBotGroupMe():
             ("Rank", self.likesrank, self.send_rank),
             ("Meme", self.randommeme, self.send_meme),
             ("Info", self.groupinfo, self.send_info),
+            ("Info", self.stats, self.send_info),
             ("Help", self.help_regex, self.send_help),
             ("Config", self.config, self.update_config),
             ("Authenticate", self.authenticate, self._authenticateUser),
@@ -252,6 +255,7 @@ class QuizBotGroupMe():
         c.execute("UPDATE stats SET TotalMessages = TotalMessages + 1 WHERE (groupid=?)", t)
         conn.commit()
         conn.close()
+        message = message.strip()
         if sendertype != "bot":
             if self.awaiting_response == False:
                 for type, regex, action in self.regex_actions:
@@ -301,7 +305,8 @@ class QuizBotGroupMe():
         c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
         conn.commit()
         conn.close()
-        self.send_message("Unfortunately, %s, this is not currently working. Stay tuned!" % (sender_name), 1)
+        x = QuizBotReturnStats(self.bot_name, self.group_id)
+        self.send_message(x.response, 1)
 
     def send_rank(self, mes, att, gid, text, sender_name):
         conn = sqlite3.connect('config.db')
