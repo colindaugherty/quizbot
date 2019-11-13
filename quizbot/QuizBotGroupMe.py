@@ -260,6 +260,12 @@ class QuizBotGroupMe():
                         else:
                             logging.info("%s and id#%s did not match group id#%s" %(name, id, gid))
                     if mes:
+                        conn = sqlite3.connect('config.db')
+                        c = conn.cursor()
+                        t = [(self.bot_name, self.bot_id, self.group_id)]
+                        c.executemany("UPDATE stats SET TotalMessages = TotalMessages + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+                        conn.commit()
+                        conn.close()
                         logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
                         if att:
                             action(mes, att, gid, message, sender_name)
@@ -267,6 +273,12 @@ class QuizBotGroupMe():
                             att = []
                             action(mes, att, gid, message, sender_name)
             elif self.awaiting_response == True:
+                conn = sqlite3.connect('config.db')
+                c = conn.cursor()
+                t = [(self.bot_name, self.bot_id, self.group_id)]
+                c.executemany("UPDATE stats SET TotalMessages = TotalMessages + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+                conn.commit()
+                conn.close()
                 mes = "none"
                 att = attachments
                 gid = groupid
