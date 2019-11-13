@@ -247,7 +247,7 @@ class QuizBotGroupMe():
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         group = int(groupid)
-        t = (group)
+        t = [(group)]
         logging.info(t)
         c.execute("UPDATE stats SET TotalMessages = TotalMessages + 1 WHERE (groupid=?)", t)
         conn.commit()
