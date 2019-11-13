@@ -6,7 +6,7 @@ class QuizBotReturnStats:
     def __init__(self, botname, groupid):
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
-        t = [(botname, groupid)]
+        t = (botname, groupid)
         message = "Stats for the group with bot {}\n".format(botname)
         c.execute("SELECT requests FROM stats WHERE name=? AND groupid=?", t)
         requests = c.fetchone()
