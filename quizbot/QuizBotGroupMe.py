@@ -249,7 +249,7 @@ class QuizBotGroupMe():
         group = int(groupid)
         t = (group)
         logging.info(t)
-        c.executemany("UPDATE stats SET TotalMessages = TotalMessages + 1 WHERE (groupid=?)", t)
+        c.execute("UPDATE stats SET TotalMessages = TotalMessages + 1 WHERE (groupid=?)", t)
         conn.commit()
         conn.close()
         if sendertype != "bot":
