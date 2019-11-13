@@ -245,11 +245,6 @@ class QuizBotGroupMe():
     def receive_message(self, message, attachments, groupid, sendertype, sender_name):
         logging.info("\n\n\n\n\nreceived message from group: %s\nself.bots: %s\n\n\n\n" % (groupid, self.bots))
         if sendertype != "bot":
-            conn = sqlite3.connect('config.db')
-            c = conn.cursor()
-            t = [(self.bot_name, self.bot_id, self.group_id)]
-            c.executemany("UPDATE stats SET TotalMessages = TotalMessages + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
-            conn.commit()
             if self.awaiting_response == False:
                 for type, regex, action in self.regex_actions:
                     mes = regex.match(message)
