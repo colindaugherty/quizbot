@@ -250,7 +250,6 @@ class QuizBotGroupMe():
             t = [(self.bot_name, self.bot_id, self.group_id)]
             c.executemany("UPDATE stats SET TotalMessages = TotalMessages + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
             conn.commit()
-            conn.close()
             if self.awaiting_response == False:
                 for type, regex, action in self.regex_actions:
                     mes = regex.match(message)
