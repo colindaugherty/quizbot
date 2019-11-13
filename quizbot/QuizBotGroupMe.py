@@ -68,10 +68,25 @@ class QuizBotGroupMe():
             c.execute("""CREATE TABLE IF NOT EXISTS opt
             (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, users text, newsroom text, elimination text)
             """)
+            c.execute("""CREATE TABLE IF NOT EXISTS stats
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, botid text, groupid int, requests int, responses int, FredResponses int, TotalMessages int)
+            """)
             c.execute("SELECT * FROM config WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckconfig = c.fetchone()
             c.execute("SELECT * FROM memesource WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckmemesource = c.fetchone()
+            c.execute("SELECT * FROM stats WHERE name=? AND botid=? AND groupid=?", iteration_values)
+            databasecheckstats = c.fetchone()
+            if databasecheckstats == None or None in databasecheckstats:
+                logging.info(f"Setting up default stats for bot {name} (id#{id} and groupid#{group})")
+                insertvalues = [(name, id, group, 0, 0, 0, 0)]
+                c.executemany("INSERT INTO stats (name, botid, groupid, requests, responses, FredResponses, TotalMessages) VALUES (?, ?, ?, ?, ?, ?, ?)", insertvalues)
+                for row in c.execute("SELECT * FROM stats ORDER BY botid"):
+                    logging.info(row)
+                conn.commit()
+            else:
+                for row in c.execute("SELECT * FROM stats ORDER BY botid"):
+                    logging.info(row)
             if databasecheckconfig == None and databasecheckmemesource == None or None in databasecheckconfig and None in databasecheckmemesource:
                 logging.info(f"Doing default config for bot {name} (id#{id} and groupid#{group})")
                 insertvalues = [(name, id, group, 'false','false')]
@@ -245,6 +260,12 @@ class QuizBotGroupMe():
                         else:
                             logging.info("%s and id#%s did not match group id#%s" %(name, id, gid))
                     if mes:
+                        conn = sqlite3.connect('config.db')
+                        c = conn.cursor()
+                        t = [(self.bot_name, self.bot_id, self.group_id)]
+                        c.executemany("UPDATE stats SET TotalMessages = TotalMessages + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+                        conn.commit()
+                        conn.close()
                         logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
                         if att:
                             action(mes, att, gid, message, sender_name)
@@ -261,25 +282,66 @@ class QuizBotGroupMe():
                 self.awaiting_response = False
     
     def send_likes(self, mes, att, gid, text, sender_name):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        t = [(self.bot_name, self.bot_id, self.group_id)]
+        c.executemany("UPDATE stats SET requests = requests + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        conn.commit()
+        conn.close()
         self.send_message("Unfortunately, %s, this is not currently working. Stay tuned!" % (sender_name), 1)
 
     def send_info(self, mes, att, gid, text, sender_name):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        t = [(self.bot_name, self.bot_id, self.group_id)]
+        c.executemany("UPDATE stats SET requests = requests + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        conn.commit()
+        conn.close()
         self.send_message("Unfortunately, %s, this is not currently working. Stay tuned!" % (sender_name), 1)
 
     def send_rank(self, mes, att, gid, text, sender_name):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        t = [(self.bot_name, self.bot_id, self.group_id)]
+        c.executemany("UPDATE stats SET requests = requests + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        conn.commit()
+        conn.close()
         self.send_message("Unfortunately, %s, this is not currently working. Stay tuned!" % (sender_name), 1)
 
     def opt(self, mes, att, gid, text, sender_name):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        t = [(self.bot_name, self.bot_id, self.group_id)]
+        c.executemany("UPDATE stats SET requests = requests + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        conn.commit()
+        conn.close()
         x = QuizBotOptIO(sender_name, text, self.bot_id, self.group_id, self.bot_name)
         self.send_message(x.response, 1)
 
     def quizzer(self, mes, att, gid, text, sender_name):
         if self.awaiting_response == False:
+            conn = sqlite3.connect('config.db')
+            c = conn.cursor()
+            t = [(self.bot_name, self.bot_id, self.group_id)]
+            c.executemany("UPDATE stats SET requests = requests + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+            c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+            conn.commit()
+            conn.close()
             self.quizzerbot = QuizBotQuizzer(self.authenticatedUsers, sender_name, self.quizbonuses)
             self.quizzerbot.start_quiz(text)
             self.send_message(self.quizzerbot.response, 1)
             self.awaiting_response = self.quizzerbot.awaiting_response 
         elif self.awaiting_response == True:
+            conn = sqlite3.connect('config.db')
+            c = conn.cursor()
+            t = [(self.bot_name, self.bot_id, self.group_id)]
+            c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+            conn.commit()
+            conn.close()
             self.quizzerbot.continue_quiz(text, sender_name)
             if self.quizzerbot.goodjob:
                 self.send_message(self.quizzerbot.goodjob, 1)
@@ -297,6 +359,13 @@ class QuizBotGroupMe():
         self.send_message(x.response, 1)
         
     def send_meme(self, mes, att, gid, text, sender_name):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        t = [(self.bot_name, self.bot_id, self.group_id)]
+        c.executemany("UPDATE stats SET requests = requests + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        conn.commit()
+        conn.close()
         if self.useReddit == True:
             x = QuizBotSendRedditMeme(self.meme_source, self.real_len)
         elif self.useReddit == False:
@@ -304,14 +373,36 @@ class QuizBotGroupMe():
         self.send_message(x.response, 1)
 
     def send_help(self, mes, att, gid, text, sender_name):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        t = [(self.bot_name, self.bot_id, self.group_id)]
+        c.executemany("UPDATE stats SET requests = requests + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        conn.commit()
+        conn.close()
         x = QuizBotHelp(text)
         self.send_message(x.response, 1)
 
     def hack_joke(self, mes, att, type, text, sender_name):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        t = [(self.bot_name, self.bot_id, self.group_id)]
+        c.executemany("UPDATE stats SET requests = requests + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        conn.commit()
+        conn.close()
         x = QuizBotHackingJoke(self.group_id, sender_name)
         self.send_message(x.response, 1)
     
     def fred_function(self, mes, att, type, text, sender_name):
+        conn = sqlite3.connect('config.db')
+        c = conn.cursor()
+        t = [(self.bot_name, self.bot_id, self.group_id)]
+        c.executemany("UPDATE stats SET requests = requests + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        c.executemany("UPDATE stats SET FredResponses = FredResponses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
+        conn.commit()
+        conn.close()
         x = QuizBotFunSayings(sender_name)
         self.send_message(x.response, 1)
 
