@@ -1,6 +1,6 @@
 # quizbot
 a python GroupMe bot
-current version 0.4b
+current version 0.5b
 
 This project started as a way to quiz SECC Bible Bowlers on their material, but it can also be used for other quizzes/study groups.
 

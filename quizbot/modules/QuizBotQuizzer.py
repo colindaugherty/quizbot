@@ -1,4 +1,4 @@
-#rewrite of the quizzing function, put into module form
+# rewrite of the quizzing function, put into module form
 # can probably be done better, but it's working for now
 
 from difflib import SequenceMatcher
@@ -17,6 +17,7 @@ class QuizBotQuizzer():
         self.playerindex = 0
         self.quiztime = 0
         self.finishedQuiz = False
+        self.awaiting_response = False
 
         with open(quiz_file) as data_file:
             self.quizmaterial = json.load(data_file)

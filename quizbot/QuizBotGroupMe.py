@@ -1,5 +1,7 @@
 # fair warning to y'all. this is gonna be wack
 # it is very wack
+# group-me wrapper for quizbot
+
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json, requests, re, time, os, random, logging, sqlite3
 from .message_routing import GroupMeMessageRouter
@@ -11,30 +13,26 @@ from .modules.QuizBotFunSayings import QuizBotFunSayings
 from .modules.QuizBotHackingJoke import QuizBotHackingJoke
 from .modules.QuizBotHelp import QuizBotHelp
 from .modules.QuizBotQuizzer import QuizBotQuizzer
-from .modules.QuizBotOptIO import QuizBotOptIO
 from .modules.QuizBotReturnStats import QuizBotReturnStats
 
 # config functions - database manipulation
 from .modules.QuizBotUpdateConfig import QuizBotUpdateConfig
 from .modules.QuizBotSetMemeSource import QuizBotSetMemeSource
+from .modules.QuizBotOptIO import QuizBotOptIO
 
-logging.basicConfig(level=logging.DEBUG,filename='access.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+logging.basicConfig(level=logging.DEBUG,filename='access.log', filemode='w', format='QuizBot[GROUPME]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 conn = sqlite3.connect('config.db')
 
 logging.info("Started program. Hello world!")
 
 config_file = os.path.join('.', 'data', 'config.json')
-quiz_file = os.path.join('.', 'data', 'quiz_material.json')
 
 class QuizBotGroupMe():
     def __init__(self, bot_id):
         # grab config from files
         with open(config_file) as data_file:
             config = json.load(data_file)
-
-        with open(quiz_file) as data_file:
-            self.quizmaterial = json.load(data_file)
 
         # start bot variables
         self.bots = config['bots']
