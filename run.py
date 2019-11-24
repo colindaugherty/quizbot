@@ -3,7 +3,6 @@ import os
 import json
 from threading import Thread
 
-# import quizbot.QuizBotGroupMe as QuizBotGroupMe
 import quizbot.QuizBotDiscord as QuizBot
 import quizbot.QuizBotGroupMe as QuizBotGroupMe
 
@@ -15,8 +14,8 @@ else:
 with open(config_file) as data_file:
     config = json.load(data_file)
 
-quizbot = QuizBot.QuizBotDiscord()
-QuizBot.client.run(quizbot.init(config['discord_key']))
-
 QuizBotGroupMe.init()
 QuizBotGroupMe.listen(port=config['listening_port'])
+
+quizbot = QuizBot.QuizBotDiscord(QuizBot.client.user)
+QuizBot.client.run(quizbot.init(config['discord_key']))
