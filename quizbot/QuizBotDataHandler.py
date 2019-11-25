@@ -328,8 +328,8 @@ class QuizBotDataHandler:
             return f"Encountered error - {e}"
 
     def do(self, method, data):
-        identity = (str(data["name"]), int(data["groupid"]))
-        table = str(data["table"])
+        identity = [str(data["name"]), int(data["groupid"])]
+        table = data["table"]
         data = tuple(data["data"])
         if self.discord:
             db, c = self.connect(discord_data)
