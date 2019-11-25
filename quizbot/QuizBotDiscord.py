@@ -158,11 +158,10 @@ async def on_message(message):
         print(f"{groupid} - groupid")
     else:
         print("This shouldn't have happened")
-    print(f"message.author.nick: {message.author.nick}")
-    if message.author.nick == None:
-        sender = str(message.author)
-    else:
-        sender = message.author.nick
+    print(f"message.author.id: {message.author.id}\nclient.get_user(id): {client.get_user(message.author.id)}")
+    uid = message.author.id
+    sender = client.get_user(uid)
+    sender = sender.display_name
     text = message.content
     text = text.strip()
     print(text)
