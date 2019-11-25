@@ -158,6 +158,7 @@ async def on_message(message):
         print(f"{groupid} - groupid")
     else:
         print("This shouldn't have happened")
+    print(f"message.author.nick: {message.author.nick}")
     if message.author.nick == None:
         sender = str(message.author)
     else:
