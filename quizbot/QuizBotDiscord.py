@@ -161,7 +161,9 @@ async def on_message(message):
     print(f"message.author.id: {message.author.id}\nclient.get_user(id): {client.get_user(message.author.id)}")
     uid = message.author.id
     sender = client.get_user(uid)
+    print(f"Sender before display name: {sender}")
     sender = sender.display_name
+    print(f"Sender after display name: {sender }")
     text = message.content
     text = text.strip()
     print(text)
