@@ -332,7 +332,7 @@ class QuizBotDataHandler:
             return f"Encountered error - {e}"
 
     def do(self, method, data):
-        identity = [str(data["name"]), int(data["groupid"])]
+        identity = [data["name"], data["groupid"]]
         table = data["table"]
         data = tuple(data["data"])
         if self.discord:
@@ -363,4 +363,3 @@ if __name__ == "__main__":
     print(test_data["data"])
     print(testingDiscord.do("selectone", test_data))
     print(testingGroupMe.do("select", test_data))
-    # print(testingErrors.do("update", test_data))
