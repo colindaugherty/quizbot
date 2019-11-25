@@ -13,7 +13,6 @@ class QuizBotOptIO():
                 if text[1] == "newsroom":
                     data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid]}
                     userCheck = handler.do("select", data)
-                    print(userCheck)
                     if userCheck == None or sender_name not in userCheck:
                         data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid, sender_name, "true", "false"]}
                         updated = handler.do("insert", data)
