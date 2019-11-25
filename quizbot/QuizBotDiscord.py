@@ -170,7 +170,7 @@ async def on_message(message):
             mes = regex.match(text)
             if mes:
                 discordlogger.info(f'Received message with type:{type} and message:{text}')
-                quizbot._set_variables(client.user, groupid)
+                quizbot._set_variables(client.user.name, groupid)
                 await message.channel.send(action(text, sender))
     else:
         print("I am waiting for a message")
