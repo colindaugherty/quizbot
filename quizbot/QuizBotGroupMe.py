@@ -165,91 +165,24 @@ class QuizBotGroupMe():
     def _authenticateUser(self, mes, att, type, text, sender_name):
         x = QuizBotAuthenticateUser(sender_name, text, self.bot_name, self.group_id, datahandler)
         self.send_message(x.response, 1)
-        # sender_name = sender_name.lower()
-        # sender_name = sender_name.replace(" ", "_")
-        # groupmelogger.info(f"Sender name is - {sender_name}")
-        # conn = sqlite3.connect('config.db')
-        # c = conn.cursor()
-        # text = text.lower()
-        # text = text.split()
-        # t = (self.bot_id, self.group_id)
-        # c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t))
-        # authenticatedCheck = c.fetchone()
-        # localusers = []
-        # if 0 <= 2 < len(text) and authenticatedCheck == None or 0 <= 2 < len(text) and None in authenticatedCheck:
-        #     if text[1] == str(self.bot_name) and text[2] == str(self.group_id):
-        #         if text[1] not in self.authenticatedUsers:
-        #             insertvalues = [(self.bot_name, self.bot_id, self.group_id, sender_name)]
-        #             c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
-        #             for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
-        #                 localusers.append(row[0])
-        #             groupmelogger.info(localusers)
-        #             conn.commit()
-        #             conn.close()
-        #             groupmelogger.info("Just authenticated a user, an updated list should be above me")
-        #             message = sender_name
-        #             message += " is now authenticated."
-        #             self.send_message(message, 1)
-        #         else:
-        #             self.send_message("Error - user already authenticated", 1)
-        #     else:
-        #         self.send_message("Include bot_name and group_id.", 1)
-        # elif sender_name in self.authenticatedUsers:
-        #     if 0 <= 1 < len(text):
-        #         if text[1] not in self.authenticatedUsers:
-        #             insertvalues = [(self.bot_name, self.bot_id, self.group_id, text[1])]
-        #             c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
-        #             for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
-        #                 localusers.append(row[0])
-        #             groupmelogger.info(localusers)
-        #             conn.commit()
-        #             conn.close()
-        #             groupmelogger.info("Just authenticated a user, an updated list should be above me")
-        #             message = "Authenticating user "
-        #             message += text[1]
-        #             message += " they will now have access to all commands."
-        #             self.send_message(message, 1)
-        #         else:
-        #             self.send_message("Error - user is already authenticated.", 1)
-        # else:
-        #     self.send_message("I'm sorry, but you can not authenticate anyone :/", 1)
 
     def _getmemesource(self):
         x = QuizBotSetMemeSource(self.bot_id, self.group_id)
         return x.response
 
     def _getallownsfw(self):
-        conn = sqlite3.connect('config.db')
-        c = conn.cursor()
-        t = (self.bot_id, self.group_id)
-        c.execute("SELECT allownsfw FROM config WHERE (botid=? AND groupid=?)", (t))
-        allownsfw = c.fetchone()
-        allownsfw = allownsfw[0]
-        conn.commit()
-        conn.close()
+        data = {"name" : self.bot_name, "groupid" : self.group_id, "table" : ["config", "allownsfw"], "data" : [self.bot_name, self.group_id]}
+        allownsfw = datahandler.do("selectone", data)
         return allownsfw
 
     def _getallowreposts(self):
-        conn = sqlite3.connect('config.db')
-        c = conn.cursor()
-        t = (self.bot_id, self.group_id)
-        c.execute("SELECT allowrepost FROM config WHERE (botid=? AND groupid=?)", (t))
-        allowrepost = c.fetchone()
-        allowrepost = allowrepost[0]
-        conn.commit()
-        conn.close()
+        data = {"name" : self.bot_name, "groupid" : self.group_id, "table" : ["config", "allowrepost"], "data" : [self.bot_name, self.group_id]}
+        allowrepost = datahandler.do("selectone", data)
         return allowrepost
 
     def _getauthenticatedusers(self):
-        conn = sqlite3.connect('config.db')
-        c = conn.cursor()
-        t = (self.bot_id, self.group_id)
-        users = []
-        for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
-            users.append(row[0])
-        groupmelogger.info(f"Current authenticated users {users}")
-        conn.commit()
-        conn.close()
+        data = {"name" : self.bot_name, "groupid" : self.group_id, "table" : "authenticate", "data" : [self.bot_name, self.group_id]}
+        users = datahandler.do("select", data)
         return users
 
     def _init_config(self, groupid, bot_id, botname):
