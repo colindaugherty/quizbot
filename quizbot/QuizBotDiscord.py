@@ -8,11 +8,13 @@ from .modules.QuizBotFunSayings import QuizBotFunSayings
 from .modules.QuizBotQuizzer import QuizBotQuizzer
 from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
 
-logging.basicConfig(level=logging.DEBUG,filename='logs/discord.log', filemode='w', format='QuizBot[DISCORD]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+discordlogger = logging.getLogger(__name__)
+
+discordlogger.basicConfig(level=logging.DEBUG,filename='logs/discord.log', filemode='w', format='QuizBot[DISCORD]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 conn = sqlite3.connect('config.db')
 
-logging.info("Started program. Hello world!")
+discordlogger.info("Started program. Hello world!")
 
 config_file = os.path.join('.', 'data', 'config.json')
 quiz_file = os.path.join('.', 'data', 'quiz_material.json')
@@ -47,7 +49,7 @@ class QuizBotDiscord():
             ("Meme", self.randommeme, self.send_meme),
             ("Quiz", self.quiz, self.quizzer)
         ]
-        logging.info("Initialized regex.")
+        discordlogger.info("Initialized regex.")
 
     def send_help(self, text, name):
         x = QuizBotHelp(text)
@@ -83,7 +85,7 @@ class QuizBotDiscord():
                 response += self.quizboi.response
                 return response
             elif self.quizboi.finishedQuiz != True and self.quizboi.finishedQuiz != False:
-                logging.info("Finished quiz is broken, error")
+                discordlogger.info("Finished quiz is broken, error")
 
     def init(self, token):
         return token
@@ -93,7 +95,7 @@ quizbot = QuizBotDiscord(client.user)
 
 @client.event
 async def on_ready():
-    logging.info("Logged in and ready for commands. User - {0.user}".format(client))
+    discordlogger.info("Logged in and ready for commands. User - {0.user}".format(client))
 
 @client.event
 async def on_message(message):
@@ -111,7 +113,7 @@ async def on_message(message):
         for type, regex, action in quizbot.regex_actions:
             mes = regex.match(text)
             if mes:
-                logging.info(f'Received message with type:{type} and message:{text}')
+                discordlogger.info(f'Received message with type:{type} and message:{text}')
                 await message.channel.send(action(text, sender))
     else:
         print("I am waiting for a message")

@@ -8,7 +8,7 @@ import quizbot.QuizBotGroupMe as QuizBotGroupMe
 
 print("Where does this go wrong")
 
-# logging.basicConfig(level=logging.DEBUG,filename='access.log', filemode='w', format='QuizBot: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+logging.basicConfig(level=logging.DEBUG,filename='access.log', filemode='w', format='QuizBot: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 logging.info("Hello World! This is the first real line of quizbot")
 
 print("Where does this go wrong")

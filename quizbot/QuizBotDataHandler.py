@@ -2,7 +2,9 @@
 
 import sqlite3, logging, traceback
 
-logging.basicConfig(level=logging.DEBUG,filename='logs/data.log', filemode='w', format='QuizBot[DATA]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+datalogger = logging.getLogger(__name__)
+
+datalogger.basicConfig(level=logging.DEBUG,filename='logs/data.log', filemode='w', format='QuizBot[DATA]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 discord_data = "data/discord.db"
 groupme_data = "data/groupme.db"
@@ -47,35 +49,35 @@ class QuizBotDataHandler:
         c.execute("SELECT * FROM stats WHERE name=? AND groupid=?", identity)
         checkstats = c.fetchone()
         if checkconfig == None and checkmemesource == None or None in checkconfig and None in checkmemesource:
-            logging.info(f"Doing default config for bot {name} in group {groupid}")
+            datalogger.info(f"Doing default config for bot {name} in group {groupid}")
             insertvalues = [(name, groupid, 'false','false')]
             c.executemany("INSERT INTO config (name, groupid, allownsfw, allowrepost) VALUES (?,?,?,?)", insertvalues)
             insertvalues = [(name, groupid, 'all')]
             c.executemany("INSERT INTO memesource (name, groupid, subreddit) VALUES (?,?,?)", insertvalues)
-            logging.info("Finished - results:\n")
+            datalogger.info("Finished - results:\n")
             for row in c.execute("SELECT * FROM config ORDER BY id"):
-                logging.info(row)
+                datalogger.info(row)
             for row in c.execute("SELECT * FROM memesource ORDER BY groupid"):
-                logging.info(row)
+                datalogger.info(row)
             db.commit()
         else:
             for row in c.execute("SELECT * FROM config ORDER BY id"):
-                logging.info(row)
+                datalogger.info(row)
             for row in c.execute("SELECT * FROM memesource ORDER BY groupid"):
-                logging.info(row)
-        logging.info("-- DOING STATS --")
+                datalogger.info(row)
+        datalogger.info("-- DOING STATS --")
         if checkstats == None or None in checkstats:
-            logging.info(f"Setting up stats for bot {name} in group {groupid}")
+            datalogger.info(f"Setting up stats for bot {name} in group {groupid}")
             insertvalues = [(name, groupid, 0, 0, 0, 0)]
             c.executemany("INSERT INTO stats (name, groupid, requests, responses, FredResponses, TotalMessages) VALUES (?, ?, ?, ?, ?, ?)", insertvalues)
             for row in c.execute("SELECT * FROM stats ORDER BY groupid"):
-                logging.info(row)
+                datalogger.info(row)
             db.commit()
         else:
             for row in c.execute("SELECT * FROM stats ORDER BY groupid"):
-                logging.info(row)
+                datalogger.info(row)
 
-        logging.info("Finished setting defaults")
+        datalogger.info("Finished setting defaults")
         db.commit()
         return "Finished setting up."
 
@@ -91,7 +93,7 @@ class QuizBotDataHandler:
 
     def update(self, db, c, table, data):
         try:
-            logging.info(f"Editing database with this data- {data}")
+            datalogger.info(f"Editing database with this data- {data}")
             if table == "opt":
                 c.executemany("UPDATE opt SET newsroom=? AND elimination=? WHERE (name=? AND groupid=?)", [data])
                 db.commit()
@@ -154,7 +156,7 @@ class QuizBotDataHandler:
                 return f"This should really only be used for stats, config, and opt, it was used for {table}"
             db.commit()
             self.clean_up(db, c)
-            logging.info("Finished editing database.")
+            datalogger.info("Finished editing database.")
         except Exception as e:
             self.clean_up(db, c)
             print(traceback.format_exc())
@@ -319,12 +321,12 @@ class QuizBotDataHandler:
         if self.discord:
             db, c = self.connect(discord_data)
             method = self.methods[method]
-            logging.info(self._setup_defaults_(db, c, identity))
+            datalogger.info(self._setup_defaults_(db, c, identity))
             return method(db, c, table, data)
         elif self.groupme:
             db, c = self.connect(groupme_data)
             method = self.methods[method]
-            logging.info(self._setup_defaults_(db, c, identity))
+            datalogger.info(self._setup_defaults_(db, c, identity))
             return method(db, c, table, data)
         else:
             return print("You never defined a client!")

@@ -24,11 +24,13 @@ from .modules.QuizBotOptIO import QuizBotOptIO
 
 datahandler = QuizBotDataHandler(groupme=True)
 
-logging.basicConfig(level=logging.DEBUG,filename='logs/groupme.log', filemode='w', format='QuizBot[GROUPME]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+groupmelogger = logging.getLogger(__name__)
+
+groupmelogger.basicConfig(level=logging.DEBUG,filename='logs/groupme.log', filemode='w', format='QuizBot[GROUPME]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 conn = sqlite3.connect('config.db')
 
-logging.info("Started program. Hello world!")
+groupmelogger.info("Started program. Hello world!")
 
 config_file = os.path.join('.', 'data', 'config.json')
 
@@ -43,7 +45,7 @@ class QuizBotGroupMe():
         reallist = []
         for bot in self.bots:
             bot = tuple(bot)
-            logging.info("Found bot- {}".format(bot))
+            groupmelogger.info("Found bot- {}".format(bot))
             reallist.append(bot)
         self.bots = reallist
         self.listening_port = config['listening_port']
@@ -81,32 +83,32 @@ class QuizBotGroupMe():
             c.execute("SELECT * FROM stats WHERE name=? AND botid=? AND groupid=?", iteration_values)
             databasecheckstats = c.fetchone()
             if databasecheckstats == None or None in databasecheckstats:
-                logging.info(f"Setting up default stats for bot {name} (id#{id} and groupid#{group})")
+                groupmelogger.info(f"Setting up default stats for bot {name} (id#{id} and groupid#{group})")
                 insertvalues = [(name, id, group, 0, 0, 0, 0)]
                 c.executemany("INSERT INTO stats (name, botid, groupid, requests, responses, FredResponses, TotalMessages) VALUES (?, ?, ?, ?, ?, ?, ?)", insertvalues)
                 for row in c.execute("SELECT * FROM stats ORDER BY botid"):
-                    logging.info(row)
+                    groupmelogger.info(row)
                 conn.commit()
             else:
                 for row in c.execute("SELECT * FROM stats ORDER BY botid"):
-                    logging.info(row)
+                    groupmelogger.info(row)
             if databasecheckconfig == None and databasecheckmemesource == None or None in databasecheckconfig and None in databasecheckmemesource:
-                logging.info(f"Doing default config for bot {name} (id#{id} and groupid#{group})")
+                groupmelogger.info(f"Doing default config for bot {name} (id#{id} and groupid#{group})")
                 insertvalues = [(name, id, group, 'false','false')]
                 c.executemany("INSERT INTO config (name, botid, groupid, allownsfw, allowrepost) VALUES (?,?,?,?,?)", insertvalues)
                 insertvalues = [(name, id, group, 'all')]
                 c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", insertvalues)
-                logging.info("Finished - results:\n")
+                groupmelogger.info("Finished - results:\n")
                 for row in c.execute("SELECT * FROM config ORDER BY id"):
-                    logging.info(row)
+                    groupmelogger.info(row)
                 for row in c.execute("SELECT * FROM memesource ORDER BY botid"):
-                    logging.info(row)
+                    groupmelogger.info(row)
                 conn.commit()
             else:
                 for row in c.execute("SELECT * FROM config ORDER BY id"):
-                    logging.info(row)
+                    groupmelogger.info(row)
                 for row in c.execute("SELECT * FROM memesource ORDER BY botid"):
-                    logging.info(row)
+                    groupmelogger.info(row)
         conn.commit()
         conn.close()
 
@@ -144,12 +146,12 @@ class QuizBotGroupMe():
             ("Joke/EasterEgg", self.fred_joke, self.fred_function),
             ("Opting In/Out", self.optregex, self.opt)
         ]
-        logging.info("Initialized regex.")
+        groupmelogger.info("Initialized regex.")
 
     def _authenticateUser(self, mes, att, type, text, sender_name):
         sender_name = sender_name.lower()
         sender_name = sender_name.replace(" ", "_")
-        logging.info(f"Sender name is - {sender_name}")
+        groupmelogger.info(f"Sender name is - {sender_name}")
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         text = text.lower()
@@ -165,10 +167,10 @@ class QuizBotGroupMe():
                     c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
                     for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
                         localusers.append(row[0])
-                    logging.info(localusers)
+                    groupmelogger.info(localusers)
                     conn.commit()
                     conn.close()
-                    logging.info("Just authenticated a user, an updated list should be above me")
+                    groupmelogger.info("Just authenticated a user, an updated list should be above me")
                     message = sender_name
                     message += " is now authenticated."
                     self.send_message(message, 1)
@@ -183,10 +185,10 @@ class QuizBotGroupMe():
                     c.executemany("INSERT INTO authenticate (name, botid, groupid, users) VALUES (?,?,?,?)", insertvalues)
                     for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
                         localusers.append(row[0])
-                    logging.info(localusers)
+                    groupmelogger.info(localusers)
                     conn.commit()
                     conn.close()
-                    logging.info("Just authenticated a user, an updated list should be above me")
+                    groupmelogger.info("Just authenticated a user, an updated list should be above me")
                     message = "Authenticating user "
                     message += text[1]
                     message += " they will now have access to all commands."
@@ -229,7 +231,7 @@ class QuizBotGroupMe():
         users = []
         for row in c.execute("SELECT users FROM authenticate WHERE (botid=? AND groupid=?)", (t)):
             users.append(row[0])
-        logging.info(f"Current authenticated users {users}")
+        groupmelogger.info(f"Current authenticated users {users}")
         conn.commit()
         conn.close()
         return users
@@ -243,17 +245,17 @@ class QuizBotGroupMe():
         self.allow_reposts = self._getallowreposts()
         self.bot_name = botname
         self.authenticatedUsers = self._getauthenticatedusers()
-        logging.info(f"\n\n\nLOTS OF SPACE FOR CONFIG INITS\n\nTHESE ARE CONFIG VALUES-\n\nbot_id: {self.bot_id}\nmeme_source: {self.meme_source}\nallow_nsfw: {self.allow_nsfw}\nallow_reposts: {self.allow_reposts}\nbot_name: {self.bot_name}\ngroup_id: {self.group_id}\nauthenticatedUsers: {self.authenticatedUsers}\n\n\nEND CONFIG VALUES\n\n\n")
-        logging.info("Initialized config for group %s" % (groupid))
-        logging.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
+        groupmelogger.info(f"\n\n\nLOTS OF SPACE FOR CONFIG INITS\n\nTHESE ARE CONFIG VALUES-\n\nbot_id: {self.bot_id}\nmeme_source: {self.meme_source}\nallow_nsfw: {self.allow_nsfw}\nallow_reposts: {self.allow_reposts}\nbot_name: {self.bot_name}\ngroup_id: {self.group_id}\nauthenticatedUsers: {self.authenticatedUsers}\n\n\nEND CONFIG VALUES\n\n\n")
+        groupmelogger.info("Initialized config for group %s" % (groupid))
+        groupmelogger.info(f'Variables are -\nbot_id : {self.bot_id}\nlistening_port : {self.listening_port}\nmeme_source : {self.meme_source}')
 
     def receive_message(self, message, attachments, groupid, sendertype, sender_name):
-        logging.info("\n\n\n\n\nreceived message from group: %s\nself.bots: %s\n\n\n\n" % (groupid, self.bots))
+        groupmelogger.info("\n\n\n\n\nreceived message from group: %s\nself.bots: %s\n\n\n\n" % (groupid, self.bots))
         conn = sqlite3.connect('config.db')
         c = conn.cursor()
         group = int(groupid)
         t = [(group)]
-        logging.info(t)
+        groupmelogger.info(t)
         c.execute("UPDATE stats SET TotalMessages = TotalMessages + 1 WHERE (groupid=?)", t)
         conn.commit()
         conn.close()
@@ -266,15 +268,15 @@ class QuizBotGroupMe():
                     gid = groupid
                     for name, id, group in self.bots:
                         if group == gid:
-                            logging.info("%s and id#%s matched group id#%s" % (name, id, gid))
+                            groupmelogger.info("%s and id#%s matched group id#%s" % (name, id, gid))
                             bot_id = id
                             gid = int(gid)
                             botname = name
                             self._init_config(gid, bot_id, botname)
                         else:
-                            logging.info("%s and id#%s did not match group id#%s" %(name, id, gid))
+                            groupmelogger.info("%s and id#%s did not match group id#%s" %(name, id, gid))
                     if mes:
-                        logging.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
+                        groupmelogger.info(f'Received message with type:{type} and message:{mes}\nfrom group:{gid} so bot {botname} should reply')
                         if att:
                             action(mes, att, gid, message, sender_name)
                         else:
@@ -360,7 +362,7 @@ class QuizBotGroupMe():
                 self.send_message("Finished quiz! Generating results", 1)
                 self.send_message(self.quizzerbot.response, 1)
             elif self.quizzerbot.finishedQuiz != True and self.quizzerbot.finishedQuiz != False:
-                logging.info("Finished quiz is broken, error")
+                groupmelogger.info("Finished quiz is broken, error")
             self.awaiting_response = self.quizzerbot.awaiting_response
 
     def update_config(self, mes, att, gid, text, sender_name):
@@ -419,7 +421,7 @@ class QuizBotGroupMe():
         data = {"bot_id": self.bot_id, "text": str(message)}
         time.sleep(t)
         requests.post(self.groupme_url, json=data)
-        logging.info(f"Just sent a message-\n{message}\n")
+        groupmelogger.info(f"Just sent a message-\n{message}\n")
 
 # init bot
 def init(bot_id=0):
