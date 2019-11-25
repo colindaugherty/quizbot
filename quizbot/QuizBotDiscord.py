@@ -162,7 +162,9 @@ async def on_message(message):
         sender = str(message.author)
     else:
         sender = message.author.nick
-    text = message.content.strip()
+    text = message.content
+    text = text.strip()
+    print(text)
     if quizbot.awaiting_response == False:
         for type, regex, action in quizbot.regex_actions:
             mes = regex.match(text)
