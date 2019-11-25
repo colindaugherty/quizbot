@@ -9,6 +9,8 @@ class QuizBotAuthenticateUser:
         text = text.split()
         sender_name = sender_name.lower()
         sender_name = sender_name.replace(" ", "_")
+        print(text)
+        print(sender_name)
         data = {"name" : name, "groupid" : groupid, "table" : "authenticate", "data" : [name, groupid]}
         userCheck = handler.do("select", data)
         if userCheck == None:

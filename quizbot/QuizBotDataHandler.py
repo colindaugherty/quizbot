@@ -335,6 +335,7 @@ class QuizBotDataHandler:
         identity = (str(data["name"]), int(data["groupid"]))
         table = str(data["table"])
         data = tuple(data["data"])
+        print(f"Identity: {identity}\nTable: {table}\nData: {data}")
         if self.discord:
             db, c = self.connect(discord_data)
             method = self.methods[method]
