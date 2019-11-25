@@ -196,6 +196,7 @@ class QuizBotDataHandler:
                 return f"This should really only be used for adding memesource and authenticated/new opt users, however, it was used for {table}"
         except Exception as e:
             self.clean_up(db, c)
+            print(traceback.format_exc())
             return f"Encountered error - {e}"
 
     def delete(self, db, c, table, data):
@@ -211,6 +212,7 @@ class QuizBotDataHandler:
                 return f"This should really only be used for deleting memesource and authenticated users, it was used for {table}"
         except Exception as e:
             self.clean_up(db, c)
+            print(traceback.format_exc())
             return f"Encountered error - {e}"
 
     def selectone(self, db, c, table, data):
@@ -269,6 +271,7 @@ class QuizBotDataHandler:
                     return data[0]
         except Exception as e:
             self.clean_up(db, c)
+            print(traceback.format_exc())
             return f"Encountered error - {e}"
 
     def selectall(self, db, c, table, data):
@@ -325,6 +328,7 @@ class QuizBotDataHandler:
                     return data
         except Exception as e:
             self.clean_up(db, c)
+            print(traceback.format_exc())
             return f"Encountered error - {e}"
 
     def do(self, method, data):
