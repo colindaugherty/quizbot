@@ -12,7 +12,7 @@ from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
 
 # database functions
 from .modules.QuizBotAuthenticateUser import QuizBotAuthenticateUser
-from.modules.QuizBotSetMemeSource import QuizBotSetMemeSource
+from .modules.QuizBotSetMemeSource import QuizBotSetMemeSource
 
 datahandler = QuizBotDataHandler(discord=True)
 
@@ -36,10 +36,9 @@ config_file = os.path.join('.', 'data', 'config.json')
 quiz_file = os.path.join('.', 'data', 'quiz_material.json')
 
 class QuizBotDiscord():
-    def __init__(self, botname):
+    def __init__(self):
         self.awaiting_response = False
         self._init_regexes()
-        self.bot_name = botname
     
     def _init_regexes(self):
         self.likes = re.compile("(^!likes$)")
@@ -63,11 +62,13 @@ class QuizBotDiscord():
             ("Help", self.help_regex, self.send_help),
             ("Fred", self.fred_joke, self.fred_function),
             ("Meme", self.randommeme, self.send_meme),
-            ("Quiz", self.quiz, self.quizzer)
+            ("Quiz", self.quiz, self.quizzer),
+            ("Authenticate", self.authenticate, self._authenticateUser)
         ]
         discordlogger.info("Initialized regex.")
 
-    def _set_variables(self, groupid):
+    def _set_variables(self, botname, groupid):
+        self.bot_name = botname
         self.group_id = groupid
         self.authenticated_users = self._getauthenticatedusers()
         self.meme_source = self._getmemesource()
@@ -75,7 +76,7 @@ class QuizBotDiscord():
         self.allow_nsfw = self._getallownsfw()
         self.allow_reposts = self._getallowreposts()
 
-    def _authenticateUser(self, mes, att, type, text, sender_name):
+    def _authenticateUser(self, text, sender_name):
         x = QuizBotAuthenticateUser(sender_name, text, self.bot_name, self.group_id, datahandler)
         return x.response
 
@@ -138,7 +139,7 @@ class QuizBotDiscord():
         return token
 
 client = discord.Client()
-quizbot = QuizBotDiscord(client.user)
+quizbot = QuizBotDiscord()
 
 @client.event
 async def on_ready():
@@ -167,7 +168,7 @@ async def on_message(message):
             mes = regex.match(text)
             if mes:
                 discordlogger.info(f'Received message with type:{type} and message:{text}')
-                quizbot._set_variables(groupid)
+                quizbot._set_variables(client.user, groupid)
                 await message.channel.send(action(text, sender))
     else:
         print("I am waiting for a message")
