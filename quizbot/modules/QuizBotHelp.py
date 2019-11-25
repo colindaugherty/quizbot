@@ -30,7 +30,7 @@ class QuizBotHelp:
             else:
                 logging.info(self.found_command)
         elif len(text) == 1:
-            message = "QuizBot Bot Commands-\nVersion 0.5b\n"
+            message = "QuizBot Bot Commands-\nVersion 0.6b\n"
             message += "!meme - searches for a random meme from your meme suppliers in the config\n"
             message += "!opt - opt in and out of events run by the bot, include the event for more specific opting\n"
             message += "!config - edits group config\n"
