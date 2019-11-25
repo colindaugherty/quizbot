@@ -188,11 +188,11 @@ class QuizBotGroupMe():
     def _init_config(self, groupid, bot_id, botname):
         self.bot_id = bot_id
         self.group_id = groupid
+        self.bot_name = botname
         self.meme_source = self._getmemesource()
         self.real_len = len(self.meme_source) - 1
         self.allow_nsfw = self._getallownsfw()
         self.allow_reposts = self._getallowreposts()
-        self.bot_name = botname
         self.authenticatedUsers = self._getauthenticatedusers()
         groupmelogger.info(f"\n\n\nLOTS OF SPACE FOR CONFIG INITS\n\nTHESE ARE CONFIG VALUES-\n\nbot_id: {self.bot_id}\nmeme_source: {self.meme_source}\nallow_nsfw: {self.allow_nsfw}\nallow_reposts: {self.allow_reposts}\nbot_name: {self.bot_name}\ngroup_id: {self.group_id}\nauthenticatedUsers: {self.authenticatedUsers}\n\n\nEND CONFIG VALUES\n\n\n")
         groupmelogger.info("Initialized config for group %s" % (groupid))
