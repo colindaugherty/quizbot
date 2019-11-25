@@ -3,15 +3,12 @@
 import discord, sqlite3, logging, re, os, time
 
 # main functions
-from modules.QuizBotHelp import QuizBotHelp
-from modules.QuizBotFunSayings import QuizBotFunSayings
-from modules.QuizBotQuizzer import QuizBotQuizzer
-from modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
+from .modules.QuizBotHelp import QuizBotHelp
+from .modules.QuizBotFunSayings import QuizBotFunSayings
+from .modules.QuizBotQuizzer import QuizBotQuizzer
+from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
 
 discordlogger = logging.getLogger(__name__)
-
-# discordlogger.basicConfig(level=logging.DEBUG,filename='logs/discord.log', filemode='w', format='QuizBot[DISCORD]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-
 discordlogger.setLevel(logging.INFO)
 
 # create a file handler
@@ -118,6 +115,12 @@ async def on_message(message):
 
     print(message.author)
     print(quizbot.awaiting_response)
+    if message.guild in client.guilds:
+        groupid = message.guild
+        groupid = groupid.id
+        print(f"{groupid} - groupid")
+    else:
+        print("This shouldn't have happened")
     if message.author.nick == None:
         sender = str(message.author)
     else:
@@ -128,8 +131,6 @@ async def on_message(message):
             mes = regex.match(text)
             if mes:
                 discordlogger.info(f'Received message with type:{type} and message:{text}')
-                # quizbot.get_gid(discord.Guild)
-                print(discord.Guild)
                 await message.channel.send(action(text, sender))
     else:
         print("I am waiting for a message")
