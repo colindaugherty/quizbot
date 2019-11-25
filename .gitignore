@@ -8,3 +8,4 @@ data/quiz_material.json
 data/block1.json
 json/
 cronjob.sh
+.DS_Store
