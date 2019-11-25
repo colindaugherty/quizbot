@@ -286,14 +286,14 @@ class QuizBotDataHandler:
             elif table == "authenticate":
                 c.execute("SELECT users FROM authenticate WHERE (name=? AND groupid=?)", data)
                 data = c.fetchall()
-                if data == None or None in data:
+                if data == None or None in data or data == []:
                     return None
                 else:
                     return data
             elif table == "opt":
                 c.execute("SELECT users FROM opt WHERE (name=? AND groupid=?)", data)
                 data = c.fetchall()
-                if data == None or None in data:
+                if data == None or None in data or data == []:
                     return None
                 else:
                     return data
