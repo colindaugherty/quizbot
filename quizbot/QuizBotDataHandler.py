@@ -328,7 +328,7 @@ class QuizBotDataHandler:
             return f"Encountered error - {e}"
 
     def do(self, method, data):
-        identity = [data["name"], data["groupid"]]
+        identity = [data["name"], int(data["groupid"])]
         table = data["table"]
         data = tuple(data["data"])
         if self.discord:
