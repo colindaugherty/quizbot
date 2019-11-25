@@ -1,7 +1,8 @@
 __pycache__/
 gmebotenv/
-access.log
-config.db
+data/discord.db
+data/groupme.db
+logs/
 data/config.json
 data/quiz_material.json
 data/block1.json

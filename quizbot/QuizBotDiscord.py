@@ -6,8 +6,9 @@ import discord, sqlite3, logging, re, os, time
 from .modules.QuizBotHelp import QuizBotHelp
 from .modules.QuizBotFunSayings import QuizBotFunSayings
 from .modules.QuizBotQuizzer import QuizBotQuizzer
+from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
 
-logging.basicConfig(level=logging.DEBUG,filename='access.log', filemode='w', format='QuizBot[DISCORD]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+logging.basicConfig(level=logging.DEBUG,filename='logs/discord.log', filemode='w', format='QuizBot[DISCORD]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 conn = sqlite3.connect('config.db')
 
@@ -17,9 +18,10 @@ config_file = os.path.join('.', 'data', 'config.json')
 quiz_file = os.path.join('.', 'data', 'quiz_material.json')
 
 class QuizBotDiscord():
-    def __init__(self):
+    def __init__(self, botname):
         self.awaiting_response = False
         self._init_regexes()
+        self.bot_name = botname
     
     def _init_regexes(self):
         self.likes = re.compile("(^!likes$)")
@@ -42,8 +44,8 @@ class QuizBotDiscord():
         self.regex_actions = [
             ("Help", self.help_regex, self.send_help),
             ("Fred", self.fred_joke, self.fred_function),
-            ("Quiz", self.quiz, self.quizzer),
-            ("Testing", self.text, self.testing_quizzer)
+            ("Meme", self.randommeme, self.send_meme),
+            ("Quiz", self.quiz, self.quizzer)
         ]
         logging.info("Initialized regex.")
 
@@ -53,6 +55,10 @@ class QuizBotDiscord():
 
     def fred_function(self, text, name):
         x = QuizBotFunSayings(name)
+        return x.response
+
+    def send_meme(self, text, name):
+        x = QuizBotSendRedditMeme(['dankchristianmemes'], 1)
         return x.response
 
     def quizzer(self, text, sender_name):
@@ -79,18 +85,11 @@ class QuizBotDiscord():
             elif self.quizboi.finishedQuiz != True and self.quizboi.finishedQuiz != False:
                 logging.info("Finished quiz is broken, error")
 
-    def testing_quizzer(self, text, name):
-        self.quizzerbotboi = QuizBotQuizzer(["colin be rockin"], name, False)
-        self.quizzerbotboi.start_quiz(text)
-        print(self.quizzerbotboi.awaiting_response)
-        return self.quizzerbotboi.response
-
     def init(self, token):
         return token
 
-quizbot = QuizBotDiscord()
-
 client = discord.Client()
+quizbot = QuizBotDiscord(client.user)
 
 @client.event
 async def on_ready():

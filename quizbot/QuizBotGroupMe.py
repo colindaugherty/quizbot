@@ -20,7 +20,7 @@ from .modules.QuizBotUpdateConfig import QuizBotUpdateConfig
 from .modules.QuizBotSetMemeSource import QuizBotSetMemeSource
 from .modules.QuizBotOptIO import QuizBotOptIO
 
-logging.basicConfig(level=logging.DEBUG,filename='access.log', filemode='w', format='QuizBot[GROUPME]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+logging.basicConfig(level=logging.DEBUG,filename='logs/groupme.log', filemode='w', format='QuizBot[GROUPME]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 conn = sqlite3.connect('config.db')
 
