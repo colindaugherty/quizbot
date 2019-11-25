@@ -6,6 +6,8 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import json, requests, re, time, os, random, logging, sqlite3
 from .message_routing import GroupMeMessageRouter
 
+from .QuizBotDataHandler import QuizBotDataHandler
+
 # main functions
 from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
 from .modules.QuizBotSendInstaMeme import QuizBotSendInstaMeme
@@ -19,6 +21,8 @@ from .modules.QuizBotReturnStats import QuizBotReturnStats
 from .modules.QuizBotUpdateConfig import QuizBotUpdateConfig
 from .modules.QuizBotSetMemeSource import QuizBotSetMemeSource
 from .modules.QuizBotOptIO import QuizBotOptIO
+
+datahandler = QuizBotDataHandler(groupme=True)
 
 logging.basicConfig(level=logging.DEBUG,filename='logs/groupme.log', filemode='w', format='QuizBot[GROUPME]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
@@ -324,7 +328,7 @@ class QuizBotGroupMe():
         c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
         conn.commit()
         conn.close()
-        x = QuizBotOptIO(sender_name, text, self.bot_id, self.group_id, self.bot_name)
+        x = QuizBotOptIO(sender_name, text, self.bot_id, self.group_id, self.bot_name, datahandler)
         self.send_message(x.response, 1)
 
     def quizzer(self, mes, att, gid, text, sender_name):

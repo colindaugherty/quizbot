@@ -135,6 +135,19 @@ class QuizBotDataHandler:
                         return True
                     else:
                         return f"Couldn't find subtable {subtable} in table {table[0]}"
+                elif table[0] == "opt":
+                    if subtable == "newsroom":
+                        c.executemany("UPDATE opt set newsroom = ? WHERE (name=? AND groupid=? AND users=?)", [data])
+                        db.commit()
+                        self.clean_up(db, c)
+                        return True
+                    elif subtable == "elimination":
+                        c.executemany("UPDATE opt set elimination = ? WHERE (name=? AND groupid=? AND users=?)", [data])
+                        db.commit()
+                        self.clean_up(db, c)
+                        return True
+                    else:
+                        return f"Couldn't find subtable {subtable} in table {table[0]}"
                 else:
                     return f"You included a list for an incompatible table, {table}\nCompatible tables: config, stats"
             else:
