@@ -14,7 +14,7 @@ class QuizBotOptIO():
                 if text[1] == "newsroom":
                     data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid]}
                     userCheck = handler.do("select", data)
-                    if sender_name not in userCheck:
+                    if sender_name not in userCheck or userCheck == None:
                         data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid, sender_name, "true", "false"]}
                         updated = handler.do("insert", data)
                         if updated == True:
@@ -58,7 +58,7 @@ class QuizBotOptIO():
                 elif text[1] == "elimination":
                     data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid]}
                     userCheck = handler.do("select", data)
-                    if sender_name not in userCheck:
+                    if sender_name not in userCheck or userCheck == None:
                         data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid, sender_name, "false", "true"]}
                         updated = handler.do("insert", data)
                         if updated == True:
@@ -105,7 +105,7 @@ class QuizBotOptIO():
                 if text[1] == "newsroom":
                     data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid]}
                     userCheck = handler.do("select", data)
-                    if sender_name not in userCheck:
+                    if sender_name not in userCheck or userCheck == None:
                         data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid, sender_name, "false", "false"]}
                         updated = handler.do("insert", data)
                         if updated == True:
@@ -151,7 +151,7 @@ class QuizBotOptIO():
                 elif text[1] == "elimination":
                     data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid]}
                     userCheck = handler.do("select", data)
-                    if sender_name not in userCheck:
+                    if sender_name not in userCheck or userCheck == None:
                         data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid, sender_name, "false", "false"]}
                         updated = handler.do("insert", data)
                         if updated == True:
@@ -199,7 +199,7 @@ class QuizBotOptIO():
         elif text[0] == "in":
             data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid]}
             userCheck = handler.do("select", data)
-            if sender_name not in userCheck:
+            if sender_name not in userCheck or userCheck == None:
                 data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid, sender_name, "true", "true"]}
                 updated = handler.do("insert", data)
                 if updated == True:
@@ -245,7 +245,7 @@ class QuizBotOptIO():
         elif text[0] == "out":
             data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid]}
             userCheck = handler.do("select", data)
-            if sender_name not in userCheck:
+            if sender_name not in userCheck or userCheck == None:
                 data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid, sender_name, "false", "false"]}
                 updated = handler.do("insert", data)
                 if updated == True:
