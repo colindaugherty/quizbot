@@ -228,11 +228,17 @@ class QuizBotDataHandler:
             elif table == "authenticate":
                 c.execute("SELECT users FROM authenticate WHERE (name=? AND groupid=?)", data)
                 data = c.fetchone()
-                return data[0]
+                if data == None or None in data:
+                    return None
+                else:
+                    return data[0]
             elif table == "opt":
                 c.execute("SELECT users FROM opt WHERE (name=? AND groupid=?)", data)
                 data = c.fetchone()
-                return data[0]
+                if data == None or None in data:
+                    return None
+                else:
+                    return data[0]
         except Exception as e:
             self.clean_up(db, c)
             return f"Encountered error - {e}"
@@ -280,11 +286,17 @@ class QuizBotDataHandler:
             elif table == "authenticate":
                 c.execute("SELECT users FROM authenticate WHERE (name=? AND groupid=?)", data)
                 data = c.fetchall()
-                return data
+                if data == None or None in data:
+                    return None
+                else:
+                    return data
             elif table == "opt":
                 c.execute("SELECT users FROM opt WHERE (name=? AND groupid=?)", data)
                 data = c.fetchall()
-                return data
+                if data == None or None in data:
+                    return None
+                else:
+                    return data
         except Exception as e:
             self.clean_up(db, c)
             return f"Encountered error - {e}"
@@ -315,10 +327,10 @@ if __name__ == "__main__":
     test_data = {
         "name" : "tester",
         "groupid" : 132,
-        "table" : ["config", "allownsfw"],
-        "data" : ["true","tester", 132]
+        "table" : "authenticate",
+        "data" : ["tester", 132]
     }
     print(test_data["data"])
-    print(testingDiscord.do("update", test_data))
-    print(testingGroupMe.do("update", test_data))
-    print(testingErrors.do("update", test_data))
+    print(testingDiscord.do("selectone", test_data))
+    print(testingGroupMe.do("select", test_data))
+    # print(testingErrors.do("update", test_data))

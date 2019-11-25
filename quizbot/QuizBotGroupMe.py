@@ -171,7 +171,7 @@ class QuizBotGroupMe():
                 else:
                     self.send_message("Error - user already authenticated", 1)
             else:
-                self.send_message("Include bot_id and group_id.", 1)
+                self.send_message("Include bot_name and group_id.", 1)
         elif sender_name in self.authenticatedUsers:
             if 0 <= 1 < len(text):
                 if text[1] not in self.authenticatedUsers:
