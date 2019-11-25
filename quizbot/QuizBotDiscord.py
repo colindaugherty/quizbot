@@ -114,7 +114,7 @@ class QuizBotDiscord():
     def quizzer(self, text, sender_name):
         print(self.awaiting_response)
         if self.awaiting_response == False:
-            self.quizboi = QuizBotQuizzer(["colin_be_rockin"], sender_name, False)
+            self.quizboi = QuizBotQuizzer(self.authenticated_users, sender_name, False)
             self.quizboi.start_quiz(text)
             time.sleep(1)
             self.awaiting_response = self.quizboi.awaiting_response
