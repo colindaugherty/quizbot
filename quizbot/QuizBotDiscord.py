@@ -129,6 +129,7 @@ class QuizBotDiscord():
                 response += self.quizboi.response
                 return response
             elif self.quizboi.finishedQuiz == True:
+                self.awaiting_response = False
                 response += "\nFinished quiz! Generating results\n"
                 response += self.quizboi.response
                 return response
