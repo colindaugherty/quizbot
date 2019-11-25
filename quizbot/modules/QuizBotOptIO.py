@@ -8,7 +8,6 @@ class QuizBotOptIO():
         text = text.split()
         sender_name = sender_name.lower()
         sender_name = sender_name.replace(" ", "_")
-        # user_list = []
         if 0 <= 1 < len(text):
             if text[0] == "in":
                 if text[1] == "newsroom":
@@ -28,33 +27,6 @@ class QuizBotOptIO():
                             self.response = f"{sender_name} has opted into newsroom"
                         else:
                             self.response = updated
-                    # t = (sender_name, botid, groupid)
-                    # c.execute("SELECT users FROM opt WHERE (users=? AND botid=? AND groupid=?)", (t))
-                    # userCheck = c.fetchone()
-                    # logging.info(userCheck)
-                    # if userCheck == None or None in userCheck:
-                    #     insertvalues = [(name, botid, groupid, sender_name, "true", "false")]
-                    #     c.executemany("INSERT INTO opt (name, botid, groupid, users, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
-                    #     t = (botid, groupid)
-                    #     for row in c.execute("SELECT users FROM opt WHERE (botid=? AND groupid=?)", (t)):
-                    #         user_list.append(row)
-                    #     logging.info(user_list)
-                    #     logging.info("user_list is above me.")
-                    #     self.response = "{} has opted in to newsroom".format(sender_name)
-                    #     conn.commit()
-                    #     conn.close()
-                    # else:
-                    #     logging.info("Inside the else block of opting in to newsroom")
-                    #     insertvalues = [(name, botid, groupid, sender_name)]
-                    #     c.executemany("UPDATE opt SET newsroom = 'true' WHERE (name=? AND botid=? AND groupid=? AND users=?)", insertvalues)
-                    #     t = (botid, groupid)
-                    #     for row in c.execute("SELECT users FROM opt WHERE (botid=? AND groupid=?)", (t)):
-                    #         user_list.append(row)
-                    #     logging.info(user_list)
-                    #     logging.info("user_list is above me.")
-                    #     self.response = "{} has opted in to newsroom".format(sender_name)
-                    #     conn.commit()
-                    #     conn.close()
                 elif text[1] == "elimination":
                     data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid]}
                     userCheck = handler.do("select", data)
@@ -72,33 +44,6 @@ class QuizBotOptIO():
                             self.response = f"{sender_name} has opted into newsroom"
                         else:
                             self.response = updated
-                    # t = (sender_name, botid, groupid)
-                    # c.execute("SELECT users FROM opt WHERE (users=? AND botid=? AND groupid=?)", (t))
-                    # userCheck = c.fetchone()
-                    # logging.info(userCheck)
-                    # if userCheck == None or None in userCheck:
-                    #     insertvalues = [(name, botid, groupid, sender_name, "false", "true")]
-                    #     c.executemany("INSERT INTO opt (name, botid, groupid, users, newsroom, elimination) VALUES (?,?,?,?,?,?)", insertvalues)
-                    #     t = (botid, groupid)
-                    #     for row in c.execute("SELECT users FROM opt WHERE (botid=? AND groupid=?)", (t)):
-                    #         user_list.append(row)
-                    #     logging.info(user_list)
-                    #     logging.info("user_list is above me.")
-                    #     self.response = "{} has opted in to elimination".format(sender_name)
-                    #     conn.commit()
-                    #     conn.close()
-                    # else:
-                    #     logging.info("Inside the else block of opting in to elimination")
-                    #     insertvalues = [(name, botid, groupid, sender_name)]
-                    #     c.executemany("UPDATE opt SET elimination = 'true' WHERE (name=? AND botid=? AND groupid=? AND users=?)", insertvalues)
-                    #     t = (botid, groupid)
-                    #     for row in c.execute("SELECT users FROM opt WHERE (botid=? AND groupid=?)", (t)):
-                    #         user_list.append(row)
-                    #     logging.info(user_list)
-                    #     logging.info("user_list is above me.")
-                    #     self.response = "{} has opted in to elimination".format(sender_name)
-                    #     conn.commit()
-                    #     conn.close()
                 else:
                     self.response = f"Can't opt into {text[1]}, doesn't exist!"
             elif text[0] == "out":
