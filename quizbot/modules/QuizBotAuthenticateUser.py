@@ -12,7 +12,7 @@ class QuizBotAuthenticateUser:
         data = {"name" : name, "groupid" : groupid, "table" : "authenticate", "data" : [name, groupid]}
         userCheck = handler.do("select", data)
         if userCheck == None:
-            print(f"Text - {text}\nName - {name}\nGroupId - {groupid}")
+            print(f"Text - {text}\nName - {name}\nGroupId - {groupid}\nText[0] - {text[0]}\nText[1] (int) - {int(text[1])}")
             if len(text) == 2 and text[0] == name and int(text[1]) == groupid:
                 data = {"name" : name, "groupid" : groupid, "table" : "authenticate", "data" : [name, groupid, sender_name]}
                 inserted = handler.do("insert", data)
