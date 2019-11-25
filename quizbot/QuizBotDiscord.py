@@ -3,10 +3,10 @@
 import discord, sqlite3, logging, re, os, time
 
 # main functions
-from .modules.QuizBotHelp import QuizBotHelp
-from .modules.QuizBotFunSayings import QuizBotFunSayings
-from .modules.QuizBotQuizzer import QuizBotQuizzer
-from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
+from modules.QuizBotHelp import QuizBotHelp
+from modules.QuizBotFunSayings import QuizBotFunSayings
+from modules.QuizBotQuizzer import QuizBotQuizzer
+from modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
 
 discordlogger = logging.getLogger(__name__)
 
@@ -24,8 +24,6 @@ handler.setFormatter(formatter)
 
 # add the file handler to the logger
 discordlogger.addHandler(handler)
-
-conn = sqlite3.connect('config.db')
 
 discordlogger.info("Started program. Hello world!")
 
@@ -63,6 +61,9 @@ class QuizBotDiscord():
             ("Quiz", self.quiz, self.quizzer)
         ]
         discordlogger.info("Initialized regex.")
+
+    def get_gid(self, groupid):
+        self.group_id = groupid
 
     def send_help(self, text, name):
         x = QuizBotHelp(text)
@@ -127,10 +128,12 @@ async def on_message(message):
             mes = regex.match(text)
             if mes:
                 discordlogger.info(f'Received message with type:{type} and message:{text}')
+                # quizbot.get_gid(discord.Guild)
+                print(discord.Guild)
                 await message.channel.send(action(text, sender))
     else:
         print("I am waiting for a message")
         await message.channel.send(quizbot.quizzer(text, sender))
 
 if __name__ == "__main__":
-    client.run(quizbot.init("NjQ0MTk2ODU3MTEwODU1Njkw.Xcwhzg.gDcKMzfGgnkUVck-UEjCWnqUr3E"))
+    client.run(quizbot.init(""))
