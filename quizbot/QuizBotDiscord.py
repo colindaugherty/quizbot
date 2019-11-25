@@ -156,15 +156,15 @@ async def on_message(message):
     if message.guild in client.guilds:
         groupid = message.guild
         groupid = groupid.id
-        print(f"{groupid} - groupid")
     else:
-        print("This shouldn't have happened")
-    print(f"message.author.id: {message.author.id}\nclient.get_user(id): {client.get_user(message.author.id)}")
+        logging.info(f"If you're seeing this, I don't even know how this error happened. {message.guild}")
     uid = message.author.id
+    # get name of the sender without identifier (identifier is not as relavant in smaller groups)
     sender = client.get_user(uid)
-    print(f"Sender before display name: {sender}")
     sender = sender.display_name
-    print(f"Sender after display name: {sender }")
+    # if they have a nickname, use that instead
+    if message.author.nick != None:
+        sender = message.author.nick
     text = message.content
     text = text.strip()
     print(text)
