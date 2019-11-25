@@ -10,7 +10,20 @@ from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
 
 discordlogger = logging.getLogger(__name__)
 
-discordlogger.basicConfig(level=logging.DEBUG,filename='logs/discord.log', filemode='w', format='QuizBot[DISCORD]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+# discordlogger.basicConfig(level=logging.DEBUG,filename='logs/discord.log', filemode='w', format='QuizBot[DISCORD]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
+discordlogger.setLevel(logging.INFO)
+
+# create a file handler
+handler = logging.FileHandler('logs/discord.log')
+handler.setLevel(logging.INFO)
+
+# create a logging format
+formatter = logging.Formatter('QuizBot[DISCORD]: %(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+
+# add the file handler to the logger
+discordlogger.addHandler(handler)
 
 conn = sqlite3.connect('config.db')
 

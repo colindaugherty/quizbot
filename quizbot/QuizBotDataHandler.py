@@ -4,7 +4,20 @@ import sqlite3, logging, traceback
 
 datalogger = logging.getLogger(__name__)
 
-datalogger.basicConfig(level=logging.DEBUG,filename='logs/data.log', filemode='w', format='QuizBot[DATA]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+# datalogger.basicConfig(level=logging.DEBUG,filename='logs/data.log', filemode='w', format='QuizBot[DATA]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
+datalogger.setLevel(logging.INFO)
+
+# create a file handler
+handler = logging.FileHandler('logs/data.log')
+handler.setLevel(logging.INFO)
+
+# create a logging format
+formatter = logging.Formatter('QuizBot[DATA]: %(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+
+# add the file handler to the logger
+datalogger.addHandler(handler)
 
 discord_data = "data/discord.db"
 groupme_data = "data/groupme.db"

@@ -26,7 +26,20 @@ datahandler = QuizBotDataHandler(groupme=True)
 
 groupmelogger = logging.getLogger(__name__)
 
-groupmelogger.basicConfig(level=logging.DEBUG,filename='logs/groupme.log', filemode='w', format='QuizBot[GROUPME]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+# groupmelogger.basicConfig(level=logging.DEBUG,filename='logs/groupme.log', filemode='w', format='QuizBot[GROUPME]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
+groupmelogger.setLevel(logging.INFO)
+
+# create a file handler
+handler = logging.FileHandler('logs/groupme.log')
+handler.setLevel(logging.INFO)
+
+# create a logging format
+formatter = logging.Formatter('QuizBot[GROUPME]: %(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+
+# add the file handler to the logger
+groupmelogger.addHandler(handler)
 
 conn = sqlite3.connect('config.db')
 
