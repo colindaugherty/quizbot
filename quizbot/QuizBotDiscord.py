@@ -2,11 +2,19 @@
 
 import discord, sqlite3, logging, re, os, time
 
-# main functions
+from .QuizBotDataHandler import QuizBotDataHandler
+
+# message functions
 from .modules.QuizBotHelp import QuizBotHelp
 from .modules.QuizBotFunSayings import QuizBotFunSayings
 from .modules.QuizBotQuizzer import QuizBotQuizzer
 from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
+
+# database functions
+from .modules.QuizBotAuthenticateUser import QuizBotAuthenticateUser
+from.modules.QuizBotSetMemeSource import QuizBotSetMemeSource
+
+datahandler = QuizBotDataHandler(discord=True)
 
 discordlogger = logging.getLogger(__name__)
 discordlogger.setLevel(logging.INFO)
@@ -59,8 +67,36 @@ class QuizBotDiscord():
         ]
         discordlogger.info("Initialized regex.")
 
-    def get_gid(self, groupid):
+    def _set_variables(self, groupid):
         self.group_id = groupid
+        self.authenticated_users = self._getauthenticatedusers()
+        self.meme_source = self._getmemesource()
+        self.real_len = len(self.meme_source) - 1
+        self.allow_nsfw = self._getallownsfw()
+        self.allow_reposts = self._getallowreposts()
+
+    def _authenticateUser(self, mes, att, type, text, sender_name):
+        x = QuizBotAuthenticateUser(sender_name, text, self.bot_name, self.group_id, datahandler)
+        return x.response
+
+    def _getmemesource(self):
+        # x = QuizBotSetMemeSource(self.bot_id, self.group_id)
+        return f"Currently broken"
+
+    def _getallownsfw(self):
+        data = {"name" : self.bot_name, "groupid" : self.group_id, "table" : ["config", "allownsfw"], "data" : [self.bot_name, self.group_id]}
+        allownsfw = datahandler.do("selectone", data)
+        return allownsfw
+
+    def _getallowreposts(self):
+        data = {"name" : self.bot_name, "groupid" : self.group_id, "table" : ["config", "allowrepost"], "data" : [self.bot_name, self.group_id]}
+        allowrepost = datahandler.do("selectone", data)
+        return allowrepost
+
+    def _getauthenticatedusers(self):
+        data = {"name" : self.bot_name, "groupid" : self.group_id, "table" : "authenticate", "data" : [self.bot_name, self.group_id]}
+        users = datahandler.do("select", data)
+        return users
 
     def send_help(self, text, name):
         x = QuizBotHelp(text)
@@ -83,7 +119,7 @@ class QuizBotDiscord():
             self.awaiting_response = self.quizboi.awaiting_response
             return self.quizboi.response
         elif self.awaiting_response == True:
-            time.sleep(1)
+            time.sleep(3)
             self.awaiting_response = self.quizboi.awaiting_response
             self.quizboi.continue_quiz(text, sender_name)
             if self.quizboi.goodjob:
@@ -131,6 +167,7 @@ async def on_message(message):
             mes = regex.match(text)
             if mes:
                 discordlogger.info(f'Received message with type:{type} and message:{text}')
+                quizbot._set_variables(groupid)
                 await message.channel.send(action(text, sender))
     else:
         print("I am waiting for a message")
