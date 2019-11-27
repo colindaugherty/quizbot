@@ -208,6 +208,9 @@ class QuizBotDataHandler:
                 return True
             elif table == "authenticate":
                 c.executemany("DELETE FROM authenticate WHERE (name=? AND groupid=? AND users=?)", [data])
+                db.commit()
+                self.clean_up(db, c)
+                return True
             else:
                 return f"This should really only be used for deleting memesource and authenticated users, it was used for {table}"
         except Exception as e:
