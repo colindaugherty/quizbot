@@ -45,7 +45,7 @@ class QuizBotAuthenticateUser:
                                 users.append(user)
                                 message += f"\n{user}"
                             else:
-                                message += f"\nHad trouble adding {user} - if the error persists let the developer know."
+                                message += f"\nHad trouble adding {user} - if the error persists let the developer know.\nerror {confirm}"
                         else:
                             message += f"\nUser: {user}, is already authenticated"
                     logging.info(f"A list of the users I just authenticated - {users}")
@@ -61,7 +61,7 @@ class QuizBotAuthenticateUser:
                                 users.append(user)
                                 message += f"\n{user}"
                             else:
-                                message += f"\nHad trouble removing {user} - if the error persists let the developer know."
+                                message += f"\nHad trouble removing {user} - if the error persists let the developer know.\nerror {confirm}"
                         else:
                             message += f"\nUser: {user}, isn't authenticated"
                     logging.info(f"A list of users I just deauthenticated - {users}")
