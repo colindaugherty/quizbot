@@ -5,7 +5,12 @@ import logging
 class QuizBotAuthenticateUser:
     def __init__(self, sender_name, text, name, groupid, handler):
         text = text.strip()
-        text = text.replace("!authenticate ", "")
+        if "!authenticate" in text:
+            text = text.replace("!authenticate ", "")
+            auth = "enable"
+        elif "!deauthenticate" in text:
+            text = text.replace("!deauthenticate ", "")
+            auth = "disable"
         text = text.split()
         sender_name = sender_name.lower()
         sender_name = sender_name.replace(" ", "_")
@@ -23,24 +28,44 @@ class QuizBotAuthenticateUser:
                 else:
                     self.response = f"Something weird happened, here's my response - {inserted}"
             else:
-                self.response = "Please include bot_name and group_id"
+                if auth == "disable":
+                    self.response = "Failed - There are no authenticated users left"
+                else:
+                    self.response = "Please include bot_name and group_id"
         elif isinstance(userCheck, list):
             if sender_name in userCheck:
-                users = []
-                message = "Added people -"
-                for user in text:
-                    if user not in userCheck:
-                        data = {"name" : name, "groupid" : groupid, "table" : "authenticate", "data" : [name, groupid, user]}
-                        confirm = handler.do("insert", data)
-                        if confirm == True:
-                            users.append(user)
-                            message += f"\n{user}"
+                if auth == "enable":
+                    users = []
+                    message = "Added people -"
+                    for user in text:
+                        if user not in userCheck:
+                            data = {"name" : name, "groupid" : groupid, "table" : "authenticate", "data" : [name, groupid, user]}
+                            confirm = handler.do("insert", data)
+                            if confirm == True:
+                                users.append(user)
+                                message += f"\n{user}"
+                            else:
+                                message += f"\nHad trouble adding {user} - if the error persists let the developer know."
                         else:
-                            message += f"\nHad trouble adding {user} - if the error persists let the developer know."
-                    else:
-                        message += f"\nUser: {user}, is already authenticated"
-                logging.info(f"A list of the users I just added - {users}")
-                self.response = message
+                            message += f"\nUser: {user}, is already authenticated"
+                    logging.info(f"A list of the users I just authenticated - {users}")
+                    self.response = message
+                elif auth == "disable":
+                    users = []
+                    message = "Removed people -"
+                    for user in text:
+                        if user in userCheck:
+                            data = {"name" : name, "groupid" : groupid, "table" : "authenticate", "data" : [name, groupid, user]}
+                            confirm = handler.do("delete", data)
+                            if confirm == True:
+                                users.append(user)
+                                message += f"\n{user}"
+                            else:
+                                message += f"\nHad trouble removing {user} - if the error persists let the developer know."
+                        else:
+                            message += f"\nUser: {user}, isn't authenticated"
+                    logging.info(f"A list of users I just deauthenticated - {users}")
+                    self.response = message
             else:
                 self.response = f"Sorry {sender_name}, this method is only availble to authenticated members."
         else:

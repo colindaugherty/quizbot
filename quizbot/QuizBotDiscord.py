@@ -49,6 +49,7 @@ class QuizBotDiscord():
         self.help_regex = re.compile("(^!help)")
         self.config = re.compile("(^!config)")
         self.authenticate = re.compile("(^!authenticate)")
+        self.deauthenticate = re.compile("(^!deauthenticate)")
         self.quiz = re.compile("(^!quiz)")
         self.hacking_joke = re.compile("(^!hack)")
         self.fred_joke = re.compile("(^!fred)")
@@ -63,7 +64,8 @@ class QuizBotDiscord():
             ("Fred", self.fred_joke, self.fred_function),
             ("Meme", self.randommeme, self.send_meme),
             ("Quiz", self.quiz, self.quizzer),
-            ("Authenticate", self.authenticate, self._authenticateUser)
+            ("Authenticate", self.authenticate, self._authenticateUser),
+            ("Authenticate", self.deauthenticate, self._authenticateUser)
         ]
         discordlogger.info("Initialized regex.")
 
