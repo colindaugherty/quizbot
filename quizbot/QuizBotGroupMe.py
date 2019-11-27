@@ -138,6 +138,7 @@ class QuizBotGroupMe():
         self.help_regex = re.compile("(^!help)")
         self.config = re.compile("(^!config)")
         self.authenticate = re.compile("(^!authenticate)")
+        self.deauthenticate = re.compile("(^!deauthenticate)")
         self.quiz = re.compile("(^!quiz)")
         self.hacking_joke = re.compile("(^!hack)")
         self.fred_joke = re.compile("(^!fred)")
@@ -155,6 +156,7 @@ class QuizBotGroupMe():
             ("Help", self.help_regex, self.send_help),
             ("Config", self.config, self.update_config),
             ("Authenticate", self.authenticate, self._authenticateUser),
+            ("Authenticate", self.deauthenticate, self._authenticateUser),
             ("Quiz", self.quiz, self.quizzer),
             ("Joke/EasterEgg", self.hacking_joke, self.hack_joke),
             ("Joke/EasterEgg", self.fred_joke, self.fred_function),
