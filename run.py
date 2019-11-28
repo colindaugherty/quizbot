@@ -23,10 +23,10 @@ with open(config_file) as data_file:
 
 print("Where does this go wrong")
 
-QuizBotGroupMe.init()
-QuizBotGroupMe.listen(port=config['listening_port'])
+# QuizBotGroupMe.init()
+# QuizBotGroupMe.listen(port=config['listening_port'])
 
-quizbot = QuizBot.QuizBotDiscord(QuizBot.client.user)
+quizbot = QuizBot.QuizBotDiscord()
 QuizBot.client.run(quizbot.init(config['discord_key']))
 
 print("Where does this go wrong")

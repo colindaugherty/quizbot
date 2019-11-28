@@ -3,7 +3,7 @@
 import sqlite3, logging
 
 class QuizBotOptIO():
-    def __init__(self, sender_name, text, botid, groupid, name, handler):
+    def __init__(self, sender_name, text, groupid, name, handler):
         text = text.replace("!opt ", "")
         text = text.split()
         sender_name = sender_name.lower()

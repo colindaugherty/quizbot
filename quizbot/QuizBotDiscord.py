@@ -7,11 +7,13 @@ from .QuizBotDataHandler import QuizBotDataHandler
 # message functions
 from .modules.QuizBotHelp import QuizBotHelp
 from .modules.QuizBotFunSayings import QuizBotFunSayings
+from .modules.QuizBotHackingJoke import QuizBotHackingJoke
 from .modules.QuizBotQuizzer import QuizBotQuizzer
 from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
 
 # database functions
 from .modules.QuizBotAuthenticateUser import QuizBotAuthenticateUser
+from .modules.QuizBotOptIO import QuizBotOptIO
 from .modules.QuizBotSetMemeSource import QuizBotSetMemeSource
 
 datahandler = QuizBotDataHandler(discord=True)
@@ -41,31 +43,32 @@ class QuizBotDiscord():
         self._init_regexes()
     
     def _init_regexes(self):
-        self.likes = re.compile("(^!likes$)")
-        self.likesrank = re.compile("(^!rank$)")
-        self.randommeme = re.compile("(^!meme$)")
         self.groupinfo = re.compile("(^!info$)")
         self.stats = re.compile("(^!stats$)")
-        self.help_regex = re.compile("(^!help)")
         self.config = re.compile("(^!config)")
+
+        #finished
+        self.optregex = re.compile("(^!opt)")
+        self.help_regex = re.compile("(^!help)")
+        self.fred_joke = re.compile("(^!fred)")
+        self.hacking_joke = re.compile("(^!hack)")
+        self.randommeme = re.compile("(^!meme$)")
+        self.quiz = re.compile("(^!quiz)")
         self.authenticate = re.compile("(^!authenticate)")
         self.deauthenticate = re.compile("(^!deauthenticate)")
-        self.quiz = re.compile("(^!quiz)")
-        self.hacking_joke = re.compile("(^!hack)")
-        self.fred_joke = re.compile("(^!fred)")
-        self.optregex = re.compile("(^!opt)")
-        self.text = re.compile("(^!test)")
 
         self._construct_regexes()
 
     def _construct_regexes(self):
         self.regex_actions = [
             ("Help", self.help_regex, self.send_help),
+            ("Joke/EasterEgg", self.hacking_joke, self.hack_joke),
             ("Fred", self.fred_joke, self.fred_function),
             ("Meme", self.randommeme, self.send_meme),
             ("Quiz", self.quiz, self.quizzer),
             ("Authenticate", self.authenticate, self._authenticateUser),
-            ("Authenticate", self.deauthenticate, self._authenticateUser)
+            ("Authenticate", self.deauthenticate, self._authenticateUser),
+            ("Opting In/Out", self.optregex, self.opt)
         ]
         discordlogger.info("Initialized regex.")
 
@@ -109,8 +112,16 @@ class QuizBotDiscord():
         x = QuizBotFunSayings(name)
         return x.response
 
+    def hack_joke(self, text, name):
+        x = QuizBotHackingJoke(self.group_id, name)
+        return x.response
+
     def send_meme(self, text, name):
-        x = QuizBotSendRedditMeme(['dankchristianmemes'], 1)
+        x = QuizBotSendRedditMeme(self.meme_source, self.real_len)
+        return x.response
+
+    def opt(self, text, sender_name):
+        x = QuizBotOptIO(sender_name, text, self.group_id, self.bot_name, datahandler)
         return x.response
 
     def quizzer(self, text, sender_name):

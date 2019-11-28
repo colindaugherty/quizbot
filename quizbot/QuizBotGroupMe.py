@@ -281,7 +281,7 @@ class QuizBotGroupMe():
         c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
         conn.commit()
         conn.close()
-        x = QuizBotOptIO(sender_name, text, self.bot_id, self.group_id, self.bot_name, datahandler)
+        x = QuizBotOptIO(sender_name, text, self.group_id, self.bot_name, datahandler)
         self.send_message(x.response, 1)
 
     def quizzer(self, mes, att, gid, text, sender_name):
