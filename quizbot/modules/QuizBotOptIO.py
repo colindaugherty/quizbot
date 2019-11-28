@@ -34,14 +34,14 @@ class QuizBotOptIO():
                         data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid, sender_name, "false", "true"]}
                         updated = handler.do("insert", data)
                         if updated == True:
-                            self.response = f"{sender_name} has opted into newsroom"
+                            self.response = f"{sender_name} has opted into elimination"
                         else:
                             self.response = updated
                     elif sender_name in userCheck:
                         data = {"name" : name, "groupid" : groupid, "table" : ["opt", "elimination"], "data" : ["true", name, groupid, sender_name]}
                         updated = handler.do("update", data)
                         if updated == True:
-                            self.response = f"{sender_name} has opted into newsroom"
+                            self.response = f"{sender_name} has opted into elimination"
                         else:
                             self.response = updated
                 else:
@@ -92,7 +92,7 @@ class QuizBotOptIO():
                 data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid, sender_name, "true", "true"]}
                 updated = handler.do("insert", data)
                 if updated == True:
-                    self.response = f"{sender_name} has opted into newsroom"
+                    self.response = f"{sender_name} has opted into newsroom and elimination"
                 else:
                     self.response = updated
             elif sender_name in userCheck:
@@ -101,7 +101,7 @@ class QuizBotOptIO():
                 data = {"name" : name, "groupid" : groupid, "table" : ["opt", "elimination"], "data" : ["true", name, groupid, sender_name]}
                 updatedtwo = handler.do("update", data)
                 if updatedone == True and updatedtwo == True:
-                    self.response = f"{sender_name} has opted into newsroom"
+                    self.response = f"{sender_name} has opted into newsroom and elimination"
                 else:
                     self.response = f"Operation One Finished - {updatedone}\nOperation Two Finished - {updatedtwo}" 
         elif text[0] == "out":
@@ -111,7 +111,7 @@ class QuizBotOptIO():
                 data = {"name" : name, "groupid" : groupid, "table" : "opt", "data" : [name, groupid, sender_name, "false", "false"]}
                 updated = handler.do("insert", data)
                 if updated == True:
-                    self.response = f"{sender_name} has opted into newsroom"
+                    self.response = f"{sender_name} has opted out of newsroom and elimination"
                 else:
                     self.response = updated
             elif sender_name in userCheck:
@@ -120,7 +120,7 @@ class QuizBotOptIO():
                 data = {"name" : name, "groupid" : groupid, "table" : ["opt", "elimination"], "data" : ["false", name, groupid, sender_name]}
                 updatedtwo = handler.do("update", data)
                 if updatedone == True and updatedtwo == True:
-                    self.response = f"{sender_name} has opted into newsroom"
+                    self.response = f"{sender_name} has opted out of newsroom and elimination"
                 else:
                     self.response = f"Operation One Finished - {updatedone}\nOperation Two Finished - {updatedtwo}" 
         else:
