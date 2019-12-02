@@ -376,7 +376,7 @@ class QuizBotGroupMe():
         self.send_message("Selecting people for newsroom...", 1)
         for person in self.newsroom_people:
             self.send_message(person, 3)
-        self.send_message("Finished!", 1)
+        self.send_message("Finished!\nHave fun!\n(if you have any questions ask Colin)", 1)
 
     def send_message(self, message, t):
         data = {"bot_id": self.bot_id, "text": str(message)}
