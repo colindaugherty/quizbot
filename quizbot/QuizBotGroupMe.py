@@ -50,6 +50,8 @@ config_file = os.path.join('.', 'data', 'config.json')
 
 class QuizBotGroupMe():
     def __init__(self, bot_id):
+        self.newsroom_people = ["Chris Dowdy", "Jackson Powell", "Kali Knight", "Bailee T. Hertrick"]
+
         # grab config from files
         with open(config_file) as data_file:
             config = json.load(data_file)
@@ -143,6 +145,7 @@ class QuizBotGroupMe():
         self.hacking_joke = re.compile("(^!hack)")
         self.fred_joke = re.compile("(^!fred)")
         self.optregex = re.compile("(^!opt)")
+        self.newsroom = re.compile("(^!newsroom)")
 
         self._construct_regexes()
 
@@ -160,7 +163,8 @@ class QuizBotGroupMe():
             ("Quiz", self.quiz, self.quizzer),
             ("Joke/EasterEgg", self.hacking_joke, self.hack_joke),
             ("Joke/EasterEgg", self.fred_joke, self.fred_function),
-            ("Opting In/Out", self.optregex, self.opt)
+            ("Opting In/Out", self.optregex, self.opt),
+            ("Newsroom", self.newsroom, self.newsroom_selection)
         ]
         groupmelogger.info("Initialized regex.")
 
@@ -367,6 +371,12 @@ class QuizBotGroupMe():
         conn.close()
         x = QuizBotFunSayings(sender_name)
         self.send_message(x.response, 1)
+
+    def newsroom_selection(self, mes, att, type, text, sender_name):
+        self.send_message("Selecting people for newsroom...", 1)
+        for person in self.newsroom_people:
+            self.send_message(person, 3)
+        self.send_message("Finished!", 1)
 
     def send_message(self, message, t):
         data = {"bot_id": self.bot_id, "text": str(message)}
