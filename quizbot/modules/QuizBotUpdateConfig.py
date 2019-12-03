@@ -1,12 +1,12 @@
 # update by group config
 
-import sqlite3, logging
+import logging
 
 class QuizBotUpdateConfig:
     def __init__(self, authenticatedusers, text, botname, groupid, sender_name, handler):
         sender_name = sender_name.lower()
         sender_name = sender_name.replace(" ", "_")
-        logging.info(text)
+        print(text)
         if sender_name in authenticatedusers:
             if "!config subreddit" in text:
                 text = text.replace("!config subreddit", "")
