@@ -28,7 +28,7 @@ class QuizBotUpdateConfig:
                     message = "Result - \n"
                     for subreddit in text:
                         data = {"name" : botname, "groupid" : groupid, "table" : "memesource", "data" : [botname, groupid, subreddit]}
-                        confirm = handler.do("insert", data)
+                        confirm = handler.do("delete", data)
                         if confirm == True:
                             message += f"Removed {subreddit}\n"
                         else:
