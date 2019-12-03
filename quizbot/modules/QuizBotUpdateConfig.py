@@ -3,130 +3,84 @@
 import sqlite3, logging
 
 class QuizBotUpdateConfig:
-    def __init__(self, authenticatedusers, botname, botid, groupid, sender_name, currentnsfw, currentrepost, currentmemesource, text):
+    def __init__(self, authenticatedusers, text, botname, groupid, sender_name, handler):
         sender_name = sender_name.lower()
         sender_name = sender_name.replace(" ", "_")
         if sender_name in authenticatedusers:
-            conn = sqlite3.connect('config.db')
-            c = conn.cursor()
-            text = text.lower()
-            what_config = ['subreddit','allownsfw','allowrepost']
-            text = text.split(' ')
-            logging.info(text)
-            configword = text[1]
-            logging.info(configword)
-            logging.info(what_config)
-            if configword in what_config:
-                logging.info("Made it into the if configword in what_config block")
-                if what_config[0] == configword:
-                    logging.info("Updating subreddits")
-                    if 0 <= 2 < len(text):
-                        if text[2] == 'add':
-                            if 0 <= 3 < len(text):
-                                t = [(botname, botid, groupid, text[3])]
-                                c.executemany("INSERT INTO memesource (name, botid, groupid, subreddit) VALUES (?,?,?,?)", t)
-                                memesource = []
-                                t = [(botname),]
-                                for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
-                                    memesource.append(row)
-                                logging.info("Just updated memesource here it is- %s" % (memesource))    
-                                conn.commit()
-                                conn.close()
-                                message = "Updated subreddit list, added - "
-                                message += text[3]
-                                self.response = message
-                            else:
-                                self.response = "You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>"
-                        elif text[2] == 'delete':
-                            if 0 <= 3 < len(text):
-                                t = [(text[3],botname)]
-                                c.executemany("DELETE FROM memesource WHERE (subreddit=? AND name=?)", (t))
-                                memesource = []
-                                t = [(botname),]
-                                for row in c.execute("SELECT subreddit FROM memesource WHERE (name=?)", (t)):
-                                    memesource.append(row[0])
-                                logging.info("Just updated memesource here it is- %s" % (memesource))    
-                                conn.commit()
-                                conn.close()
-                                message = "Updated subreddit list, removed - "
-                                message += text[3]
-                                self.response = message
-                            else:
-                                self.response = "You didn't include a subreddit!\nUsage - !config subreddit add <subreddit>"
+            if "!config subreddit" in text:
+                text = text.replace("!config subreddit", "")
+                if "add" in text:
+                    text = text.replace("add", "")
+                    text = text.split()
+                    message = "Result - \n"
+                    for subreddit in text:
+                        data = {"name" : botname, "groupid" : groupid, "table" : "memesource", "data" : [botname, groupid, subreddit]}
+                        confirm = handler.do("insert", data)
+                        if confirm == True:
+                            message += f"Added {subreddit}\n"
                         else:
-                            self.response = "Incorrect usage, expected add|delete\nUsage - !config subreddit <add|delete>"
-                    else:
-                        message = "Current enabled subreddits to pull from -"
-                        for subreddit in currentmemesource:
-                            message += "\n{}".format(subreddit)
-                        self.response = message
-                elif what_config[1] == configword:
-                    logging.info("Updating allownsfw")
-                    if 0 <= 2 <= len(text):
-                        if text[2] == 'true':
-                            t = [(text[2],botid,groupid),]
-                            c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
-                            t = [(botname),]
-                            c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
-                            allownsfw = c.fetchone()
-                            logging.info("Just updated allownsfw, expected output is 'true', here it is- %s" % (allownsfw))
-                            conn.commit()
-                            conn.close()
-                            message = "Updated status of allownsfw - "
-                            message += text[2]
-                            self.response = message
-                        elif text[2] == 'false':
-                            t = [(text[2],botid,groupid),]
-                            c.executemany("UPDATE config SET allownsfw=? WHERE (botid=? AND groupid=?)", (t))
-                            t = [(botname),]
-                            c.execute("SELECT allownsfw FROM config WHERE (name=?)", (t))
-                            allownsfw = c.fetchone()
-                            logging.info("Just updated allownsfw, expected output is 'false', here it is- %s" % (allownsfw))
-                            conn.commit()
-                            conn.close()
-                            message = "Updated status of allownsfw - "
-                            message += text[2]
-                            self.response = message
+                            message += f"Failed to add {subreddit}, if the error persists, let the developer know.\n{confirm}\n"
+                    self.response = message
+                elif "delete" in text:
+                    text = text.replace("delete", "")
+                    text = text.split()
+                    message = "Result - \n"
+                    for subreddit in text:
+                        data = {"name" : botname, "groupid" : groupid, "table" : "memesource", "data" : [botname, groupid, subreddit]}
+                        confirm = handler.do("insert", data)
+                        if confirm == True:
+                            message += f"Removed {subreddit}\n"
                         else:
-                            self.response = "Incorrect usage, expected true|false\nUsage !config allownsfw <true|false>"
-                    else:
-                        message = "Current status of allownsfw - "
-                        message += currentnsfw
-                        self.response = message
-                elif what_config[2] == configword:
-                    logging.info("Updating allowrepost")
-                    if 0 <= 2 <= len(text):
-                        if text[2] == 'true':
-                            t = [(text[2],botid,groupid),]
-                            c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
-                            t = [(botname),]
-                            c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
-                            allowrepost = c.fetchone()
-                            logging.info("Just updated allowrepost, expected output is 'true', here it is- %s" % (allowrepost))
-                            conn.commit()
-                            conn.close()
-                            message = "Updated status of allowrepost - "
-                            message += text[2]
-                            self.response = message
-                        elif text[2] == 'false':
-                            t = [(text[2],botid,groupid),]
-                            c.executemany("UPDATE config SET allowrepost=? WHERE (botid=? AND groupid=?)", (t))
-                            t = [(botname),]
-                            c.execute("SELECT allowrepost FROM config WHERE (name=?)", (t))
-                            allowrepost = c.fetchone()
-                            logging.info("Just updated allowrepost, expected output is 'false', here it is- %s" % (allowrepost))
-                            conn.commit()
-                            conn.close()
-                            message = "Updated status of allowrepost - "
-                            message += text[2]
-                            self.response = message
-                        else:
-                            self.response = "Incorrect usage, expected true|false\nUsage !config allowrepost <true|false>"
-                    else:
-                        message = "Current status of allowrepost - "
-                        message += currentrepost
-                        self.response = message
+                            message += f"Failed to remove {subreddit}, if the error persists, let the developer know.\n{confirm}\n"
+                    self.response = message
                 else:
-                    self.response = "Sorry, I can't find that config! This is the config message I received-\n{}".format(text)
-        else:
-            self.response = "Sorry, this is only for authenticated users."
+                    text = text.split()
+                    if len(text) == 2:
+                        data = {"name" : botname, "groupid" : groupid, "table" : "memesource", "data" : [botname, groupid]}
+                        sourceList = handler.do("select", data)
+                        message = "Current subreddits enabled to pull from - \n"
+                        for subreddit in sourceList:
+                            message += f"{subreddit}\n"
+                        self.response = message
+                    else:
+                        self.response = f"Improper usage! Expected add|delete not {text[3]}"
+            elif "!config allownsfw" in text:
+                text = text.replace("!config allownsfw")
+                if "true" in text:
+                    data = {"name" : botname, "groupid" : groupid, "table" : ["config", "allownsfw"], "data" : ["true", botname, groupid]}
+                    confirm = handler.do("update", data)
+                    if confirm == True:
+                        self.response = "allownsfw updated to True"
+                    else:
+                        self.response = f"Error - \n{confirm}"
+                elif "false" in text:
+                    data = {"name" : botname, "groupid" : groupid, "table" : ["config", "allownsfw"], "data" : ["false", botname, groupid]}
+                    confirm = handler.do("update", data)
+                    if confirm == True:
+                        self.response = "allownsfw updated to False"
+                    else:
+                        self.response = f"Error - \n{confirm}"
+                else:
+                    text = text.split()
+                    self.response = f"Expected true|false not {text[1]}"
+            elif "!config allowrepost" in text:
+                if "true" in text:
+                    data = {"name" : botname, "groupid" : groupid, "table" : ["config", "allowrepost"], "data" : ["true", botname, groupid]}
+                    confirm = handler.do("update", data)
+                    if confirm == True:
+                        self.response = "allowrepost updated to True"
+                    else:
+                        self.response = f"Error - \n{confirm}"
+                elif "false" in text:
+                    data = {"name" : botname, "groupid" : groupid, "table" : ["config", "allowrepost"], "data" : ["false", botname, groupid]}
+                    confirm = handler.do("update", data)
+                    if confirm == True:
+                        self.response = "allowrepost updated to False"
+                    else:
+                        self.response = f"Error - \n{confirm}"
+                else:
+                    text = text.split()
+                    self.response = f"Expected true|false not {text[1]}"
+            else:
+                text = text.split()
+                self.response = f"I didn't find that config ({text[1]}), perhaps you mispelled it?"

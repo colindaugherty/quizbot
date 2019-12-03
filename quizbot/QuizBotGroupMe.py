@@ -321,7 +321,7 @@ class QuizBotGroupMe():
             self.awaiting_response = self.quizzerbot.awaiting_response
 
     def update_config(self, mes, att, gid, text, sender_name):
-        x = QuizBotUpdateConfig(self.authenticatedUsers, self.bot_name, self.bot_id, self.group_id, sender_name, self.allow_nsfw, self.allow_reposts, self.meme_source, text)
+        x = QuizBotUpdateConfig(self.authenticatedUsers, text, self.bot_name, self.group_id, sender_name, datahandler)
         self.send_message(x.response, 1)
         
     def send_meme(self, mes, att, gid, text, sender_name):

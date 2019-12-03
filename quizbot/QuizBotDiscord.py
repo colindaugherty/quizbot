@@ -13,6 +13,7 @@ from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
 
 # database functions
 from .modules.QuizBotAuthenticateUser import QuizBotAuthenticateUser
+from .modules.QuizBotUpdateConfig import QuizBotUpdateConfig
 from .modules.QuizBotOptIO import QuizBotOptIO
 from .modules.QuizBotSetMemeSource import QuizBotSetMemeSource
 
@@ -45,17 +46,19 @@ class QuizBotDiscord():
     def _init_regexes(self):
         self.groupinfo = re.compile("(^!info$)")
         self.stats = re.compile("(^!stats$)")
-        self.config = re.compile("(^!config)")
 
         #finished
-        self.optregex = re.compile("(^!opt)")
         self.help_regex = re.compile("(^!help)")
+        
         self.fred_joke = re.compile("(^!fred)")
         self.hacking_joke = re.compile("(^!hack)")
         self.randommeme = re.compile("(^!meme$)")
         self.quiz = re.compile("(^!quiz)")
+
+        self.config = re.compile("(^!config)")
         self.authenticate = re.compile("(^!authenticate)")
         self.deauthenticate = re.compile("(^!deauthenticate)")
+        self.optregex = re.compile("(^!opt)")
 
         self._construct_regexes()
 
@@ -68,6 +71,7 @@ class QuizBotDiscord():
             ("Quiz", self.quiz, self.quizzer),
             ("Authenticate", self.authenticate, self._authenticateUser),
             ("Authenticate", self.deauthenticate, self._authenticateUser),
+            ("Config", self.config, self.update_config),
             ("Opting In/Out", self.optregex, self.opt)
         ]
         discordlogger.info("Initialized regex.")
@@ -85,9 +89,15 @@ class QuizBotDiscord():
         x = QuizBotAuthenticateUser(sender_name, text, self.bot_name, self.group_id, datahandler)
         return x.response
 
+    def update_config(self, text, sender_name):
+        x = QuizBotUpdateConfig(self.authenticated_users, text, self.bot_name, self.group_id, sender_name, datahandler)
+        return x.response
+
     def _getmemesource(self):
         # x = QuizBotSetMemeSource(self.bot_id, self.group_id)
-        return f"Currently broken"
+        data = {"name" : self.bot_name, "groupid" : self.group_id, "table" : "memesource", "data": [self.bot_name, self.group_id]}
+        memesource = datahandler.do("select", data)
+        return memesource
 
     def _getallownsfw(self):
         data = {"name" : self.bot_name, "groupid" : self.group_id, "table" : ["config", "allownsfw"], "data" : [self.bot_name, self.group_id]}
