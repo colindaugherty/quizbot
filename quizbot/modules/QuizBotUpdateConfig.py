@@ -84,3 +84,5 @@ class QuizBotUpdateConfig:
             else:
                 text = text.split()
                 self.response = f"I didn't find that config ({text[1]}), perhaps you mispelled it?"
+        else:
+            self.response = f"{sender_name}, this is only for authenticated users."
