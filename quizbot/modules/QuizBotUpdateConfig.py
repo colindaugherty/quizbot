@@ -36,6 +36,7 @@ class QuizBotUpdateConfig:
                     self.response = message
                 else:
                     text = text.split()
+                    print(len(text))
                     if len(text) == 2:
                         data = {"name" : botname, "groupid" : groupid, "table" : "memesource", "data" : [botname, groupid]}
                         sourceList = handler.do("select", data)
