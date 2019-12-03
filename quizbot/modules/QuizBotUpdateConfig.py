@@ -36,8 +36,7 @@ class QuizBotUpdateConfig:
                     self.response = message
                 else:
                     text = text.split()
-                    print(len(text))
-                    if len(text) == 2:
+                    if len(text) == 0:
                         data = {"name" : botname, "groupid" : groupid, "table" : "memesource", "data" : [botname, groupid]}
                         sourceList = handler.do("select", data)
                         message = "Current subreddits enabled to pull from - \n"
@@ -45,7 +44,7 @@ class QuizBotUpdateConfig:
                             message += f"{subreddit}\n"
                         self.response = message
                     else:
-                        self.response = f"Improper usage! Expected add|delete not {text[3]}"
+                        self.response = f"Improper usage! Expected add|delete not {text[0]}"
             elif "!config allownsfw" in text:
                 text = text.replace("!config allownsfw")
                 if "true" in text:
