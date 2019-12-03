@@ -314,9 +314,11 @@ class QuizBotDataHandler:
                 else:
                     return f"Table {table} is not supported for lists.\nCompatiable tables are: config, stats"
             elif table == "memesource":
-                c.execute("SELECT subreddit FROM memesource WHERE (name=? AND groupid=?)", data)
-                data = c.fetchall()
-                return data
+                data = [subreddit[0] for subreddit in c.execute("SELECT subreddit FROM memesource WHERE (name=? AND groupid=?)", data)]
+                if data == None or None in data or data == []:
+                    return None
+                else:
+                    return data
             elif table == "authenticate":
                 data = [user[0] for user in c.execute("SELECT users FROM authenticate WHERE (name=? AND groupid=?)", data)]
                 if data == None or None in data or data == []:
