@@ -40,8 +40,11 @@ class QuizBotUpdateConfig:
                         data = {"name" : botname, "groupid" : groupid, "table" : "memesource", "data" : [botname, groupid]}
                         sourceList = handler.do("select", data)
                         message = "Current subreddits enabled to pull from - \n"
-                        for subreddit in sourceList:
-                            message += f"{subreddit}\n"
+                        if sourceList == None:
+                            message = "There are currently no subreddits to pull from."
+                        else:
+                            for subreddit in sourceList:
+                                message += f"{subreddit}\n"
                         self.response = message
                     else:
                         self.response = f"Improper usage! Expected add|delete not {text[0]}"
