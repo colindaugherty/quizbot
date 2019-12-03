@@ -49,7 +49,7 @@ class QuizBotDiscord():
 
         #finished
         self.help_regex = re.compile("(^!help)")
-        
+
         self.fred_joke = re.compile("(^!fred)")
         self.hacking_joke = re.compile("(^!hack)")
         self.randommeme = re.compile("(^!meme$)")
@@ -81,7 +81,10 @@ class QuizBotDiscord():
         self.group_id = groupid
         self.authenticated_users = self._getauthenticatedusers()
         self.meme_source = self._getmemesource()
-        self.real_len = len(self.meme_source) - 1
+        if self.meme_source == None:
+            self.real_len = 0    
+        else:
+            self.real_len = len(self.meme_source) - 1
         self.allow_nsfw = self._getallownsfw()
         self.allow_reposts = self._getallowreposts()
 
