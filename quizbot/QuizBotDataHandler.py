@@ -4,8 +4,6 @@ import sqlite3, logging, traceback
 
 datalogger = logging.getLogger(__name__)
 
-# datalogger.basicConfig(level=logging.DEBUG,filename='logs/data.log', filemode='w', format='QuizBot[DATA]: %(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-
 datalogger.setLevel(logging.INFO)
 
 # create a file handler
@@ -253,7 +251,7 @@ class QuizBotDataHandler:
                     else:
                         return f"Subtable not found, was given {subtable}"
                 else:
-                    return f"Table {table} is not supported for lists.\nCompatiable tables are: config, stats"
+                    return f"Table {table} is not supported for lists.\ncompatible tables are: config, stats"
             elif table == "memesource":
                 c.execute("SELECT subreddit FROM memesource WHERE (name=? AND groupid=?)", data)
                 data = c.fetchone()
@@ -312,7 +310,7 @@ class QuizBotDataHandler:
                     else:
                         return f"Subtable not found, was given {subtable}"
                 else:
-                    return f"Table {table} is not supported for lists.\nCompatiable tables are: config, stats"
+                    return f"Table {table} is not supported for lists.\ncompatible tables are: config, stats"
             elif table == "memesource":
                 data = [subreddit[0] for subreddit in c.execute("SELECT subreddit FROM memesource WHERE (name=? AND groupid=?)", data)]
                 if data == None or None in data or data == []:

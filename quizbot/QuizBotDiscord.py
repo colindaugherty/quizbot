@@ -193,7 +193,6 @@ async def on_message(message):
         sender = message.author.nick
     text = message.content
     text = text.strip()
-    print(text)
     if quizbot.awaiting_response == False:
         for type, regex, action in quizbot.regex_actions:
             mes = regex.match(text)
@@ -202,7 +201,7 @@ async def on_message(message):
                 quizbot._set_variables(client.user.name, groupid)
                 await message.channel.send(action(text, sender))
     else:
-        print("I am waiting for a message")
+        discordlogger.info("Received response to a question")
         await message.channel.send(quizbot.quizzer(text, sender))
 
 if __name__ == "__main__":
