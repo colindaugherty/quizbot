@@ -67,7 +67,7 @@ class QuizBotGroupMe():
         self.listening_port = config['listening_port']
         self.groupme_url = "https://api.groupme.com/v3/bots/post"
 
-        self.useReddit = True
+        self.useReddit = False
 
         # quizzing variables
         self.awaiting_response = False
@@ -336,7 +336,7 @@ class QuizBotGroupMe():
             x = QuizBotSendRedditMeme(self.meme_source, self.real_len)
         elif self.useReddit == False:
             x = QuizBotSendInstaMeme(self.meme_source, self.real_len)
-        self.send_message(x.response, 1)
+        self.send_media(x.response, x.media, 1)
 
     def send_help(self, mes, att, gid, text, sender_name):
         conn = sqlite3.connect('config.db')
@@ -357,7 +357,7 @@ class QuizBotGroupMe():
         c.executemany("UPDATE stats SET responses = responses + 1 WHERE (name=? AND botid=? AND groupid=?)", t)
         conn.commit()
         conn.close()
-        x = QuizBotHackingJoke(self.group_id, sender_name)
+        x = QuizBotHackingJoke(self.group_id, text, sender_name)
         self.send_message(x.response, 1)
     
     def fred_function(self, mes, att, type, text, sender_name):
@@ -380,6 +380,12 @@ class QuizBotGroupMe():
 
     def send_message(self, message, t):
         data = {"bot_id": self.bot_id, "text": str(message)}
+        time.sleep(t)
+        requests.post(self.groupme_url, json=data)
+        groupmelogger.info(f"Just sent a message-\n{message}\n")
+
+    def send_media(self, message, media, t):
+        data = {"bot_id": self.bot_id, "text": str(message), "image_url": media}
         time.sleep(t)
         requests.post(self.groupme_url, json=data)
         groupmelogger.info(f"Just sent a message-\n{message}\n")
