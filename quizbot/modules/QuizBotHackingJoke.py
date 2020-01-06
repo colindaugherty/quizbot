@@ -10,7 +10,7 @@ class QuizBotHackingJoke:
         randpassword = passwords[random.randint(0, len(passwords) - 1)]
         randemail = emails[random.randint(0, len(emails) - 1)]
         if len(text) > 1:
-            message = f"Begining to hack {text[1]}\nCracking password...\npassword found\nsending password: {randpassword}\nfound email: {randemail}\nYou now have access to {text[1]}'s account. Be wise.'"
+            message = f"Begining to hack {text[1]}\nCracking password...\npassword found\nsending password: {randpassword}\nfound email: {randemail}\nYou now have access to {text[1]}'s account. Be wise."
         else:
             message = "Begining hacking sequence...\nSetting variables....\n\nsender_name: {}\ngroup_id: {}\ndate: {}\n\nattempting remote login....\nsuccess\n\n{} you are now totally in the system. Good job. Proud of you.".format(sender_name, groupid, time.strftime("%j/%m/%Y", time.gmtime(time.time())), sender_name)
 
