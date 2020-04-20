@@ -180,7 +180,7 @@ async def on_message(message):
             text = message.content
             if "Score Results" in text:
                 time.sleep(5)
-                quizbot.quizzer("!quiz 15", "colin")
+                await message.channel.send(quizbot.quizzer("!quiz 15", "colin"))
             else:
                 return
             return
