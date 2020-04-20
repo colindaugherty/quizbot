@@ -18,8 +18,8 @@ else:
 with open(config_file) as data_file:
     config = json.load(data_file)
 
-QuizBotGroupMe.init()
-QuizBotGroupMe.listen(port=config['listening_port'])
+# QuizBotGroupMe.init()
+# QuizBotGroupMe.listen(port=config['listening_port'])
 
 quizbot = QuizBot.QuizBotDiscord()
 QuizBot.client.run(quizbot.init(config['discord_key']))
