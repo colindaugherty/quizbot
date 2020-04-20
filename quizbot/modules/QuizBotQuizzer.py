@@ -227,6 +227,7 @@ class QuizBotQuizzer():
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     for player in self.keeping_score:
                         message += "{}: {}\n".format(player[0],[player[1]])
+                    message += "\nStarting new round in 5 seconds!\n"
                     self.response = message
             else:
                 logging.info("Got incorrect answer %s" % (answer))
