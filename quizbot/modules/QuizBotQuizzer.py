@@ -8,7 +8,7 @@ quiz_file = os.path.join('.', 'data', 'quiz_material.json')
 
 class QuizBotQuizzer():
     def __init__(self, authenticated_users, sender_name, quizbonuses):
-        self.authenticated_users = authenticated_users
+        self.authenticated_users = ["colin", "Colin D.", "mrcdaug"]
         self.sender_name = sender_name
         self.quizbonuses = quizbonuses
         self.current_quiz = []
