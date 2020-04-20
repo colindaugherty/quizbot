@@ -126,7 +126,7 @@ class QuizBotDiscord():
         return x.response
 
     def hack_joke(self, text, name):
-        x = QuizBotHackingJoke(self.group_id, name)
+        x = QuizBotHackingJoke(self.group_id, text, name)
         return x.response
 
     def send_meme(self, text, name):
@@ -174,35 +174,45 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.author == client.user:
-        return
+    channel = str(message.channel)
+    if channel == "quiz room":
+        if message.author == client.user:
+            text = message.content
+            if "Score Results" in text:
+                time.sleep(5)
+                quizbot.quizzer("!quiz 15", "colin")
+            else:
+                return
+            return
 
-    print(message.author)
-    print(quizbot.awaiting_response)
-    if message.guild in client.guilds:
-        groupid = message.guild
-        groupid = groupid.id
+        print(message.author)
+        print(quizbot.awaiting_response)
+        if message.guild in client.guilds:
+            groupid = message.guild
+            groupid = groupid.id
+        else:
+            logging.info(f"If you're seeing this, I don't even know how this error happened. {message.guild}")
+        uid = message.author.id
+        # get name of the sender without identifier (identifier is not as relavant in smaller groups)
+        sender = client.get_user(uid)
+        sender = sender.display_name
+        # if they have a nickname, use that instead
+        if message.author.nick != None:
+            sender = message.author.nick
+        text = message.content
+        text = text.strip()
+        if quizbot.awaiting_response == False:
+            for type, regex, action in quizbot.regex_actions:
+                mes = regex.match(text)
+                if mes:
+                    discordlogger.info(f'Received message with type:{type} and message:{text}')
+                    quizbot._set_variables(client.user.name, groupid)
+                    await message.channel.send(action(text, sender))
+        else:
+            discordlogger.info("Received response to a question")
+            await message.channel.send(quizbot.quizzer(text, sender))
     else:
-        logging.info(f"If you're seeing this, I don't even know how this error happened. {message.guild}")
-    uid = message.author.id
-    # get name of the sender without identifier (identifier is not as relavant in smaller groups)
-    sender = client.get_user(uid)
-    sender = sender.display_name
-    # if they have a nickname, use that instead
-    if message.author.nick != None:
-        sender = message.author.nick
-    text = message.content
-    text = text.strip()
-    if quizbot.awaiting_response == False:
-        for type, regex, action in quizbot.regex_actions:
-            mes = regex.match(text)
-            if mes:
-                discordlogger.info(f'Received message with type:{type} and message:{text}')
-                quizbot._set_variables(client.user.name, groupid)
-                await message.channel.send(action(text, sender))
-    else:
-        discordlogger.info("Received response to a question")
-        await message.channel.send(quizbot.quizzer(text, sender))
+        print(f"Wrong channel! Channel I got was {channel}")
 
 if __name__ == "__main__":
     client.run(quizbot.init(""))
