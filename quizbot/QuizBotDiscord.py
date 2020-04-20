@@ -175,7 +175,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     channel = str(message.channel)
-    if channel == "quiz room":
+    if channel == "quiz-room":
         if message.author == client.user:
             text = message.content
             if "Score Results" in text:
