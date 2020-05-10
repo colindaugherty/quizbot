@@ -303,7 +303,7 @@ class QuizBotDataHandler:
                 else:
                     return data[0]
             elif table == "players":
-                c.execute("SELECT users FROM opt WHERE (name=? AND groupid=? AND users=?)", data)
+                c.execute("SELECT users FROM players WHERE (name=? AND groupid=? AND users=?)", data)
                 data = c.fetchone()
                 if data == None or None in data:
                     return None
