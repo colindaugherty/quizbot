@@ -108,6 +108,7 @@ class QuizBotDataHandler:
     def update(self, db, c, table, data):
         try:
             datalogger.info(f"Editing database with this data- {data}")
+            datalogger.info(f"Table is {table} and subtable is {table[1]}")
             if table == "opt":
                 c.executemany("UPDATE opt SET newsroom=? AND elimination=? WHERE (name=? AND groupid=?)", [data])
                 db.commit()
@@ -386,7 +387,7 @@ class QuizBotDataHandler:
         identity = (str(data["name"]), int(data["groupid"]))
         table = str(data["table"])
         data = tuple(data["data"])
-        print(f"Identity: {identity}\nTable: {table}\nData: {data}")
+        datalogger.info(f"Identity: {identity}\nTable: {table}\nData: {data}")
         if self.discord:
             db, c = self.connect(discord_data)
             method = self.methods[method]
