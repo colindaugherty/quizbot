@@ -223,12 +223,12 @@ class QuizBotQuizzer():
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
                     insertData = self.handler.do("insert", data)
                     if insertData == True:
-                        message += "This was your first correct answer this week! Yay!"
+                        message += "This was your first correct answer this week! Yay!\n"
                 else:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "questions"], "data" : [self.botname, self.groupid, name]}
                     updateData = self.handler.do("update", data)
                     if updateData == True:
-                        message += "Added that question to your tally board. Good job!"
+                        message += "Added that question to your tally board. Good job!\n"
 
                 score = 1
                 player = [name, score]
