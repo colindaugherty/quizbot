@@ -146,18 +146,7 @@ class QuizBotDiscord():
             return self.quizboi.response
         elif mode == 'continue':
             self.quizboi.continue_quiz(text, sender_name)
-            if self.quizboi.goodjob:
-                response = f"{self.quizboi.goodjob}\n"
-            if self.quizboi.finishedQuiz == False and self.quizboi.correct == True:
-                response += self.quizboi.response
-                return response
-            elif self.quizboi.finishedQuiz == True:
-                self.awaiting_response = False
-                response += "\nFinished quiz! Generating results\n"
-                response += self.quizboi.response
-                return response
-            elif self.quizboi.finishedQuiz != True and self.quizboi.finishedQuiz != False:
-                discordlogger.info("Finished quiz is broken, error")
+            return f"{self.quizboi.goodjob}\n{self.quizboi.response}"
 
     def announceWinners(self):
         x = QuizBotAnnounceWinners(self.bot_name, self.group_id, datahandler)
