@@ -212,7 +212,7 @@ class QuizBotDataHandler:
                 self.clean_up(db, c)
                 return True
             elif table == "players":
-                c.executemany("INSERT INTO players (name, groupid, users, wins, questions, lifetimeWins, lifetimeQuestions, lifetimeRewards) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", data)
+                c.executemany("INSERT INTO players (name, groupid, users, wins, questions, lifetimeWins, lifetimeQuestions, lifetimeRewards) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [data])
                 db.commit()
                 self.clean_up(db, c)
                 return True
