@@ -129,6 +129,7 @@ class QuizBotQuizzer():
         cq = self.current_question
         index = cq
         logging.info(cq)
+        logging.info(self.current_quiz)
         logging.info(self.current_question)
         logging.info(self.current_quiz[index][4])
         if isinstance(self.current_quiz[index][4], list):
