@@ -297,21 +297,22 @@ class QuizBotDataHandler:
             elif table == "authenticate":
                 c.execute("SELECT users FROM authenticate WHERE (name=? AND groupid=?)", data)
                 data = c.fetchone()
-                if data == None or None in data:
+                if data == None or None in data or data == []:
                     return None
                 else:
                     return data[0]
             elif table == "opt":
                 c.execute("SELECT users FROM opt WHERE (name=? AND groupid=?)", data)
                 data = c.fetchone()
-                if data == None or None in data:
+                if data == None or None in data or data == []:
                     return None
                 else:
                     return data[0]
             elif table == "players":
                 c.execute("SELECT users FROM players WHERE (name=? AND groupid=? AND users=?)", data)
                 data = c.fetchone()
-                if data == None or None in data:
+                datalogger.info(f"\n\nData for the player score lookup is - {data}\n\n")
+                if data == None or None in data or data == []:
                     return None
                 else:
                     return data[0]

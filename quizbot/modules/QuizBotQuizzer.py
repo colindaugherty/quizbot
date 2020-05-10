@@ -146,7 +146,7 @@ class QuizBotQuizzer():
                 message = "Good job {} you got that one right! ".format(name)
 
                 data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
-                checkForPlayer = self.handler.do("select", data)
+                checkForPlayer = self.handler.do("selectone", data)
                 if checkForPlayer == None:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
                     insertData = self.handler.do("insert", data)
@@ -218,7 +218,7 @@ class QuizBotQuizzer():
 
                 table = ["players", "questions"]
                 data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
-                checkForPlayer = self.handler.do("select", data)
+                checkForPlayer = self.handler.do("selectone", data)
                 if checkForPlayer == None:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
                     insertData = self.handler.do("insert", data)
@@ -270,12 +270,12 @@ class QuizBotQuizzer():
                         data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, top_player, 1, 1, 1, 1, 0]}
                         insertData = self.handler.do("insert", data)
                         if insertData == True:
-                            message += f"{top_player}, this was your first win this week. Nice job!"
+                            message += f"{top_player}, this was your first win this week. Nice job!\n"
                     else:
                         data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "wins"], "data" : [self.botname, self.groupid, top_player]}
                         updateData = self.handler.do("update", data)
                         if updateData == True:
-                            message += f"{top_player} is the winner of this round! Congrats!"
+                            message += f"{top_player} is the winner of this round! Congrats!\n"
 
                     for player in self.keeping_score:
                         message += "{}: {}\n".format(player[0],[player[1]])
