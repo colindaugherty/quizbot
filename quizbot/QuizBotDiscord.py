@@ -140,8 +140,8 @@ class QuizBotDiscord():
         return x.response
 
     def quizzer(self, text, sender_name, mode):
-        self.quizboi = QuizBotQuizzer(self.authenticated_users, sender_name, False, datahandler, self.bot_name, self.group_id)
         if mode == 'start':
+            self.quizboi = QuizBotQuizzer(self.authenticated_users, sender_name, False, datahandler, self.bot_name, self.group_id)
             return self.quizboi.start_quiz(text)
         elif mode == 'continue':
             return self.quizboi.continue_quiz(text, sender_name)
