@@ -7,7 +7,7 @@ import time, random, os, logging, json
 quiz_file = os.path.join('.', 'data', 'quiz_material.json')
 
 class QuizBotQuizzer():
-    def __init__(self, authenticated_users, sender_name, quizbonuses):
+    def __init__(self, authenticated_users, sender_name, quizbonuses, handler, botname, groupid):
         self.authenticated_users = ["colin", "Colin D.", "mrcdaug"]
         self.sender_name = sender_name
         self.quizbonuses = quizbonuses
@@ -18,6 +18,9 @@ class QuizBotQuizzer():
         self.quiztime = 0
         self.finishedQuiz = False
         self.awaiting_response = False
+        self.botname = botname
+        self.groupid = groupid
+        self.handler = handler
 
         with open(quiz_file) as data_file:
             self.quizmaterial = json.load(data_file)
@@ -120,18 +123,17 @@ class QuizBotQuizzer():
         playeranswer = playeranswer.strip()
         if "'" in playeranswer:
             playeranswer = playeranswer.replace("'", "’")
+        if " and " in playeranswer:
+            playeranswer = playeranswer.replace(" and ", ", ")
         logging.info(playeranswer)
         cq = self.current_question
         index = cq
         logging.info(cq)
-        logging.info(index)
         logging.info(self.current_question)
         logging.info(self.current_quiz[index][4])
         if isinstance(self.current_quiz[index][4], list):
             if "," in playeranswer:
                 playeranswer = playeranswer.split(', ')
-            elif "and" in playeranswer:
-                playeranswer = playeranswer.split(' and ')
             self.current_quiz[index][4] = sorted(self.current_quiz[index][4])
             playeranswer = sorted(playeranswer)
         if isinstance(self.current_quiz[index][4], str):
@@ -139,6 +141,20 @@ class QuizBotQuizzer():
                 name = sender_name.split(' ')
                 name = name[0]
                 message = "Good job {} you got that one right!".format(name)
+
+                data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
+                checkForPlayer = self.handler.do("select", data)
+                if checkForPlayer == None:
+                    data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
+                    insertData = self.handler.do("inser", data)
+                    if insertData == True:
+                        message += "\nThis was your first correct answer this week! Yay!"
+                else:
+                    data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "questions"], "data" : [self.botname, self.groupid, name]}
+                    updateData = self.handler.do("update", data)
+                    if updateData == True:
+                        message += "\nAdded that question to your tally board. Good job!"
+
                 score = 1
                 player = [name, score]
                 while self.playerindex <= len(self.keeping_score):
@@ -193,6 +209,20 @@ class QuizBotQuizzer():
                 name = sender_name.split(' ')
                 name = name[0]
                 message = "Good job {} you got that one right!".format(name)
+
+                data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
+                checkForPlayer = self.handler.do("select", data)
+                if checkForPlayer == None:
+                    data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
+                    insertData = self.handler.do("inser", data)
+                    if insertData == True:
+                        message += "\nThis was your first correct answer this week! Yay!"
+                else:
+                    data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "questions"], "data" : [self.botname, self.groupid, name]}
+                    updateData = self.handler.do("update", data)
+                    if updateData == True:
+                        message += "\nAdded that question to your tally board. Good job!"
+
                 score = 1
                 player = [name, score]
                 while self.playerindex <= len(self.keeping_score):
@@ -227,7 +257,6 @@ class QuizBotQuizzer():
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     for player in self.keeping_score:
                         message += "{}: {}\n".format(player[0],[player[1]])
-                    message += "\nStarting new round in 5 seconds!\n"
                     self.response = message
             else:
                 logging.info("Got incorrect answer %s" % (answer))

@@ -1,6 +1,7 @@
 # discord wrapper for quizbot
 
 import discord, sqlite3, logging, re, os, time
+from discord.utils import get
 
 from .QuizBotDataHandler import QuizBotDataHandler
 
@@ -10,6 +11,7 @@ from .modules.QuizBotFunSayings import QuizBotFunSayings
 from .modules.QuizBotHackingJoke import QuizBotHackingJoke
 from .modules.QuizBotQuizzer import QuizBotQuizzer
 from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
+from .modules.QuizBotAnnounceWinners import QuizBotAnnounceWinners
 
 # database functions
 from .modules.QuizBotAuthenticateUser import QuizBotAuthenticateUser
@@ -137,30 +139,29 @@ class QuizBotDiscord():
         x = QuizBotOptIO(sender_name, text, self.group_id, self.bot_name, datahandler)
         return x.response
 
-    def quizzer(self, text, sender_name):
-        print(self.awaiting_response)
-        if self.awaiting_response == False:
-            self.quizboi = QuizBotQuizzer(self.authenticated_users, sender_name, False)
+    def quizzer(self, text, sender_name, mode):
+        self.quizboi = QuizBotQuizzer(self.authenticated_users, sender_name, False, datahandler, self.bot_name, self.group_id)
+        if mode == 'start':
             self.quizboi.start_quiz(text)
-            time.sleep(1)
-            self.awaiting_response = self.quizboi.awaiting_response
             return self.quizboi.response
-        elif self.awaiting_response == True:
-            time.sleep(3)
-            self.awaiting_response = self.quizboi.awaiting_response
+        elif mode == 'continue':
             self.quizboi.continue_quiz(text, sender_name)
             if self.quizboi.goodjob:
-                response = self.quizboi.goodjob + "\n"
-            if self.quizboi.finishedQuiz == False and self.quizboi.correct == True:
-                response += self.quizboi.response
-                return response
-            elif self.quizboi.finishedQuiz == True:
-                self.awaiting_response = False
-                response += "\nFinished quiz! Generating results\n"
-                response += self.quizboi.response
-                return response
-            elif self.quizboi.finishedQuiz != True and self.quizboi.finishedQuiz != False:
-                discordlogger.info("Finished quiz is broken, error")
+                response = f"{self.quizboi.goodjob}\n"
+                if self.quizboi.finishedQuiz == False and self.quizboi.correct == True:
+                    response += self.quizboi.response
+                    return response
+                elif self.quizboi.finishedQuiz == True:
+                    self.awaiting_response = False
+                    response += "\nFinished quiz! Generating results\n"
+                    response += self.quizboi.response
+                    return response
+                elif self.quizboi.finishedQuiz != True and self.quizboi.finishedQuiz != False:
+                    discordlogger.info("Finished quiz is broken, error")
+
+    def announceWinners(self):
+        x = QuizBotAnnounceWinners(self.bot_name, self.group_id, datahandler)
+        return x.response
 
     def init(self, token):
         return token
@@ -175,44 +176,54 @@ async def on_ready():
 @client.event
 async def on_message(message):
     channel = str(message.channel)
+
+    # id message origin
+    if message.guild in client.guilds:
+        groupid = message.guild
+        groupid = groupid.id
+    uid = message.author.id
+    
+    # get name of sender
+    sender = client.get_user(uid)
+    sender = sender.display_name
+    if message.author.nick != None:
+        sender = message.author.nick
+
+    # get message text ready for processing
+    text = message.content
+    text = text.strip()
+
+    # process message and send response
     if channel == "quiz-room":
+        text = message.content
         if message.author == client.user:
-            text = message.content
             if "Score Results" in text:
                 time.sleep(5)
-                await message.channel.send(quizbot.quizzer("!quiz 15", "colin"))
-            else:
-                return
-            return
-
-        print(message.author)
-        print(quizbot.awaiting_response)
-        if message.guild in client.guilds:
-            groupid = message.guild
-            groupid = groupid.id
+                await message.channel.send(quizbot.quizzer("!quiz 15", "colin", "start"))
+        elif "!quiz 15" in text and sender == "Colin D.":
+            await message.channel.send(quizbot.quizzer("!quiz 15", "colin", "start"))
         else:
-            logging.info(f"If you're seeing this, I don't even know how this error happened. {message.guild}")
-        uid = message.author.id
-        # get name of the sender without identifier (identifier is not as relavant in smaller groups)
-        sender = client.get_user(uid)
-        sender = sender.display_name
-        # if they have a nickname, use that instead
-        if message.author.nick != None:
-            sender = message.author.nick
-        text = message.content
-        text = text.strip()
-        if quizbot.awaiting_response == False:
-            for type, regex, action in quizbot.regex_actions:
+            await message.channel.send(quizbot.quizzer(text, sender, "continue"))
+    elif channel == "general":
+        if message.author == client.user:
+            return
+        for type, regex, action, in quizbot.regex_actions:
+            if "!quiz" in text:
+                await message.channel.send("Sorry! That command isn't allowed in here, use #quiz-room for quizzing functions!")
+            else:
                 mes = regex.match(text)
                 if mes:
                     discordlogger.info(f'Received message with type:{type} and message:{text}')
                     quizbot._set_variables(client.user.name, groupid)
                     await message.channel.send(action(text, sender))
-        else:
-            discordlogger.info("Received response to a question")
-            await message.channel.send(quizbot.quizzer(text, sender))
+    elif channel == "moderation-log":
+        if text == "!announce-winners":
+            if message.guild in client.guilds:
+                guild = message.guild
+            channel = get(guild.channels, name="announcements", type=discord.ChannelType.text)
+            await channel.send(quizbot.announceWinners())
     else:
-        print(f"Wrong channel! Channel I got was {channel}")
+        discordlogger.info(f'Wrong channel! Channel I got was {channel}')
 
 if __name__ == "__main__":
     client.run(quizbot.init(""))

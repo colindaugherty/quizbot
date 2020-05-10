@@ -52,6 +52,9 @@ class QuizBotDataHandler:
         c.execute("""CREATE TABLE IF NOT EXISTS opt
         (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, groupid int, users text, newsroom text, elimination text)
         """)
+        c.execute("""CREATE TABLE IF NOT EXISTS players
+        (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, groupid int, users text, wins int, questions int, lifetimeWins int, lifetimeQuestions int, lifetimeRewards int)
+        """)
 
         c.execute("SELECT * FROM config WHERE name=? AND groupid=?", identity)
         checkconfig = c.fetchone()
@@ -161,6 +164,24 @@ class QuizBotDataHandler:
                         return True
                     else:
                         return f"Couldn't find subtable {subtable} in table {table[0]}"
+                elif table[0] == "players":
+                    if subtable == "wins":
+                        c.executemany("UPDATE players set wins = wins + 1 WHERE (name=? AND groupid=? AND users=?)", [data])
+                        c.executemany("UPDATE players set lifetimeWins = lifetimeWins + 1 WHERE (name=? AND groupid=? AND users=?)", [data])
+                        db.commit()
+                        self.clean_up(db, c)
+                        return True
+                    elif subtable == "questions":
+                        c.executemany("UPDATE players set questions = questions + 1 WHERE (name=? AND groupid=? AND users=?)", [data])
+                        c.executemany("UPDATE players set lifetimeQuestions = lifetimeQuestions + 1 WHERE (name=? AND groupid=? AND users=?)", [data])
+                        db.commit()
+                        self.clean_up(db, c)
+                        return True
+                    elif subtable == "lifetimeRewards":
+                        c.executemany("UPDATE players set lifetimeRewards = lifetimeRewards + 1 WHERE (name=? AND groupid=? AND users=?)", [data])
+                        db.commit()
+                        self.clean_up(db, c)
+                        return True
                 else:
                     return f"You included a list for an incompatible table, {table}\nCompatible tables: config, stats"
             else:
@@ -190,8 +211,13 @@ class QuizBotDataHandler:
                 db.commit()
                 self.clean_up(db, c)
                 return True
+            elif table == "players":
+                c.executemany("INSERT INTO players (name, groupid, users, wins, questions, lifetimeWins, lifetimeQuestions, lifetimeRewards) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", data)
+                db.commit()
+                self.clean_up(db, c)
+                return True
             else:
-                return f"This should really only be used for adding memesource and authenticated/new opt users, however, it was used for {table}"
+                return f"This should really only be used for adding memesource, authenticated/new opt users, or updating score stats of players, however, it was used for {table}"
         except Exception as e:
             self.clean_up(db, c)
             print(traceback.format_exc())
@@ -206,6 +232,12 @@ class QuizBotDataHandler:
                 return True
             elif table == "authenticate":
                 c.executemany("DELETE FROM authenticate WHERE (name=? AND groupid=? AND users=?)", [data])
+                db.commit()
+                self.clean_up(db, c)
+                return True
+            elif table == "players":
+                c.executemany("UPDATE players set wins = 0 WHERE (name=? AND groupid=?)", [data])
+                c.executemany("UPDATE players set questions = 0 WHERE (name=? AND groupid=?)", [data])
                 db.commit()
                 self.clean_up(db, c)
                 return True
@@ -270,6 +302,13 @@ class QuizBotDataHandler:
                     return None
                 else:
                     return data[0]
+            elif table == "players":
+                c.execute("SELECT users FROM opt WHERE (name=? AND groupid=? AND users=?)", data)
+                data = c.fetchone()
+                if data == None or None in data:
+                    return None
+                else:
+                    return data[0]
         except Exception as e:
             self.clean_up(db, c)
             print(traceback.format_exc())
@@ -325,6 +364,12 @@ class QuizBotDataHandler:
                     return data
             elif table == "opt":
                 data = [user[0] for user in c.execute("SELECT users FROM opt WHERE (name=? AND groupid=?)", data)]
+                if data == None or None in data or data == []:
+                    return None
+                else:
+                    return data
+            elif table == "players":
+                data = [user[0] for user in c.execute("SELECT * FROM players WHERE (name=? AND groupid=?)", data)]
                 if data == None or None in data or data == []:
                     return None
                 else:
