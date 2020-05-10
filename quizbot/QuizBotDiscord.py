@@ -195,6 +195,7 @@ async def on_message(message):
 
     # process message and send response
     if channel == "quiz-room":
+        quizbot._set_variables(client.user.name, groupid)
         text = message.content
         if message.author == client.user:
             if "Score Results" in text:
@@ -216,6 +217,7 @@ async def on_message(message):
                 quizbot._set_variables(client.user.name, groupid)
                 await message.channel.send(action(text, sender))
     elif channel == "moderation-log":
+        quizbot._set_variables(client.user.name, groupid)
         if text == "!announce-winners":
             if message.guild in client.guilds:
                 guild = message.guild

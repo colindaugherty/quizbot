@@ -146,7 +146,7 @@ class QuizBotQuizzer():
                 checkForPlayer = self.handler.do("select", data)
                 if checkForPlayer == None:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
-                    insertData = self.handler.do("inser", data)
+                    insertData = self.handler.do("insert", data)
                     if insertData == True:
                         message += "\nThis was your first correct answer this week! Yay!"
                 else:
@@ -214,7 +214,7 @@ class QuizBotQuizzer():
                 checkForPlayer = self.handler.do("select", data)
                 if checkForPlayer == None:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
-                    insertData = self.handler.do("inser", data)
+                    insertData = self.handler.do("insert", data)
                     if insertData == True:
                         message += "\nThis was your first correct answer this week! Yay!"
                 else:
