@@ -217,7 +217,7 @@ class QuizBotQuizzer():
                 message = "Good job {} you got that one right! ".format(name)
 
                 table = ["players", "questions"]
-                data = {"name" : self.botname, "groupid" : self.groupid, "table" : "player", "data" : [self.botname, self.groupid, name]}
+                data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
                 checkForPlayer = self.handler.do("select", data)
                 if checkForPlayer == None:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
@@ -262,10 +262,10 @@ class QuizBotQuizzer():
                     self.quiztime = 0
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     top_player = self.keeping_score[0][0]
-
+                    logging.info(f"Top player for that round - {top_player}")
                     table = ["players", "wins"]
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, top_player]}
-                    checkForPlayer = self.handler.do("select", data)
+                    checkForPlayer = self.handler.do("selectone", data)
                     if checkForPlayer == None:
                         data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, top_player, 1, 1, 1, 1, 0]}
                         insertData = self.handler.do("insert", data)
