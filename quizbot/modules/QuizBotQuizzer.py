@@ -152,7 +152,8 @@ class QuizBotQuizzer():
                     if insertData == True:
                         message += "This was your first correct answer this week! Yay!\n"
                 else:
-                    data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "questions"], "data" : [self.botname, self.groupid, name]}
+                    table = ["players", "questions"]
+                    data = {"name" : self.botname, "groupid" : self.groupid, "table" : table, "data" : [self.botname, self.groupid, name]}
                     updateData = self.handler.do("update", data)
                     logging.info(f"\n\n\nDATABASE STATUS updateData STATE:\n\n{updateData}\n\n\n")
                     if updateData == True:
@@ -213,7 +214,8 @@ class QuizBotQuizzer():
                 name = name[0]
                 message = "Good job {} you got that one right! ".format(name)
 
-                data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
+                table = ["players", "questions"]
+                data = {"name" : self.botname, "groupid" : self.groupid, "table" : table, "data" : [self.botname, self.groupid, name]}
                 checkForPlayer = self.handler.do("select", data)
                 if checkForPlayer == None:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
