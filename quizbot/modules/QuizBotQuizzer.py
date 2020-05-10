@@ -146,7 +146,7 @@ class QuizBotQuizzer():
                 message = "Good job {} you got that one right! ".format(name)
 
                 data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
-                checkForPlayer = self.handler.do("selectone", data)
+                checkForPlayer = self.handler.do("select", data)
                 if checkForPlayer == None:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
                     insertData = self.handler.do("insert", data)
@@ -217,8 +217,8 @@ class QuizBotQuizzer():
                 message = "Good job {} you got that one right! ".format(name)
 
                 table = ["players", "questions"]
-                data = {"name" : self.botname, "groupid" : self.groupid, "table" : table, "data" : [self.botname, self.groupid, name]}
-                checkForPlayer = self.handler.do("selectone", data)
+                data = {"name" : self.botname, "groupid" : self.groupid, "table" : "player", "data" : [self.botname, self.groupid, name]}
+                checkForPlayer = self.handler.do("select", data)
                 if checkForPlayer == None:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
                     insertData = self.handler.do("insert", data)
@@ -264,8 +264,8 @@ class QuizBotQuizzer():
                     top_player = self.keeping_score[0][0]
 
                     table = ["players", "wins"]
-                    data = {"name" : self.botname, "groupid" : self.groupid, "table" : table, "data" : [self.botname, self.groupid, top_player]}
-                    checkForPlayer = self.handler.do("selectone", data)
+                    data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, top_player]}
+                    checkForPlayer = self.handler.do("select", data)
                     if checkForPlayer == None:
                         data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, top_player, 1, 1, 1, 1, 0]}
                         insertData = self.handler.do("insert", data)
