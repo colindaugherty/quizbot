@@ -30,7 +30,7 @@ class QuizBotHelp:
             else:
                 logging.info(self.found_command)
         elif len(text) == 1:
-            message = "QuizBot Bot Commands-\nVersion 0.6b\n"
+            message = "QuizBot Bot Commands-\nVersion 0.8b\n"
             message += "!meme - searches for a random meme from your meme suppliers in the config\n"
             message += "!opt - opt in and out of events run by the bot, include the event for more specific opting\n"
             message += "!config - edits group config\n"
@@ -41,4 +41,4 @@ class QuizBotHelp:
         elif len(text) > 2:
             self.response = "You've asked for too many words, I can't help you..."
         else:
-            logging.info("HelpModule: Text has confused me - {}".format(text))
+            logging.info(f"HelpModule: Text has confused me - {text}")
