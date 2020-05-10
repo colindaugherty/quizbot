@@ -142,11 +142,9 @@ class QuizBotDiscord():
     def quizzer(self, text, sender_name, mode):
         self.quizboi = QuizBotQuizzer(self.authenticated_users, sender_name, False, datahandler, self.bot_name, self.group_id)
         if mode == 'start':
-            self.quizboi.start_quiz(text)
-            return self.quizboi.response
+            return self.quizboi.start_quiz(text)
         elif mode == 'continue':
-            self.quizboi.continue_quiz(text, sender_name)
-            return f"{self.quizboi.goodjob}\n{self.quizboi.response}"
+            return self.quizboi.continue_quiz(text, sender_name)
 
     def announceWinners(self):
         x = QuizBotAnnounceWinners(self.bot_name, self.group_id, datahandler)

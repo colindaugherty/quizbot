@@ -8,7 +8,7 @@ quiz_file = os.path.join('.', 'data', 'quiz_material.json')
 
 class QuizBotQuizzer():
     def __init__(self, authenticated_users, sender_name, quizbonuses, handler, botname, groupid):
-        self.authenticated_users = ["colin", "Colin D.", "mrcdaug"]
+        self.authenticated_users = ["colin", "colin_d.", "mrcdaug"]
         self.sender_name = sender_name
         self.quizbonuses = quizbonuses
         self.current_quiz = []
@@ -66,7 +66,7 @@ class QuizBotQuizzer():
             counter = 0
             questioncount = text.replace("!quiz ", "")
             if int(questioncount) > 25:
-                self.response = "25 is the max amount of questions I can quiz over at this time."
+                return "25 is the max amount of questions I can quiz over at this time."
             while counter < int(questioncount) and int(questioncount) <= 25:
                 topics = self.quizmaterial
                 topics = list(topics.keys())
@@ -112,9 +112,9 @@ class QuizBotQuizzer():
                 message = "{}) Here is your question from the section '{}': {} ({}-{})".format(self.current_quiz[0][0], self.current_quiz[0][1], self.current_quiz[0][3], self.current_quiz[0][5], self.current_quiz[0][2])
                 self.awaiting_response = True
                 self.current_question = 0
-                self.response = message
+                return message
         else:
-            self.response = "Sorry, this is only for authenticated users :/"
+            return "Sorry, this is only for authenticated users :/"
 
     def continue_quiz(self, answer, sender_name):
         self.goodjob = False
@@ -148,12 +148,12 @@ class QuizBotQuizzer():
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
                     insertData = self.handler.do("insert", data)
                     if insertData == True:
-                        message += "\nThis was your first correct answer this week! Yay!"
+                        message += "\nThis was your first correct answer this week! Yay!\n"
                 else:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "questions"], "data" : [self.botname, self.groupid, name]}
                     updateData = self.handler.do("update", data)
                     if updateData == True:
-                        message += "\nAdded that question to your tally board. Good job!"
+                        message += "\nAdded that question to your tally board. Good job!\n"
 
                 score = 1
                 player = [name, score]
@@ -172,24 +172,23 @@ class QuizBotQuizzer():
                         logging.info("Player not found, iterating again")
                         self.playerindex += 1
                 self.playerindex = 0
-                self.goodjob = message
                 self.correct = True
                 self.current_question += 1
                 index += 1
                 if self.current_question < len(self.current_quiz):
-                    message = "{}) Here is your question from the section '{}': {} ({}-{})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][5], self.current_quiz[index][2])
-                    self.response = message
+                    message += "{}) Here is your question from the section '{}': {} ({}-{})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][5], self.current_quiz[index][2])
+                    return message
                 else:
                     self.awaiting_response = False
                     self.finishedQuiz = True
                     self.quiztime = time.time() - self.quizstop
                     self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
-                    message = "Time taken: {}\nScore Results-\n".format(self.quiztime)
+                    message += "Finished quiz! Generating results\nTime taken: {}\nScore Results-\n".format(self.quiztime)
                     self.quiztime = 0
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     for player in self.keeping_score:
                         message += "{}: {}\n".format(player[0],[player[1]])
-                    self.response = message
+                    return message
             else:
                 logging.info("Got incorrect answer %s" % (answer))
         elif isinstance(self.current_quiz[index][4], list):
@@ -240,24 +239,23 @@ class QuizBotQuizzer():
                         logging.info("Player not found, iterating again")
                         self.playerindex += 1
                 self.playerindex = 0
-                self.goodjob = message
                 self.correct = True
                 self.current_question += 1
                 index += 1
                 if self.current_question < len(self.current_quiz):
-                    message = "{}) Here is your question from the section '{}': {} ({}-{})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][5], self.current_quiz[index][2])
-                    self.response = message
+                    message += "{}) Here is your question from the section '{}': {} ({}-{})".format(self.current_quiz[index][0], self.current_quiz[index][1], self.current_quiz[index][3], self.current_quiz[index][5], self.current_quiz[index][2])
+                    return message
                 else:
                     self.awaiting_response = False
                     self.finishedQuiz = True
                     self.quiztime = time.time() - self.quizstop
                     self.quiztime = time.strftime("%M:%Ss", time.gmtime(self.quiztime))
-                    message = "Time taken: {}\nScore Results-\n".format(self.quiztime)
+                    message += "Finished quiz! Generating results\nTime taken: {}\nScore Results-\n".format(self.quiztime)
                     self.quiztime = 0
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
                     for player in self.keeping_score:
                         message += "{}: {}\n".format(player[0],[player[1]])
-                    self.response = message
+                    return message
             else:
                 logging.info("Got incorrect answer %s" % (answer))
         else:
