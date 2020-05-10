@@ -148,14 +148,17 @@ class QuizBotQuizzer():
                 if checkForPlayer == None:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
                     insertData = self.handler.do("insert", data)
+                    logging.info(f"\n\n\nDATABASE STATUS insertData STATE:\n\n{insertData}\n\n\n")
                     if insertData == True:
                         message += "\nThis was your first correct answer this week! Yay!\n"
                 else:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "questions"], "data" : [self.botname, self.groupid, name]}
                     updateData = self.handler.do("update", data)
+                    logging.info(f"\n\n\nDATABASE STATUS updateData STATE:\n\n{updateData}\n\n\n")
                     if updateData == True:
                         message += "\nAdded that question to your tally board. Good job!\n"
 
+                logging.info(f"Current status of message: {message}")
                 score = 1
                 player = [name, score]
                 while self.playerindex <= len(self.keeping_score):
