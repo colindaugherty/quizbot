@@ -123,6 +123,8 @@ class QuizBotQuizzer():
         playeranswer = playeranswer.strip()
         if "'" in playeranswer:
             playeranswer = playeranswer.replace("'", "’")
+        if ", and " in playeranswer:
+            playeranswer = playeranswer.replace(", and ", ", ")
         if " and " in playeranswer:
             playeranswer = playeranswer.replace(" and ", ", ")
         logging.info(playeranswer)
