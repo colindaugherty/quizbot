@@ -144,7 +144,7 @@ class QuizBotQuizzer():
                 message = "Good job {} you got that one right!".format(name)
 
                 data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
-                checkForPlayer = self.handler.do("select", data)
+                checkForPlayer = self.handler.do("selectone", data)
                 if checkForPlayer == None:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
                     insertData = self.handler.do("insert", data)
