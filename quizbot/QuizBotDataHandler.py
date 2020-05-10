@@ -387,7 +387,7 @@ class QuizBotDataHandler:
 
     def do(self, method, data):
         identity = (str(data["name"]), int(data["groupid"]))
-        table = str(data["table"])
+        table = data["table"]
         data = tuple(data["data"])
         datalogger.info(f"Identity: {identity}\nTable: {table}\nData: {data}")
         if self.discord:
