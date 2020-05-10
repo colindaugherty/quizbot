@@ -141,7 +141,7 @@ class QuizBotQuizzer():
             if self.similar(playeranswer, self.current_quiz[index][4]) or self.rulechecker(playeranswer, self.current_quiz[index][4]):
                 name = sender_name.split(' ')
                 name = name[0]
-                message = "Good job {} you got that one right!".format(name)
+                message = "Good job {} you got that one right! ".format(name)
 
                 data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
                 checkForPlayer = self.handler.do("selectone", data)
@@ -150,13 +150,13 @@ class QuizBotQuizzer():
                     insertData = self.handler.do("insert", data)
                     logging.info(f"\n\n\nDATABASE STATUS insertData STATE:\n\n{insertData}\n\n\n")
                     if insertData == True:
-                        message += "\nThis was your first correct answer this week! Yay!\n"
+                        message += "This was your first correct answer this week! Yay!\n"
                 else:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "questions"], "data" : [self.botname, self.groupid, name]}
                     updateData = self.handler.do("update", data)
                     logging.info(f"\n\n\nDATABASE STATUS updateData STATE:\n\n{updateData}\n\n\n")
                     if updateData == True:
-                        message += "\nAdded that question to your tally board. Good job!\n"
+                        message += "Added that question to your tally board. Good job!\n"
 
                 logging.info(f"Current status of message: {message}")
                 score = 1
@@ -211,7 +211,7 @@ class QuizBotQuizzer():
             if correctanswers == len(self.current_quiz[index][4]):
                 name = sender_name.split(' ')
                 name = name[0]
-                message = "Good job {} you got that one right!".format(name)
+                message = "Good job {} you got that one right! ".format(name)
 
                 data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
                 checkForPlayer = self.handler.do("select", data)
@@ -219,12 +219,12 @@ class QuizBotQuizzer():
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name, 0, 1, 0, 1, 0]}
                     insertData = self.handler.do("insert", data)
                     if insertData == True:
-                        message += "\nThis was your first correct answer this week! Yay!"
+                        message += "This was your first correct answer this week! Yay!"
                 else:
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "questions"], "data" : [self.botname, self.groupid, name]}
                     updateData = self.handler.do("update", data)
                     if updateData == True:
-                        message += "\nAdded that question to your tally board. Good job!"
+                        message += "Added that question to your tally board. Good job!"
 
                 score = 1
                 player = [name, score]
