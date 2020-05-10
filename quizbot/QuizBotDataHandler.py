@@ -115,6 +115,7 @@ class QuizBotDataHandler:
                 return True
             elif isinstance(table, list):
                 subtable = table[1]
+                datalogger.info(f"Table is {table} and subtable is {subtable}")
                 if table[0] == "stats":
                     if subtable == "requests":
                         c.executemany("UPDATE stats SET requests = requests + 1 WHERE (name=? AND groupid=?)", [data])
@@ -182,6 +183,8 @@ class QuizBotDataHandler:
                         db.commit()
                         self.clean_up(db, c)
                         return True
+                    else:
+                        return f"Couldn't find subtable {subtable} in table {table[0]}"
                 else:
                     return f"You included a list for an incompatible table, {table}\nCompatible tables: config, stats"
             else:
