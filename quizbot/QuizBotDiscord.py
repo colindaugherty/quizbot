@@ -148,16 +148,16 @@ class QuizBotDiscord():
             self.quizboi.continue_quiz(text, sender_name)
             if self.quizboi.goodjob:
                 response = f"{self.quizboi.goodjob}\n"
-                if self.quizboi.finishedQuiz == False and self.quizboi.correct == True:
-                    response += self.quizboi.response
-                    return response
-                elif self.quizboi.finishedQuiz == True:
-                    self.awaiting_response = False
-                    response += "\nFinished quiz! Generating results\n"
-                    response += self.quizboi.response
-                    return response
-                elif self.quizboi.finishedQuiz != True and self.quizboi.finishedQuiz != False:
-                    discordlogger.info("Finished quiz is broken, error")
+            if self.quizboi.finishedQuiz == False and self.quizboi.correct == True:
+                response += self.quizboi.response
+                return response
+            elif self.quizboi.finishedQuiz == True:
+                self.awaiting_response = False
+                response += "\nFinished quiz! Generating results\n"
+                response += self.quizboi.response
+                return response
+            elif self.quizboi.finishedQuiz != True and self.quizboi.finishedQuiz != False:
+                discordlogger.info("Finished quiz is broken, error")
 
     def announceWinners(self):
         x = QuizBotAnnounceWinners(self.bot_name, self.group_id, datahandler)
@@ -200,22 +200,21 @@ async def on_message(message):
             if "Score Results" in text:
                 time.sleep(5)
                 await message.channel.send(quizbot.quizzer("!quiz 15", "colin", "start"))
-        elif "!quiz 15" in text and sender == "Colin D.":
+        elif "!quiz 15" in text and sender == "colin":
             await message.channel.send(quizbot.quizzer("!quiz 15", "colin", "start"))
         else:
             await message.channel.send(quizbot.quizzer(text, sender, "continue"))
     elif channel == "general":
         if message.author == client.user:
             return
-        for type, regex, action, in quizbot.regex_actions:
-            if "!quiz" in text:
+        if "!quiz" in text:
                 await message.channel.send("Sorry! That command isn't allowed in here, use #quiz-room for quizzing functions!")
-            else:
-                mes = regex.match(text)
-                if mes:
-                    discordlogger.info(f'Received message with type:{type} and message:{text}')
-                    quizbot._set_variables(client.user.name, groupid)
-                    await message.channel.send(action(text, sender))
+        for type, regex, action, in quizbot.regex_actions:
+            mes = regex.match(text)
+            if mes:
+                discordlogger.info(f'Received message with type:{type} and message:{text}')
+                quizbot._set_variables(client.user.name, groupid)
+                await message.channel.send(action(text, sender))
     elif channel == "moderation-log":
         if text == "!announce-winners":
             if message.guild in client.guilds:
