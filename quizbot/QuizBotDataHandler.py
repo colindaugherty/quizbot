@@ -109,6 +109,7 @@ class QuizBotDataHandler:
         try:
             datalogger.info(f"Editing database with this data- {data}")
             datalogger.info(f"Table is {table} and subtable is {table[1]}")
+            datalogger.info(f"Table is a list: {isinstance(table, list)}")
             if table == "opt":
                 c.executemany("UPDATE opt SET newsroom=? AND elimination=? WHERE (name=? AND groupid=?)", [data])
                 db.commit()
