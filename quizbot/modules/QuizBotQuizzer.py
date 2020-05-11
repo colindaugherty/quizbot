@@ -261,7 +261,7 @@ class QuizBotQuizzer():
                     message += "Finished quiz! Generating results\nTime taken: {}\nScore Results-\n".format(self.quiztime)
                     self.quiztime = 0
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
-                    top_player = self.keeping_score[0][0]
+                    top_player = str(self.keeping_score[0][0])
                     logging.info(f"Top player for that round - {top_player}")
                     table = ["players", "wins"]
                     data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, top_player]}
