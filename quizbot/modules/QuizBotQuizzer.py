@@ -261,6 +261,11 @@ class QuizBotQuizzer():
                     message += "Finished quiz! Generating results\nTime taken: {}\nScore Results-\n".format(self.quiztime)
                     self.quiztime = 0
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
+
+                    for player in self.keeping_score:
+                        logging.info(f"\n\n\n\nAdding {player} to this game's scoreboard\n\n\n")
+                        message += "{}: {}\n".format(player[0],[player[1]])
+                    
                     top_player = str(self.keeping_score[0][0])
                     logging.info(f"Top player for that round - {top_player}")
                     table = ["players", "wins"]
@@ -277,8 +282,6 @@ class QuizBotQuizzer():
                         if updateData == True:
                             message += f"{top_player} is the winner of this round! Congrats!\n"
 
-                    for player in self.keeping_score:
-                        message += "{}: {}\n".format(player[0],[player[1]])
                     return message
             else:
                 logging.info("Got incorrect answer %s" % (answer))

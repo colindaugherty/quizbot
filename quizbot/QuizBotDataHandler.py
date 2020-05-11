@@ -170,6 +170,7 @@ class QuizBotDataHandler:
                         return f"Couldn't find subtable {subtable} in table {table[0]}"
                 elif table[0] == "players":
                     if subtable == "wins":
+                        datalogger.info(f"\n\nupdating wins with this data {data}\n\n")
                         c.executemany("UPDATE players set wins = wins + 1 WHERE (name=? AND groupid=? AND users=?)", [data])
                         c.executemany("UPDATE players set lifetimeWins = lifetimeWins + 1 WHERE (name=? AND groupid=? AND users=?)", [data])
                         db.commit()
