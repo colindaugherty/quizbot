@@ -9,5 +9,4 @@ data/block1.json
 json/
 cronjob.sh
 .DS_Store
-access.log
 config.db
