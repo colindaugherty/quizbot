@@ -193,8 +193,26 @@ class QuizBotQuizzer():
                     message += "Finished quiz! Generating results\nTime taken: {}\nScore Results-\n".format(self.quiztime)
                     self.quiztime = 0
                     self.keeping_score = sorted(self.keeping_score, key = lambda x: int(x[1]), reverse=True)
+
                     for player in self.keeping_score:
                         message += "{}: {}\n".format(player[0],[player[1]])
+
+                    top_player = str(self.keeping_score[0][0])
+                    logging.info(f"Top player for that round - {top_player}")
+                    table = ["players", "wins"]
+                    data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, top_player]}
+                    checkForPlayer = self.handler.do("selectone", data)
+                    if checkForPlayer == None:
+                        data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, top_player, 1, 1, 1, 1, 0]}
+                        insertData = self.handler.do("insert", data)
+                        if insertData == True:
+                            message += f"{top_player}, this was your first win this week. Nice job!\n"
+                    else:
+                        data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "wins"], "data" : [self.botname, self.groupid, top_player]}
+                        updateData = self.handler.do("update", data)
+                        if updateData == True:
+                            message += f"{top_player} is the winner of this round! Congrats!\n"
+                            
                     return message
             else:
                 logging.info("Got incorrect answer %s" % (answer))
