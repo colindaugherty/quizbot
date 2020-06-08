@@ -1,7 +1,6 @@
 # discord wrapper for quizbot
 
-import discord, sqlite3, logging, re, os, time
-from discord.utils import get
+import discord, sqlite3, logging, re, os, time, discord.utils
 
 from .QuizBotDataHandler import QuizBotDataHandler
 
@@ -192,6 +191,23 @@ async def on_message(message):
             await message.channel.send(quizbot.quizzer("!quiz 15", "colin", "start"))
         else:
             await message.channel.send(quizbot.quizzer(text, sender, "continue"))
+    elif channel == "welcome":
+        if message.author == client.user:
+            return
+        text = message.content
+        if "!team" in text:
+            text = text.replace("!team", "")
+            text = text.strip
+            if ", " in text:
+                text = text.replace(", ", " ")
+            role_list = text.split()
+            for role in role_list:
+                role = discord.utils.get(message.server.roles, name=role)
+                try:
+                    await message.author.add_roles(message.author, role)
+                    await message.channel.send(f"Added role {role.name} to you.")
+                except discord.Forbidden:
+                    await message.channel.send("I can't add roles :/")
     elif channel == "general":
         if message.author == client.user:
             return
@@ -208,7 +224,7 @@ async def on_message(message):
         if text == "!announce-winners":
             if message.guild in client.guilds:
                 guild = message.guild
-            channel = get(guild.channels, name="announcements", type=discord.ChannelType.text)
+            channel = discord.utils.get(guild.channels, name="announcements", type=discord.ChannelType.text)
             await channel.send(quizbot.announceWinners())
     else:
         discordlogger.info(f'Wrong channel! Channel I got was {channel}')
