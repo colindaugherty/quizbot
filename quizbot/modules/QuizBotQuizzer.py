@@ -142,7 +142,7 @@ class QuizBotQuizzer():
         if isinstance(self.current_quiz[index][4], str):
             if self.similar(playeranswer, self.current_quiz[index][4]) or self.rulechecker(playeranswer, self.current_quiz[index][4]):
                 name = sender_name.split(' ')
-                name = name[0]
+                name = ' '.join(name[3:])
                 message = "Good job {} you got that one right! ".format(name)
 
                 data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, name]}
