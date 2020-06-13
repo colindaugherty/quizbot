@@ -68,12 +68,12 @@ class QuizBotDiscord():
             ("Help", self.help_regex, self.send_help),
             ("Joke/EasterEgg", self.hacking_joke, self.hack_joke),
             ("Fred", self.fred_joke, self.fred_function),
-            ("Meme", self.randommeme, self.send_meme),
+            # ("Meme", self.randommeme, self.send_meme),
             ("Quiz", self.quiz, self.quizzer),
-            ("Authenticate", self.authenticate, self._authenticateUser),
-            ("Authenticate", self.deauthenticate, self._authenticateUser),
-            ("Config", self.config, self.update_config),
-            ("Opting In/Out", self.optregex, self.opt)
+            # ("Authenticate", self.authenticate, self._authenticateUser),
+            # ("Authenticate", self.deauthenticate, self._authenticateUser),
+            # ("Config", self.config, self.update_config),
+            # ("Opting In/Out", self.optregex, self.opt)
         ]
         discordlogger.info("Initialized regex.")
 
@@ -180,7 +180,7 @@ async def on_message(message):
     text = text.strip()
 
     # process message and send response
-    if channel == "quiz-room":
+    if "quiz-room" or "quizbot" or "study-room" in channel:
         quizbot._set_variables(client.user.name, groupid)
         text = message.content
         if message.author == client.user:
@@ -208,11 +208,11 @@ async def on_message(message):
                     await message.channel.send(f"Added role {role.name} to you.")
                 except discord.Forbidden:
                     await message.channel.send("I can't add roles :/")
-    elif channel == "general":
+    elif "general" in channel:
         if message.author == client.user:
             return
         if "!quiz" in text:
-                await message.channel.send("Sorry! That command isn't allowed in here, use #quiz-room for quizzing functions!")
+                await message.channel.send("Sorry! That command isn't allowed in here, use #study-room for quizzing functions!")
         for type, regex, action, in quizbot.regex_actions:
             mes = regex.match(text)
             if mes:

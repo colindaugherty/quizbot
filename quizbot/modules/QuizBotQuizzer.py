@@ -229,8 +229,7 @@ class QuizBotQuizzer():
             logging.info(len(self.current_quiz[index][4]))
             logging.info("The number of answers is above me")
             if correctanswers == len(self.current_quiz[index][4]):
-                name = sender_name.split(' ')
-                name = name[0]
+                name = sender_name
                 message = "Good job {} you got that one right! ".format(name)
 
                 table = ["players", "questions"]
