@@ -181,7 +181,7 @@ async def on_message(message):
     text = text.strip()
 
     # process message and send response
-    if "quiz-room" or "quizbot" or "study-room" in channel:
+    if "quiz-room" in channel or "study-room" in channel or "quizbot" in channel:
         discordlogger.info(f"\n\nin quiz room\n\n")
         quizbot._set_variables(client.user.name, groupid)
         text = message.content
