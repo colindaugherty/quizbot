@@ -68,12 +68,12 @@ class QuizBotDiscord():
             ("Help", self.help_regex, self.send_help),
             ("Joke/EasterEgg", self.hacking_joke, self.hack_joke),
             ("Fred", self.fred_joke, self.fred_function),
-            # ("Meme", self.randommeme, self.send_meme),
+            ("Meme", self.randommeme, self.send_meme),
             ("Quiz", self.quiz, self.quizzer),
-            # ("Authenticate", self.authenticate, self._authenticateUser),
-            # ("Authenticate", self.deauthenticate, self._authenticateUser),
-            # ("Config", self.config, self.update_config),
-            # ("Opting In/Out", self.optregex, self.opt)
+            ("Authenticate", self.authenticate, self._authenticateUser),
+            ("Authenticate", self.deauthenticate, self._authenticateUser),
+            ("Config", self.config, self.update_config),
+            ("Opting In/Out", self.optregex, self.opt)
         ]
         discordlogger.info("Initialized regex.")
 
@@ -162,6 +162,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     channel = str(message.channel)
+    discordlogger.info(f"\n\nmessage sent in channel {channel}\n\n")
 
     # id message origin
     if message.guild in client.guilds:
@@ -181,6 +182,7 @@ async def on_message(message):
 
     # process message and send response
     if "quiz-room" or "quizbot" or "study-room" in channel:
+        discordlogger.info(f"\n\nin quiz room\n\n")
         quizbot._set_variables(client.user.name, groupid)
         text = message.content
         if message.author == client.user:
@@ -209,6 +211,7 @@ async def on_message(message):
                 except discord.Forbidden:
                     await message.channel.send("I can't add roles :/")
     elif "general" in channel:
+        discordlogger.info(f"\n\nin a general chat\n\n")
         if message.author == client.user:
             return
         if "!quiz" in text:

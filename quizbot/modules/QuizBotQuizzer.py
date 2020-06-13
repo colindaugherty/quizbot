@@ -205,12 +205,12 @@ class QuizBotQuizzer():
                         data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, top_player, 1, 1, 1, 1, 0]}
                         insertData = self.handler.do("insert", data)
                         if insertData == True:
-                            message += f"{top_player}, this was your first win this week. Nice job!\n"
+                            message += f"\n{top_player}, this was your first win this week. Nice job!\n"
                     else:
                         data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "wins"], "data" : [self.botname, self.groupid, top_player]}
                         updateData = self.handler.do("update", data)
                         if updateData == True:
-                            message += f"{top_player} is the winner of this round! Congrats!\n"
+                            message += f"\n{top_player} is the winner of this round! Congrats!\n"
                             
                     return message
             else:
@@ -291,12 +291,12 @@ class QuizBotQuizzer():
                         data = {"name" : self.botname, "groupid" : self.groupid, "table" : "players", "data" : [self.botname, self.groupid, top_player, 1, 1, 1, 1, 0]}
                         insertData = self.handler.do("insert", data)
                         if insertData == True:
-                            message += f"{top_player}, this was your first win this week. Nice job!\n"
+                            message += f"\n{top_player}, this was your first win this week. Nice job!\n"
                     else:
                         data = {"name" : self.botname, "groupid" : self.groupid, "table" : ["players", "wins"], "data" : [self.botname, self.groupid, top_player]}
                         updateData = self.handler.do("update", data)
                         if updateData == True:
-                            message += f"{top_player} is the winner of this round! Congrats!\n"
+                            message += f"\n{top_player} is the winner of this round! Congrats!\n"
 
                     return message
             else:
