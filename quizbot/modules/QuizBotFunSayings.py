@@ -40,7 +40,7 @@ class QuizBotFunSayings:
             "I cut my finger on my moms wring\nI hope I can still dance",
             "*dab on them haters*\nヽ( •_)ᕗ",
             "what do you call a chicken farmer?\n.\n.\n.\nA CHICKEN TENDER",
-            f"Read {datetime.now.time.hour}:{datetime.now.time.minute}",
+            # f"Read {datetime.now.time.hour}:{datetime.now.time.minute}",
             "If you wear cowboy clothes, are you ranch dressing?",
             "Please not now, I'm introverting",
             "Bible Bowlers are easily confused",

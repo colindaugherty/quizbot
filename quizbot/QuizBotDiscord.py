@@ -68,12 +68,12 @@ class QuizBotDiscord():
             ("Help", self.help_regex, self.send_help),
             ("Joke/EasterEgg", self.hacking_joke, self.hack_joke),
             ("Fred", self.fred_joke, self.fred_function),
-            # ("Meme", self.randommeme, self.send_meme),
-            ("Quiz", self.quiz, self.quizzer)
-            # ("Authenticate", self.authenticate, self._authenticateUser),
-            # ("Authenticate", self.deauthenticate, self._authenticateUser),
-            # ("Config", self.config, self.update_config),
-            # ("Opting In/Out", self.optregex, self.opt)
+            ("Meme", self.randommeme, self.send_meme),
+            ("Quiz", self.quiz, self.quizzer),
+            ("Authenticate", self.authenticate, self._authenticateUser),
+            ("Authenticate", self.deauthenticate, self._authenticateUser),
+            ("Config", self.config, self.update_config),
+            ("Opting In/Out", self.optregex, self.opt)
         ]
         discordlogger.info("Initialized regex.")
 
