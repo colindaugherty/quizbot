@@ -11,10 +11,10 @@ class QuizBotHelp:
         if len(text) == 2:
             command_help = [
                 ["help","!help <command>","Displays commands and their syntax/usage"],
-                ["opt","!opt <in|out> (optional:elimination|newsroom)","Will opt you in or out of specific quizbot events, such as newsroom and elimination"],
-                ["config","requires auth\n!config <configname>","Edits config per group, must be used by authenticated users"],
+                # ["opt","!opt <in|out> (optional:elimination|newsroom)","Will opt you in or out of specific quizbot events, such as newsroom and elimination"],
+                # ["config","requires auth\n!config <configname>","Edits config per group, must be used by authenticated users"],
                 ["fred","!fred","A funny phrase generator, name idea by Vanessa"],
-                ["meme","!meme","Meme generator, will pull a random meme from your meme sources."],
+                # ["meme","!meme","Meme generator, will pull a random meme from your meme sources."],
                 ["quiz","requires auth\n!quiz <number of questions>","Start a quiz with the supplied number of questions from quiz material"]
             ]
             for command in command_help:
@@ -31,9 +31,9 @@ class QuizBotHelp:
                 logging.info(self.found_command)
         elif len(text) == 1:
             message = "QuizBot Bot Commands-\nVersion 0.8b\n"
-            message += "!meme - searches for a random meme from your meme suppliers in the config\n"
-            message += "!opt - opt in and out of events run by the bot, include the event for more specific opting\n"
-            message += "!config - edits group config\n"
+            # message += "!meme - searches for a random meme from your meme suppliers in the config\n"
+            # message += "!opt - opt in and out of events run by the bot, include the event for more specific opting\n"
+            # message += "!config - edits group config\n"
             message += "!quiz - starts a quiz with questions from quiz material\n"
             message += "!fred - get a message from Fred\n"
             message += "!help - displays help commands\n"
