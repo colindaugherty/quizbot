@@ -48,7 +48,8 @@ class QuizBotFunSayings:
             "In my defense- I was left unsupervised",
             "surely not everyone was kung fu fighting.....",
             "I'd love to stay and chat, but I'm lying",
-            "*default dances on the haterz*"
+            "*default dances on the haterz*",
+            "If Ben and Megan started a fan club, it'd be a khul club -Samuel"
             ]
 
         rand = random.randint(0, len(fun_sayings) - 1)
