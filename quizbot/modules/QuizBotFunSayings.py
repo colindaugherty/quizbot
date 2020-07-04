@@ -4,7 +4,7 @@ import random
 from datetime import datetime
 
 class QuizBotFunSayings:
-    def __init__(self, sender_name):
+    def __init__(self, sender_name, text):
         
         fun_sayings = [
             "Why was I created? I don't know. It's something I ask myself daily. - Fred",
@@ -52,8 +52,16 @@ class QuizBotFunSayings:
             "If Ben and Megan started a fan club, it'd be a khul club -Samuel"
             ]
 
-        rand = random.randint(0, len(fun_sayings) - 1)
-        message = fun_sayings[rand]
-        message += "\n(this message was summoned by {})".format(sender_name)
+        text = text.split(", ")
+
+        if isinstance(text, list):
+            message = fun_sayings[int(text[1])]
+            message += f"\n(this message was summoned by {sender_name})"
+        elif text == "!red":
+            message += f"My name. Is not. RED. It is Fred"
+        else:
+            rand = random.choice(fun_sayings)
+            message = fun_sayings[rand]
+            message += f"\n(this message was summoned by {sender_name})"
 
         self.response = message

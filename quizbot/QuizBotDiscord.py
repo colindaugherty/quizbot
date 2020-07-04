@@ -8,6 +8,7 @@ from .QuizBotDataHandler import QuizBotDataHandler
 from .modules.QuizBotHelp import QuizBotHelp
 from .modules.QuizBotFunSayings import QuizBotFunSayings
 from .modules.QuizBotHackingJoke import QuizBotHackingJoke
+from .modules.QuizBotFortuneCookie import QuizBotFortuneCookie
 from .modules.QuizBotQuizzer import QuizBotQuizzer
 from .modules.QuizBotSendRedditMeme import QuizBotSendRedditMeme
 from .modules.QuizBotAnnounceWinners import QuizBotAnnounceWinners
@@ -52,6 +53,9 @@ class QuizBotDiscord():
         self.help_regex = re.compile("(^!help)")
 
         self.fred_joke = re.compile("(^!fred)")
+        self.red_joke = re.compile("(^!red)")
+        self.fortune = re.compile("(^!fortune)")
+        self.mad_lib = re.compile("(^!madlib)")
         self.hacking_joke = re.compile("(^!hack)")
         self.randommeme = re.compile("(^!meme$)")
         self.quiz = re.compile("(^!quiz)")
@@ -67,7 +71,10 @@ class QuizBotDiscord():
         self.regex_actions = [
             ("Help", self.help_regex, self.send_help),
             ("Joke/EasterEgg", self.hacking_joke, self.hack_joke),
+            ("Joke/EasterEgg", self.fortune, self.fortune_cookie),
+            ("Joke/EasterEgg", self.mad_lib, self.fortune_cookie),
             ("Fred", self.fred_joke, self.fred_function),
+            ("Fred", self.red_joke, self.fred_function),
             ("Meme", self.randommeme, self.send_meme),
             ("Quiz", self.quiz, self.quizzer),
             ("Authenticate", self.authenticate, self._authenticateUser),
@@ -123,7 +130,11 @@ class QuizBotDiscord():
         return x.response
 
     def fred_function(self, text, name):
-        x = QuizBotFunSayings(name)
+        x = QuizBotFunSayings(name, text)
+        return x.response
+
+    def fortune_cookie(self, text, name):
+        x = QuizBotFortuneCookie(name)
         return x.response
 
     def hack_joke(self, text, name):
