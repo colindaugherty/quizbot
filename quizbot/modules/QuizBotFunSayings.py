@@ -52,16 +52,18 @@ class QuizBotFunSayings:
             "If Ben and Megan started a fan club, it'd be a khul club -Samuel"
             ]
 
-        text = text.split(", ")
-
-        if isinstance(text, list):
+        text = text.split()
+        if len(text) == 2:
             message = fun_sayings[int(text[1])]
             message += f"\n(this message was summoned by {sender_name})"
-        elif text == "!red":
-            message += f"My name. Is not. RED. It is Fred"
+        elif len(text) == 1:
+            if text[0] == "!red":
+                message += f"My name. Is not. RED. It is Fred"
+            else:
+                rand = random.choice(fun_sayings)
+                message = fun_sayings[rand]
+                message += f"\n(this message was summoned by {sender_name})"
         else:
-            rand = random.choice(fun_sayings)
-            message = fun_sayings[rand]
-            message += f"\n(this message was summoned by {sender_name})"
+            message = f"you have confused me :("
 
         self.response = message
