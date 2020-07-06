@@ -1,0 +1,342 @@
+          groupid = 709898375918649445
+            users = CP1 Caleb
+             wins = 0
+        questions = 0
+     lifetimeWins = 24
+lifetimeQuestions = 290
+
+          groupid = 709898375918649445
+            users = CP1
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 32
+
+          groupid = 709898375918649445
+            users = Dallas
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 3
+
+          groupid = 709898375918649445
+            users = SECC 6 - Dallas
+             wins = 0
+        questions = 0
+     lifetimeWins = 5
+lifetimeQuestions = 65
+
+          groupid = 709898375918649445
+            users = SECC
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 53
+
+          groupid = 709898375918649445
+            users = SECC 6 - Sallad
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 1
+
+          groupid = 709898375918649445
+            users = SECC 4 - Troy
+             wins = 0
+        questions = 0
+     lifetimeWins = 1
+lifetimeQuestions = 22
+
+          groupid = 709898375918649445
+            users = SECC 8 - Dallas
+             wins = 0
+        questions = 0
+     lifetimeWins = 1
+lifetimeQuestions = 19
+
+          groupid = 709898375918649445
+            users = Tamara Meyer- Mt View
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 4
+
+          groupid = 709898375918649445
+            users = SECC 3 - Rhi Zweydoff
+             wins = 0
+        questions = 0
+     lifetimeWins = 3
+lifetimeQuestions = 36
+
+          groupid = 709898375918649445
+            users = Fellowship 1 - Madeleine Haagen
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 1
+
+          groupid = 709898375918649445
+            users = Fellowship 1- Natalia
+             wins = 0
+        questions = 0
+     lifetimeWins = 1
+lifetimeQuestions = 26
+
+          groupid = 709898375918649445
+            users = Rising Sun- Abby Hurley
+             wins = 0
+        questions = 0
+     lifetimeWins = 21
+lifetimeQuestions = 365
+
+          groupid = 709898375918649445
+            users = Buddy Dowdy - SECC
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 5
+
+          groupid = 709898375918649445
+            users = Rising Sun - Evan Rowland
+             wins = 0
+        questions = 0
+     lifetimeWins = 3
+lifetimeQuestions = 68
+
+          groupid = 709898375918649445
+            users = Oliver
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 9
+
+          groupid = 709898375918649445
+            users = Fellowship 1- Bella Jane
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 2
+
+          groupid = 709898375918649445
+            users = SECC 5 - Bailee Hertrick
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 5
+
+          groupid = 709898375918649445
+            users = Franklin 1- Ethan Fritz
+             wins = 0
+        questions = 0
+     lifetimeWins = 2
+lifetimeQuestions = 27
+
+          groupid = 709898375918649445
+            users = SECC 4 - Eli Daugherty
+             wins = 0
+        questions = 0
+     lifetimeWins = 15
+lifetimeQuestions = 184
+
+          groupid = 709898375918649445
+            users = SECC 6 - Isaac Carlsen
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 4
+
+          groupid = 709898375918649445
+            users = SECC 4 - Gabi Schneider
+             wins = 0
+        questions = 0
+     lifetimeWins = 0
+lifetimeQuestions = 2
+
+          groupid = 709898375918649445
+            users = MV1 - Trason
+             wins = 0
+        questions = 0
+     lifetimeWins = 1
+lifetimeQuestions = 10
+
+          groupid = 709898375918649445
+            users = SECC 1 - Jonathan Jackson
+             wins = 0
+        questions = 0
+     lifetimeWins = 4
+lifetimeQuestions = 60
+
+          groupid = 709898375918649445
+            users = SECC 2 - Jacob Powell
+             wins = 0
+        questions = 7
+     lifetimeWins = 1
+lifetimeQuestions = 18
+
+          groupid = 709898375918649445
+            users = April Daugherty- SECC
+             wins = 0
+        questions = 12
+     lifetimeWins = 4
+lifetimeQuestions = 130
+
+          groupid = 709898375918649445
+            users = Rising Sun - Madison De Vries
+             wins = 1
+        questions = 12
+     lifetimeWins = 4
+lifetimeQuestions = 61
+
+          groupid = 709898375918649445
+            users = Mt. View 1- Sarah Meyer
+             wins = 1
+        questions = 13
+     lifetimeWins = 1
+lifetimeQuestions = 14
+
+          groupid = 709898375918649445
+            users = SECC 5 - Abi Lusher
+             wins = 0
+        questions = 14
+     lifetimeWins = 4
+lifetimeQuestions = 90
+
+          groupid = 709898375918649445
+            users = WilliamBrown
+             wins = 0
+        questions = 16
+     lifetimeWins = 0
+lifetimeQuestions = 16
+
+          groupid = 709898375918649445
+            users = Bluegrass 1 - Will Brown
+             wins = 1
+        questions = 18
+     lifetimeWins = 1
+lifetimeQuestions = 18
+
+          groupid = 709898375918649445
+            users = MV - Trason
+             wins = 1
+        questions = 26
+     lifetimeWins = 1
+lifetimeQuestions = 26
+
+          groupid = 709898375918649445
+            users = Colin
+             wins = 2
+        questions = 36
+     lifetimeWins = 2
+lifetimeQuestions = 59
+
+          groupid = 709898375918649445
+            users = Fellowship 1 - Oriname
+             wins = 4
+        questions = 57
+     lifetimeWins = 18
+lifetimeQuestions = 280
+
+          groupid = 709898375918649445
+            users = MarondaD
+             wins = 5
+        questions = 81
+     lifetimeWins = 5
+lifetimeQuestions = 81
+
+          groupid = 709898375918649445
+            users = SECC 2 - Ruby Knight
+             wins = 10
+        questions = 100
+     lifetimeWins = 40
+lifetimeQuestions = 576
+
+          groupid = 709898375918649445
+            users = Z Brown
+             wins = 9
+        questions = 131
+     lifetimeWins = 9
+lifetimeQuestions = 131
+
+          groupid = 709898375918649445
+            users = Bluegrass1-Will Brown
+             wins = 10
+        questions = 134
+     lifetimeWins = 10
+lifetimeQuestions = 134
+
+          groupid = 709898375918649445
+            users = Bluegrass 1 - Ya'el Brown
+             wins = 16
+        questions = 257
+     lifetimeWins = 16
+lifetimeQuestions = 257
+
+          groupid = 709898375918649445
+            users = SECC 5 - Kali Knight
+             wins = 17
+        questions = 291
+     lifetimeWins = 53
+lifetimeQuestions = 865
+
+          groupid = 709898375918649445
+            users = SECC 2 - Maggie Daugherty
+             wins = 23
+        questions = 316
+     lifetimeWins = 31
+lifetimeQuestions = 427
+
+          groupid = 709898375918649445
+            users = CP1 - Caleb Nolasco
+             wins = 27
+        questions = 385
+     lifetimeWins = 48
+lifetimeQuestions = 671
+
+          groupid = 709898375918649445
+            users = SECC 2- Samuel Powell
+             wins = 25
+        questions = 389
+     lifetimeWins = 74
+lifetimeQuestions = 1046
+
+          groupid = 709898375918649445
+            users = Fellowship 2- Sarah Butterworth
+             wins = 28
+        questions = 414
+     lifetimeWins = 56
+lifetimeQuestions = 819
+
+          groupid = 709898375918649445
+            users = Bluegrass 1 - Z Brown
+             wins = 35
+        questions = 575
+     lifetimeWins = 26
+lifetimeQuestions = 444
+
+          groupid = 709898375918649445
+            users = SECC 1 - Lindsay Jones
+             wins = 57
+        questions = 834
+     lifetimeWins = 87
+lifetimeQuestions = 1290
+
+          groupid = 709898375918649445
+            users = Cp1-Caleb Nolasco
+             wins = 71
+        questions = 1050
+     lifetimeWins = 44
+lifetimeQuestions = 665
+
+          groupid = 709898375918649445
+            users = SECC 7 - Dallas Dowdy
+             wins = 124
+        questions = 1964
+     lifetimeWins = 119
+lifetimeQuestions = 1883
+
+          groupid = 709898375918649445
+            users = SECC 5 - Sarah Jackson
+             wins = 231
+        questions = 3325
+     lifetimeWins = 453
+lifetimeQuestions = 6540

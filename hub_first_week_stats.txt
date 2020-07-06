@@ -1,0 +1,149 @@
+  groupid = 709898375918649445
+    users = SECC 6 - Sallad
+     wins = 0
+questions = 1
+
+  groupid = 709898375918649445
+    users = Fellowship 1 - Madeleine Haagen
+     wins = 0
+questions = 1
+
+  groupid = 709898375918649445
+    users = Fellowship 1- Bella Jane
+     wins = 0
+questions = 2
+
+  groupid = 709898375918649445
+    users = Dallas
+     wins = 0
+questions = 3
+
+  groupid = 709898375918649445
+    users = Tamara Meyer- Mt View
+     wins = 0
+questions = 4
+
+  groupid = 709898375918649445
+    users = Buddy Dowdy - SECC
+     wins = 0
+questions = 5
+
+  groupid = 709898375918649445
+    users = SECC 5 - Bailee Hertrick
+     wins = 0
+questions = 5
+
+  groupid = 709898375918649445
+    users = Oliver
+     wins = 0
+questions = 6
+
+  groupid = 709898375918649445
+    users = SECC 2 - Jacob Powell
+     wins = 1
+questions = 11
+
+  groupid = 709898375918649445
+    users = Colin
+     wins = 0
+questions = 12
+
+  groupid = 709898375918649445
+    users = Fellowship 1- Natalia
+     wins = 1
+questions = 17
+
+  groupid = 709898375918649445
+    users = SECC 8 - Dallas
+     wins = 1
+questions = 19
+
+  groupid = 709898375918649445
+    users = SECC 4 - Troy
+     wins = 1
+questions = 22
+
+  groupid = 709898375918649445
+    users = Franklin 1- Ethan Fritz
+     wins = 2
+questions = 27
+
+  groupid = 709898375918649445
+    users = CP1
+     wins = 0
+questions = 32
+
+  groupid = 709898375918649445
+    users = SECC 3 - Rhi Zweydoff
+     wins = 3
+questions = 36
+
+  groupid = 709898375918649445
+    users = Fellowship 2- Sarah Butterworth
+     wins = 2
+questions = 37
+
+  groupid = 709898375918649445
+    users = Rising Sun - Evan Rowland
+     wins = 3
+questions = 43
+
+  groupid = 709898375918649445
+    users = SECC 2 - Maggie Daugherty
+     wins = 3
+questions = 44
+
+  groupid = 709898375918649445
+    users = Rising Sun - Madison De Vries
+     wins = 3
+questions = 49
+
+  groupid = 709898375918649445
+    users = SECC 5 - Kali Knight
+     wins = 3
+questions = 52
+
+  groupid = 709898375918649445
+    users = SECC
+     wins = 0
+questions = 53
+
+  groupid = 709898375918649445
+    users = SECC 6 - Dallas
+     wins = 5
+questions = 65
+
+  groupid = 709898375918649445
+    users = April Daugherty- SECC
+     wins = 3
+questions = 71
+
+  groupid = 709898375918649445
+    users = Fellowship 1 - Oriname
+     wins = 5
+questions = 102
+
+  groupid = 709898375918649445
+    users = SECC 2 - Ruby Knight
+     wins = 10
+questions = 134
+
+  groupid = 709898375918649445
+    users = SECC 2- Samuel Powell
+     wins = 18
+questions = 247
+
+  groupid = 709898375918649445
+    users = CP1 Caleb
+     wins = 24
+questions = 290
+
+  groupid = 709898375918649445
+    users = Rising Sun- Abby Hurley
+     wins = 19
+questions = 347
+
+  groupid = 709898375918649445
+    users = SECC 5 - Sarah Jackson
+     wins = 109
+questions = 1512
