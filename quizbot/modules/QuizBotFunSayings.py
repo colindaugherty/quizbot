@@ -56,9 +56,10 @@ class QuizBotFunSayings:
         if len(text) == 2:
             message = self.fun_sayings[int(text[1])]
             message += f"\n(this message was summoned by {sender_name})"
-        elif len(text) == 1:
-            message += f"{random.choice(self.fun_sayings)}\n(this message was summoned by {sender_name})"
+            self.response = message
+        elif len(text) == 1 or isinstance(text, str):
+            message = f"{random.choice(self.fun_sayings)}\n(this message was summoned by {sender_name})"
+            self.response = message
         else:
             message = f"you have confused me :("
-
-        self.response = message
+            self.response = message
