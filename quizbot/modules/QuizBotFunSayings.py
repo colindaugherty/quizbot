@@ -6,7 +6,7 @@ from datetime import datetime
 class QuizBotFunSayings:
     def __init__(self, sender_name, text):
         
-        fun_sayings = [
+        self.fun_sayings = [
             "Why was I created? I don't know. It's something I ask myself daily. - Fred",
             "Oh, shut up Weatherby - Fred",
             "I think we've outgrown full time education - Fred",
@@ -54,10 +54,10 @@ class QuizBotFunSayings:
 
         text = text.split()
         if len(text) == 2:
-            message = fun_sayings[int(text[1])]
+            message = self.fun_sayings[int(text[1])]
             message += f"\n(this message was summoned by {sender_name})"
         elif len(text) == 1:
-                message += f"{random.choice(fun_sayings)}\n(this message was summoned by {sender_name})"
+            message += f"{random.choice(self.fun_sayings)}\n(this message was summoned by {sender_name})"
         else:
             message = f"you have confused me :("
 

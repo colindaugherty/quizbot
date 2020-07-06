@@ -2,7 +2,6 @@ import random
 
 class QuizBotFortuneCookie:
     def __init__(self, sender):
-        self.sender = sender
 
         self.initial = [
             sender,
