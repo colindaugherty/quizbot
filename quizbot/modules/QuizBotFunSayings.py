@@ -6,6 +6,10 @@ from datetime import datetime
 class QuizBotFunSayings:
     def __init__(self, sender_name, text):
         
+        self.time = datetime.now()
+
+        self.time = self.time.strftime("%h:%M:%S%p")
+
         self.fun_sayings = [
             "Why was I created? I don't know. It's something I ask myself daily. - Fred",
             "Oh, shut up Weatherby - Fred",
@@ -40,7 +44,7 @@ class QuizBotFunSayings:
             "I cut my finger on my moms wring\nI hope I can still dance",
             "*dab on them haters*\nヽ( •_)ᕗ",
             "what do you call a chicken farmer?\n.\n.\n.\nA CHICKEN TENDER",
-            f"Read {datetime.now().hour}:{datetime.now().minute}",
+            f"Read at {str(self.time)}",
             "If you wear cowboy clothes, are you ranch dressing?",
             "Please not now, I'm introverting",
             "Bible Bowlers are easily confused",
